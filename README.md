@@ -6,4 +6,4 @@ Basic Setup
 - cd ~/Eggercise
 - npm install
 - bower install
-- node server/server.js
+- gulp serve
