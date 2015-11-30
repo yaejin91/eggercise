@@ -11,3 +11,7 @@ An application for motivating people to exercise by incentivizing them with the 
 * CD to the /eggercise folder and run `gulp serve`
 
 At this point you should have the basic app up and running.
+
+## Design Doc
+
+https://ltl-enterprise.slack.com/files/dordal/F0FJ35FJT/eggercise_mockups.pdf
