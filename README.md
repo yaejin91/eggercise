@@ -23,3 +23,8 @@ https://ltl-enterprise.slack.com/files/dordal/F0FJ35FJT/eggercise_mockups.pdf
 * Function names are camelcase and start with an uppercase
 * Variable names are camelcase and start with a lowercase
 * Names do not have '-' or '_' characters in them
+
+## Development Process
+
+* All features are developed with on feature branches created off of the dev branch
+* When a feature is complete pull requests must be generated. Never merge code into dev or master directly.
