@@ -4,10 +4,15 @@
     "filters": {
       "backend": "mongo",
       "reload": "browsersync",
+      "ngCookies": true,
+      "ngResource": true,
+      "ngSanitize": true,
+      "ngAnimate": true,
       "control": true,
+      "karma": true,
+      "hasTests": true,
       "sockets": false,
-      "auth": true,
-      "ngCookies": true
+      "auth": true
     }
   }
 }

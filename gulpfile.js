@@ -15,3 +15,4 @@ gulp.task('build',                    require('./tasks/build'));
 gulp.task('bump',       ['version'],  require('./tasks/chore').bump);
 gulp.task('version',                  require('./tasks/chore').version);
 gulp.task('control',                  require('./tasks/control'));
+gulp.task('test',                     require('./tasks/test').test);

@@ -2,7 +2,10 @@
 
 angular.module('eggercise', [
   'ngRoute',
-  'ngCookies'
+  'ngCookies',
+  'ngResource',
+  'ngSanitize',
+  'ngAnimate'
 ])
   .config(function ($routeProvider, $locationProvider, $httpProvider) {
 
