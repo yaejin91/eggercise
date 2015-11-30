@@ -15,3 +15,11 @@ At this point you should have the basic app up and running.
 ## Design Doc
 
 https://ltl-enterprise.slack.com/files/dordal/F0FJ35FJT/eggercise_mockups.pdf
+
+## Coding Standards
+
+* Tabs must be 2 spaces
+* Tabs must be stored as spaces, not tabs characters
+* Function names are camelcase and start with an uppercase
+* Variable names are camelcase and start with a lowercase
+* Names do not have '-' or '_' characters in them
