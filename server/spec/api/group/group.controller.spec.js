@@ -37,8 +37,28 @@ describe('Group', function() {
 				} else {
 					done();
 				}
+			});
+		});
+
+		it('should return an existing group', function (done) {
+			request()
+			.get('/api/group/'+group._id)
+			.expect('Content-Type', /json/)
+			.expect(200)
+			.end(function (error,res){
+				if (error) {
+					done.fail(error);
+				} else {
+					console.log('I reached');
+					console.log(res.body);
+					expect(res.body.length).toEqual(1);
+					returnedGroup = res.body[0];
+					expect(returnedGroup.name).toBe('testGroup');
+					done();
+				}
 			})
 		})
-	})
+
+	});
 
 })
