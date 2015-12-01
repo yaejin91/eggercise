@@ -16,11 +16,8 @@ var Group = require('../../../api/group/group.model');
 			expect(group.bet).toBe(9000);
 		});
 
-		// it('should have a creator', function() {
-
-		// });
-
-		// it('should have a member', function() {
-
-		// });
+		it('should return empty member', function() {
+			var group = new Group();
+			expect(group._member).toBeUndefined();
+		});
 })
