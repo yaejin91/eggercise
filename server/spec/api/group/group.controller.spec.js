@@ -4,7 +4,16 @@
 var request = require('supertest');
 
 //model
-var Group = require('../../../api/group/group.model');
+var Group = require('../../../api/group/group.model'),
+	User = require('../../../api/user/user.model');
+
+//auth
+var auth = {};
+
+//variables
+var creator;
+
+beforeAll();
 	
 describe('Group', function() {
 
@@ -40,25 +49,72 @@ describe('Group', function() {
 			});
 		});
 
-		it('should return an existing group', function (done) {
-			request()
-			.get('/api/group/'+group._id)
-			.expect('Content-Type', /json/)
-			.expect(200)
-			.end(function (error,res){
-				if (error) {
-					done.fail(error);
-				} else {
-					console.log('I reached');
-					console.log(res.body);
-					expect(res.body.length).toEqual(1);
-					returnedGroup = res.body[0];
-					expect(returnedGroup.name).toBe('testGroup');
-					done();
-				}
-			})
-		})
+	// 	it('should create a new group', function (done) {
+	// 		var creatorId = creator._id;
 
+	// 		request()
+	// 		.post('/api/groups/create')
+	// 		.send({
+	// 			name:'testGroupCreate',
+	// 			email: 'create@test.com',
+	// 			bet: 9000,
+	// 			start:'01-01-2016',
+	// 			end: '01-31-2016',
+	// 			_creator: creatorId
+	// 		})
+	// 		.expect('Content-Type', /json/)
+	// 		.end(function (error, res) {
+	// 			if (error) {
+	// 				done.fail(error);
+	// 			} else {
+	// 				returnedGroup = res.body;
+	// 				expect(returnedGroup.name).toBe('testGroupCreate');
+	// 				Group.findOne({ _id: returnedGroup._id})
+	// 				.remove(function (error) {
+	// 					done();
+	// 				})
+	// 			}
+	// 		});
+	// 	});
 	});
 
-})
+});
+
+function loginUser (auth) {
+	return function (done) {
+		request()
+		.post('/auth')
+		.send({
+			name: 'loginDummy',
+			password: 'dummyPw'
+		})
+		.expect(200)
+		.end(onResponse);
+
+		function onResponse(error, res) {
+			auth.token = res.body.token;
+			return done();
+		}
+	}
+	return done();
+}
+
+function userCreator () {
+	return function (done) {
+		User.create({
+			name: 'loginDummy',
+			password: 'dummyPw',
+			email: 'dummy@test.com'
+		}, function (error, dummyUser) {
+			if(err) {
+				console.log(error);
+				done.fail(error);
+			} else {
+				creator = dummyUser;
+				done();
+			}
+		})
+		
+	}
+	return done();
+}
