@@ -7,5 +7,9 @@ angular.module('eggercise')
         templateUrl: 'views/group/group.html',
         controller: 'GroupCtrl',
         controllerAs: 'vm'
+      })
+      .otherwise({
+        redirectTo: '/'
       });
+
   });
