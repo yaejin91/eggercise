@@ -1,4 +1,4 @@
-'strict';
+'use strict';
 
 var request = require('supertest'),
   User = require('../../api/user/user.model');
