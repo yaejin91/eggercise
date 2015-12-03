@@ -96,7 +96,7 @@ describe('Group', function() {
 				if (error) {
 					done.fail(error);
 				} else {
-					returnedGroup = res.body;
+					var returnedGroup = res.body.group;
 					expect(returnedGroup.name).toBe('testGroupCreate1');
 					Group.findOne({ _id: returnedGroup._id})
 					.remove(function (error) {
