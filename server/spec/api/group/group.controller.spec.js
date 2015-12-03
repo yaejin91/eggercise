@@ -75,34 +75,57 @@ describe('Group', function() {
 			});
 		});
 
+		// it('login', loginUser());
+		// it('should create a new group', function (done) {
+		// 	// console.log(auth);
+		// 	var creatorId = creator._id;
+		// 	agent
+		// 	.post('/api/groups/create')
+		// 	.send({
+		// 		name:'testGroupCreate1',
+		// 		email: 'create@test.com',
+		// 		bet: 9000,
+		// 		start:'01-01-2016',
+		// 		end: '01-31-2016',
+		// 		_creator: creatorId
+		// 	})
+		// 	.expect('Content-Type', /json/)
+		// 	.end(function (error, res) {
+		// 		if (error) {
+		// 			done.fail(error);
+		// 		} else {
+		// 			returnedGroup = res.body;
+		// 			expect(returnedGroup.name).toBe('testGroupCreate1');
+		// 			Group.findOne({ _id: returnedGroup._id})
+		// 			.remove(function (error) {
+		// 				done();
+		// 			})
+		// 		}
+		// 	});
+		// });
+
 		it('login', loginUser());
-		it('should create a new group', function (done) {
-			// console.log(auth);
+		it('should delete the group', function (done) {
 			var creatorId = creator._id;
 			agent
-			.post('/api/groups/create')
-			.send({
-				name:'testGroupCreate1',
-				email: 'create@test.com',
-				bet: 9000,
-				start:'01-01-2016',
-				end: '01-31-2016',
-				_creator: creatorId
-			})
+			.post('/api/groups/' + group._id)
 			.expect('Content-Type', /json/)
 			.end(function (error, res) {
 				if (error) {
 					done.fail(error);
 				} else {
-					returnedGroup = res.body;
-					expect(returnedGroup.name).toBe('testGroupCreate1');
-					Group.findOne({ _id: returnedGroup._id})
-					.remove(function (error) {
-						done();
+					Group.findOne({name: 'testGroup'}, function (err, deletedGroup){
+						if(err){
+							done.fail.err;
+						}else{
+							done();
+						}
 					})
 				}
 			});
 		});
+
+
 
 	});
 });
