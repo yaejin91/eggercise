@@ -76,8 +76,8 @@ describe('Group', function() {
 			});
 		});
 
-		it('login', loginUser());
-
+		// it('login', loginUser());
+		
 		it('should create a new group', function (done) {
 			console.log(auth);
 			var creatorId = creator._id;

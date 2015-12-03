@@ -19,3 +19,16 @@ exports.create = function (req, res) {
 		});
 	});
 }
+
+//Delete a group
+exports.delete = function (req, res){
+    var group = new Group({_id: req.params.group_id});
+    group.remove( function (err, deletedGroup){
+        if(err){
+            return handleError(err, err);
+        }
+        res.status(400).json({
+            group: deletedGroup
+        });
+    });
+}
