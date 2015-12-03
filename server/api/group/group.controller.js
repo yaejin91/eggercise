@@ -10,13 +10,12 @@ function handleError (res, err) {
 
 //Creates a new group in the DB.
 exports.create = function (req, res) {
-	Group.create(req.body, function (err, group) {
+	Group.create(req.body, function (err, createdGroup) {
 		if (err) {
 			return handleError(res, err);
-		} else {
-
 		}
-	})
+        res.status(201).json({
+			group: createdGroup
+		});
+	});
 }
-
-
