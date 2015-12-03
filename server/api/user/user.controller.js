@@ -38,3 +38,28 @@ exports.getMe = function (req, res) {
     res.status(200).json(user);
   });
 };
+
+
+/**
+ * Update a user profile in the DB.
+ *
+ * @param req
+ * @param res
+ */
+exports.updateProfile = function (req, res) {
+  new User({
+    _id: req.params.id
+  })
+  .fetch()
+  .then(function (user) {
+    user.save({
+      email: req.body.email || user.get('email'),
+      password: req.body.password || user.get('password'),
+      name: req.body.name || user.get('name')
+    }, function (err, user) {
+      if (err) { return handleError(res, err);}
+      if (!user) { return res.json(401);}
+      res.status(200).json(user);
+    })
+  })
+};
