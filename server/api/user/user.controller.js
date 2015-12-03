@@ -47,19 +47,17 @@ exports.getMe = function (req, res) {
  * @param res
  */
 exports.updateProfile = function (req, res) {
-  new User({
-    _id: req.params.id
-  })
-  .fetch()
-  .then(function (user) {
-    user.save({
-      email: req.body.email || user.get('email'),
-      password: req.body.password || user.get('password'),
-      name: req.body.name || user.get('name')
-    }, function (err, user) {
+  var query = {'_id': req.user._id};
+  User.findById(query, function (err, user) {
+    if (err) { return handleError(res, err);}
+    if (!user) { return res.json(401);}
+    user.email = req.body.email || user.get('email');
+    user.password = req.body.password || user.get('password');
+    user.name = req.body.name || user.get('name');
+    user.save(function (err, user) {
       if (err) { return handleError(res, err);}
       if (!user) { return res.json(401);}
       res.status(200).json(user);
-    })
-  })
+    });
+  });
 };

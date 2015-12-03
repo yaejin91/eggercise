@@ -1,9 +1,9 @@
 'use strict';
 
 var request = require('supertest'),
-  app = require('../../server'),
+  app = require('../../../server'),
   agent = request.agent(app),
-  User = require('../../api/user/user.model');
+  User = require('../../../api/user/user.model');
 
 var auth = {};
 
@@ -67,6 +67,37 @@ describe('User', function() {
           User.findOne({_id: returnedUser.user._id})
           .remove(function (error) {
             done();
+          })
+        }
+      });
+    });
+
+    it('should modify an existing user', function (done) {
+      agent
+      .get('/api/users/me')
+      .set('Authorization', 'Bearer ' + auth.token)
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .end(function (error, res) {
+        if (error) {
+          done.fail(error);
+        } else {
+          var getUser = res.body;
+          agent
+          .post('/api/users/updateProfile')
+          .set('Authorization', 'Bearer ' + auth.token)
+          .send({
+            email: 'changed2@changed.com',
+            password: 'newpass'
+          })
+          .end(function (error, res) {
+            if (error) {
+              done.fail(error);
+            } else {
+              var postUser = res.body;
+              expect(postUser.email).toBe('changed2@changed.com');
+              done();
+            }
           })
         }
       });
