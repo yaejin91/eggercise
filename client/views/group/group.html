@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <!-- these first 3 meta tags need to come before anything else -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <!-- *Bootstrap is mobile first; add in mobile first styles* -->
     <meta name="viewport" content="width=device-width initial-scale=1">
+
+    <link href="./client/bower_components/ui-bootstrap.min.js" rel="stylesheet">
     <title>Eggercise</title>
   </head>
   <body>
     <!-- this give the 'GroupCtrl' name to know what page we are on -->
     {{ vm.name }}
-
     <div>
       <h1>My Groups</h1>
 
@@ -21,7 +25,6 @@
 
       <h2>Active Groups</h2>
       <h2>Past Groups</h2>
-
     </div>
   </body>
 </html>
