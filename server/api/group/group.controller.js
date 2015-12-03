@@ -9,6 +9,7 @@ function handleError (res, err) {
 }
 
 //Creates a new group in the DB.
+//TODO: should return new group created with the attributes.
 exports.create = function (req, res) {
 	Group.create(req.body, function (err, createdGroup) {
 		if (err) {
