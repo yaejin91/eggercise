@@ -1,32 +1,30 @@
 'use strict';
 
 var request = require('supertest'),
-  // app = require('../../../server'),
-  agent = request.agent(),
+  app = require('../../server'),
+  agent = request.agent(app),
   User = require('../../api/user/user.model');
+
+var auth = {};
 
 describe('User', function() {
   describe('with data', function() {
     var user;
 
     beforeEach(function (done) {
-      User.save({name: 'test', email: 'test@test.com', password: 'testing'}, function (error, newUser) {
-        console.log(error);
-        console.log(newUser);
+      User.create({name: 'test', email: 'test@test.com', password: 'testing'}, function (error, newUser) {
         if (error) {
           done.fail(error);
         } else {
           user = newUser;
-          done();
+          loginUser(auth, done);
         }
       });
     })
-    });
 
     afterEach(function (done) {
       User.remove({name: 'test'}, function (error, removeUser) {
         if (error) {
-          console.log(error);
           done.fail(error);
         } else {
           done();
@@ -35,29 +33,37 @@ describe('User', function() {
     });
 
     it('should return an existing user', function (done) {
-      console.log('running test');
-      done();
-      // request()
-      // .get('/me')
-      // .expect('Content-Type', /json/)
-      // .expect(200)
-      // .end(function (error, res) {
-      //   if (error) {
-      //     console.log(error);
-      //     done.fail(error);
-      //   } else {
-      //     console.log(res.body);
-      //     expect(res.body.length).toEqual(1);
-      //     returnUser = res.body[0];
-      //     expect(returnUser.name).toBe('test');
-      //     done();
-        // }
-      // });
+      agent
+      .get('/api/users/me')
+      .set('Authorization', 'Bearer ' + auth.token)
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .end(function (error, res) {
+        if (error) {
+          done.fail(error);
+        } else {
+          var returnUser = res.body;
+          expect(returnUser.name).toBe('test');
+          done();
+        }
+      });
+    });
   });
-})
 
-function loginUser(auth) {
-  return function (done) {
-    request(server)
+});
+
+function loginUser(auth, done) {
+  agent
+  .post('/auth/local/')
+  .send({email: 'test@test.com', password: 'testing'})
+  .end(onResponse);
+  function onResponse(error, res) {
+    if (error) {
+      throw error;
+    } else {
+      auth.token = res.body.token;
+      agent.saveCookies(res);
+      done();
+    }
   }
 }
