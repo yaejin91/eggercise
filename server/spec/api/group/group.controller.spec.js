@@ -111,6 +111,7 @@ describe('Group', function() {
 			var creatorId = creator._id;
 			agent
 			.post('/api/groups/' + group._id)
+			.set('Authorization', 'Bearer ' + auth.token)
 			.expect('Content-Type', /json/)
 			.end(function (error, res) {
 				if (error) {
