@@ -28,7 +28,7 @@ describe('Group', function() {
 			} else {
 				creator = dummyUser;
 				loginUser(auth, done);
-				done();
+				// done();
 			}
 		});
 	});
@@ -47,6 +47,7 @@ describe('Group', function() {
 		var group;
 
 		beforeEach(function (done) {
+			console.log('auth',auth);
 			Group.create({
 				name: 'testGroup',
 				email: 'testGroup@test.com',
@@ -75,9 +76,9 @@ describe('Group', function() {
 			});
 		});
 
-		it('login', loginUser());
+		// it('login', loginUser());
 		it('should create a new group', function (done) {
-			// console.log(auth);
+			console.log(auth);
 			var creatorId = creator._id;
 			agent
 			.post('/api/groups/create')
@@ -89,6 +90,7 @@ describe('Group', function() {
 				end: '01-31-2016',
 				_creator: creatorId
 			})
+			.set('Authorization', 'Bearer ' + auth.token)
 			.expect('Content-Type', /json/)
 			.end(function (error, res) {
 				if (error) {
@@ -109,9 +111,9 @@ describe('Group', function() {
 
 function loginUser (auth, done) {
 	agent
-	.post('/auth')
+	.post('/auth/local/')
 	.send({
-		name: 'loginDummy',
+		email: 'dummy@test.com',
 		password: 'dummypw'
 	})
 	// .expect(200)
@@ -119,13 +121,12 @@ function loginUser (auth, done) {
 
 	function onResponse(error, res) {
 		if(error) {
-			console.log('I reached');
 			console.log(error);
 			throw error;
 		} else {
-			console.log('res',res.body);
+			auth.token = res.body.token;
 			agent.saveCookies(res);
-			done(agent);
+			done();
 		}
 	}
 	
