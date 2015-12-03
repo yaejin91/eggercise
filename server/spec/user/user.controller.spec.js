@@ -48,9 +48,32 @@ describe('User', function() {
         }
       });
     });
-  });
 
+    it('should create a new user', function (done) {
+      request(app)
+      .post('/api/users/')
+      .send({
+        name: 'testers',
+        email: 'testers@testers.com',
+        password: 'testers'
+      })
+      .expect('Content-Type', /json/)
+      .end(function (error, res) {
+        if (error) {
+          done.fail(error);
+        } else {
+          var returnedUser = res.body;
+          expect(returnedUser.user.name).toBe('testers');
+          User.findOne({_id: returnedUser.user._id})
+          .remove(function (error) {
+            done();
+          })
+        }
+      });
+    });
+  });
 });
+
 
 function loginUser(auth, done) {
   agent
