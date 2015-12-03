@@ -8,3 +8,14 @@ function handleError (res, err) {
   return res.status(500).send(err);
 }
 
+//Creates a new group in the DB.
+exports.create = function (req, res) {
+	Group.create(req.body, function (err, createdGroup) {
+		if (err) {
+			return handleError(res, err);
+		}
+		res.status(201).json({
+			group: createdGroup
+		});
+	});
+}
