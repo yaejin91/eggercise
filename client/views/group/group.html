@@ -35,11 +35,11 @@
         </div>
 
         <div class="col-xs-6">
-          <a href="https://google.com">
+          <!-- <a href="https://google.com"> -->
             <div class="jumbotron">
               <div class="row">
                 <div class="col-md-6 text-center">
-                  <div class="glyphicon glyphicon-plus large-glyph">
+                  <div class="glyphicon glyphicon-plus large-glyph" data-toggle="modal" data-target="#addGroup">
                   </div>
                 </div>
                 <div class="col-md-6 text-center">
@@ -49,7 +49,7 @@
                 </div>
               </div>
             </div>
-          </a>
+          <!-- </a> -->
         </div>
       </div>
 
@@ -78,6 +78,42 @@
               Group info here
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modals -->
+    <div class="modal fade" id="#addGroup" tabindex="-1" role="dialog" ara-labelledby="createGroupLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+
+          <!-- Modal Header -->
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">
+              <span aria-hidden="true">&times;</span>
+              <span class="sr-only">Close</span>
+            </button>
+            <h4 class="modal-title" id="createGroupLabel">
+              Create a New Group
+            </h4>
+          </div>
+
+          <!-- Modal Body -->
+          <div class="modal-body">
+            <form role="form" ng-submit="GroupCtrl.createGroup()">
+              <div class="input-group">
+                <input type="text" ng-model="GroupCtrl.formData.name" placeholder="New Group Name" class="form-control">
+              </div>
+            </form>
+          </div>
+
+          <!-- Modal Footer -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">
+              Close
+            </button>
+          </div>
+
         </div>
       </div>
     </div>
