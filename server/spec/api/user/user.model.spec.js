@@ -1,6 +1,8 @@
+'use strict';
+
 var mongoose = require('mongoose'),
-  config = require('../../config/environment'),
-  User = require('../../api/user/user.model');
+  config = require('../../../config/environment'),
+  User = require('../../../api/user/user.model');
 
 beforeEach(function() {
   mongoose.connect(config.mongo.uri);

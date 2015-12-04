@@ -1,16 +1,15 @@
 'use strict';
 
 var request = require('supertest'),
-  app = require('../../server'),
+  app = require('../../../server'),
   agent = request.agent(app),
-  User = require('../../api/user/user.model');
+  User = require('../../../api/user/user.model');
 
 var auth = {};
 
 describe('User', function() {
   describe('with data', function() {
     var user;
-
     beforeEach(function (done) {
       User.create({name: 'test', email: 'test@test.com', password: 'testing'}, function (error, newUser) {
         if (error) {
@@ -20,7 +19,7 @@ describe('User', function() {
           loginUser(auth, done);
         }
       });
-    })
+    });
 
     afterEach(function (done) {
       User.remove({name: 'test'}, function (error, removeUser) {
@@ -71,9 +70,39 @@ describe('User', function() {
         }
       });
     });
+
+    it('should modify an existing user', function (done) {
+      agent
+      .get('/api/users/me')
+      .set('Authorization', 'Bearer ' + auth.token)
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .end(function (error, res) {
+        if (error) {
+          done.fail(error);
+        } else {
+          var getUser = res.body;
+          agent
+          .post('/api/users/updateProfile')
+          .set('Authorization', 'Bearer ' + auth.token)
+          .send({
+            email: 'changed2@changed.com',
+            password: 'newpass'
+          })
+          .end(function (error, res) {
+            if (error) {
+              done.fail(error);
+            } else {
+              var postUser = res.body;
+              expect(postUser.email).toBe('changed2@changed.com');
+              done();
+            }
+          })
+        }
+      });
+    });
   });
 });
-
 
 function loginUser(auth, done) {
   agent
