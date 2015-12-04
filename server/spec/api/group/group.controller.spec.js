@@ -15,7 +15,52 @@ var auth = {};
 //variables
 var creator;
 
+
 describe('Group', function() {
+  describe('with no data', function () {
+    var testGroup;
+
+    beforeAll(function(done) {
+      Group.create({ name: 'test group 1' }, function(err, newGroup) {
+        if (err) {
+          console.log('This failed (beforeAll)! ', err);
+          done.fail(err);
+        } else {
+          testGroup = newGroup;
+          console.log('This is newGroup: ', newGroup);
+          done();
+        }
+      });
+    });
+
+    it('should return no groups', function (done) {
+      request(app).get('/api/groups')
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .end(function (err, res) {
+        if(err) {
+          // done.fail(err);
+          console.log('This failed (test)! ', err);
+          done.fail(err);
+        } else {
+          console.log('This is res.body: ', res.body);
+          expect(res.body).toEqual([]);
+          done();
+        }
+      });
+    });
+
+    afterAll(function(done) {
+      testGroup.remove(function(err, removedGroup) {
+        if (err) {
+          done.fail(err);
+        } else {
+          done();
+        }
+      });
+    });
+  });
+
   beforeAll(function (done) {
     User.create({
       name: 'loginDummy',
@@ -42,24 +87,6 @@ describe('Group', function() {
       }
     });
   });
-
-
-  describe('with no data', function () {
-    it('should return no groups', function (done) {
-      request(app).get('/api/groups')
-      .expect('Content-Type', /json/)
-      .expect(200)
-      .end(function (err, res) {
-        if(err) {
-          done.fail(err);
-        } else {
-          expect(res.body).toEqual([]);
-          done();
-        }
-      });
-    });
-  });
-
 
   describe('with data', function() {
     var group;

@@ -10,27 +10,26 @@ function handleError (res, err) {
 
 //Show all groups
 exports.showAll = function (req, res) {
-    Group.find({}, function (err, foundGroups) {
-        if (err) {
-            return handleError(res, err);
-        }
-        res.status(201).json({
-            group: foundGroups
-        });
-    });
+  Group.find({}, function (err, foundGroups) {
+    if (err) {
+      return handleError(res, err);
+    } else if (foundGroups) {
+      res.json(foundGroups);
+    }
+  });
 }
 
 
 //Creates a new group in the DB.
 exports.create = function (req, res) {
-	Group.create(req.body, function (err, createdGroup) {
-		if (err) {
-			return handleError(res, err);
-		}
+  Group.create(req.body, function (err, createdGroup) {
+    if (err) {
+      return handleError(res, err);
+    }
         res.status(201).json({
-			group: createdGroup
-		});
-	});
+      group: createdGroup
+    });
+  });
 }
 
 //Delete a group
