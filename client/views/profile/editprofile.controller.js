@@ -6,10 +6,10 @@ angular.module('eggercise')
     var vm = this;
     vm.user = {};
     vm.formData = {};
-    vm.id = $cookieStore.get('globals').currentUser._id;
+    vm.id = $rootScope._id;
 
     //Edit Profile
-    EditProfile.editProfile(vm.user)
+    EditProfile.editProfile(vm.formData)
       .then(function (data) {
         vm.user = data;
       })

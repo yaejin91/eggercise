@@ -48,16 +48,11 @@ exports.getMe = function (req, res) {
  */
 exports.updateProfile = function (req, res) {
   var query = {'_id': req.user._id};
-  User.findById(query, function (err, user) {
+  console.log(req.body);
+  User.findByIdAndUpdate(query, req.body, function (err, user) {
     if (err) { return handleError(res, err);}
     if (!user) { return res.json(401);}
-    user.email = req.body.email || user.get('email');
-    user.password = req.body.password || user.get('password');
-    user.name = req.body.name || user.get('name');
-    user.save(function (err, user) {
-      if (err) { return handleError(res, err);}
-      if (!user) { return res.json(401);}
-      res.status(200).json(user);
-    });
+    res.status(200).json(user);
+
   });
 };
