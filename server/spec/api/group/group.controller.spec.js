@@ -77,6 +77,7 @@ describe('Group', function() {
 		});
 
 		// it('login', loginUser());
+		
 		it('should create a new group', function (done) {
 			console.log(auth);
 			var creatorId = creator._id;
@@ -104,7 +105,30 @@ describe('Group', function() {
 					})
 				}
 			});
+		});			
+
+		it('should delete the group', function (done) {
+			var creatorId = creator._id;
+			agent
+			.post('/api/groups/' + group._id)
+			.set('Authorization', 'Bearer ' + auth.token)
+			.expect('Content-Type', /json/)
+			.end(function (error, res) {
+				if (error) {
+					done.fail(error);
+				} else {
+					Group.findOne({name: 'testGroup'}, function (err, deletedGroup){
+						if(err){
+							done.fail.err;
+						}else{
+							done();
+						}
+					})
+				}
+			});
 		});
+
+
 
 	});
 });

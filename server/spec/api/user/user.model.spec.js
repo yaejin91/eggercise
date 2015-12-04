@@ -1,6 +1,8 @@
+'use strict';
+
 var mongoose = require('mongoose'),
-  config = require('../../config/environment'),
-  User = require('../../api/user/user.model');
+  config = require('../../../config/environment'),
+  User = require('../../../api/user/user.model');
 
 beforeEach(function() {
   mongoose.connect(config.mongo.uri);
@@ -21,13 +23,14 @@ describe ('User', function() {
     var user = new User({name: 'blah', email: 'test@test.com', password: 'test'});
     expect(user.passwordHash).toBeDefined();
     expect(user.salt).toBeDefined();
-  });    
+    expect(user.authenticate('test')).toBe(true);
+  });
 
   it('should create a new user', function(done) {
-    User.create({ 
-      name: 'Test User', 
-      email: 'test@learntech.com', 
-      password: 'dummyPassword' 
+    User.create({
+      name: 'Test User',
+      email: 'test@learntech.com',
+      password: 'dummyPassword'
     }, function(err, newUser) {
         if (err) {
           console.log(err);
