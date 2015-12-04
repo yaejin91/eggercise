@@ -1,16 +1,13 @@
 <div>
-  {{ vm.name }}
+  <h1>Update Profile</h1>
 </div>
 
-<form ng-submit="vm.login()">
-  <input type="email"
-         ng-model="vm.user.email"
-         placeholder="email">
-  <input type="password"
-         ng-model="vm.user.password"
-         placeholder="password">
+<form ng-submit="ProfileCtrl.editProfile()">
+  <input type="name" ng-model="user.name" placeholder="name">
+  <input type="email" ng-model="user.email" placeholder="email">
+  <input type="password" ng-model="user.password" placeholder="password">
   <button type="submit">
-    login
+    Update
   </button>
 </form>
 
