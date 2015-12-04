@@ -10,7 +10,6 @@ var auth = {};
 describe('User', function() {
   describe('with data', function() {
     var user;
-
     beforeEach(function (done) {
       User.create({name: 'test', email: 'test@test.com', password: 'testing'}, function (error, newUser) {
         if (error) {
@@ -20,7 +19,7 @@ describe('User', function() {
           loginUser(auth, done);
         }
       });
-    })
+    });
 
     afterEach(function (done) {
       User.remove({name: 'test'}, function (error, removeUser) {
@@ -104,7 +103,6 @@ describe('User', function() {
     });
   });
 });
-
 
 function loginUser(auth, done) {
   agent

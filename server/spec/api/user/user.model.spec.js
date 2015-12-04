@@ -1,3 +1,5 @@
+'use strict';
+
 var mongoose = require('mongoose'),
   config = require('../../../config/environment'),
   User = require('../../../api/user/user.model');
