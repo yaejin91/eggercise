@@ -8,6 +8,19 @@ function handleError (res, err) {
   return res.status(500).send(err);
 }
 
+//Show all groups
+exports.showAll = function (req, res) {
+    Group.find({}, function (err, foundGroups) {
+        if (err) {
+            return handleError(res, err);
+        }
+        res.status(201).json({
+            group: foundGroups
+        });
+    });
+}
+
+
 //Creates a new group in the DB.
 exports.create = function (req, res) {
 	Group.create(req.body, function (err, createdGroup) {
