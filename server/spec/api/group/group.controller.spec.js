@@ -56,22 +56,16 @@ describe('Group', function() {
         end: '01-31-2016',
         _creator: creator._id
       }, function(err, newGroup) {
-        console.log('This is newGroup: ', newGroup);
-        console.log('----------------------------');
         if (err) {
           done.fail(err);
         } else {
           testGroup = newGroup;
-          console.log('This is testGroup (beforeEach): ', testGroup);
-          console.log('----------------------------');
           done();
         }
       });
     });
 
     it('should return all groups', function (done) {
-      console.log('This is auth: ', auth);
-      console.log('----------------------------');
       agent
       .get('/api/groups')
       .set('Authorization', 'Bearer ' + auth.token)
@@ -79,11 +73,8 @@ describe('Group', function() {
       .expect(200)
       .end(function (err, res) {
         if(err) {
-          console.log('This is the err: ', err);
           done.fail(err);
         } else {
-          console.log('This is res.body: ', res.body);
-          console.log('----------------------------');
           expect(res.body.length).toEqual(1);
           done();
         }
@@ -107,7 +98,6 @@ describe('Group', function() {
     var group;
 
     beforeEach(function (done) {
-      console.log('auth',auth);
       Group.create({
         name: 'testGroup',
         email: 'testGroup@test.com',
@@ -117,7 +107,6 @@ describe('Group', function() {
         _creator:creator._id
       }, function (error, newGroup) {
         if (error) {
-          console.log(error);
           done.fail(error);
         } else {
           group = newGroup;
@@ -139,7 +128,6 @@ describe('Group', function() {
     // it('login', loginUser());
 
     it('should create a new group', function (done) {
-      console.log(auth);
       var creatorId = creator._id;
       agent
       .post('/api/groups/create')
