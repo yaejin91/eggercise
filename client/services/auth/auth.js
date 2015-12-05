@@ -62,7 +62,8 @@ angular.module('eggercise')
      * Logout
      */
     this.logout = function () {
-      $cookieStore.remove('token');
+      console.log('someone logged me out');
+      // $cookieStore.remove('token');
       _user = {};
     };
 

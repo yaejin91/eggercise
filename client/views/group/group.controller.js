@@ -16,9 +16,11 @@ angular
       name: 'GroupCtrl',
 
       createGroup: function () {
+      	vm.formData._creator = 
       	GroupService.createGroup(vm.formData)
       		.then(function (data) {
       			vm.groups.push(data);
+      			console.log(vm.groups);
       		})
       		.catch(function (err) {
       			vm.error = err;

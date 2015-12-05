@@ -9,11 +9,10 @@
     <title>Eggercise</title>
   </head>
   <body>
-    <!-- this give the 'GroupCtrl' name to know what page we are on -->
+    <!-- this give the 'vm' name to know what page we are on -->
 
     <div class="container">
     {{ vm.name }}
-
       <h1>My Groups</h1>
       <div class="row">
         <div class="col-xs-6">
@@ -93,13 +92,14 @@
 
           <!-- Modal Body -->
           <div class="modal-body">
-            <form role="form" ng-submit="GroupCtrl.createGroup()">
+            <form role="form" ng-submit="vm.createGroup()">
               <div class="row">
                 <div class="input-group col-md-4">
-                  <input type="text" placeholder="New Group's Name" class="form-control">
-                  <input type="number" placeholder="Buy-In Price" class="form-control">
-                  <input type="date" placeholder="Start Date" class="form-control">
-                  <input type="date" placehodler="End Date" class="form-control">
+                  <input ng-model="vm.formData.name" type="text" placeholder="New Group's Name" class="form-control">
+                  <input ng-model="vm.formData.bet" type="number" placeholder="Buy-In Price" class="form-control">
+                  <input ng-model="vm.formData.start" type="date" placeholder="Start Date" class="form-control">
+                  <input ng-model="vm.formData.end" type="date" placehodler="End Date" class="form-control">
+                  <input type="submit" class="btn btn-primary" value="Create Group">
                 </div>
               </div>
             </form>
@@ -107,7 +107,6 @@
 
           <!-- Modal Footer -->
           <div class="modal-footer">
-            <input type="submit" class="btn btn-primary" value="Create Group">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
           </div>
         </div>
