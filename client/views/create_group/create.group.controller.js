@@ -1,13 +1,31 @@
 'use strict';
 
 angular.module('eggercise')
-	.controller('CreateGroupCtrl', function ($log, $routeParams, GroupService) {
-		// var vm = this;
+	.controller('CreateGroupCtrl', function ($location, $log, $routeParams, GroupService) {
+		var vm = this;
+		    // var creatorId = $routeParams.creatorId;
 
-		// angular.extend(vm, {
+		    vm.groups = [];
+		    vm.formData = {};
+		    // vm.formData._creator = creatorId
 
-		// 	name: 'CreateGroupCtrl',
+		    angular.extend(vm, {
 
-			
-		// });
+		      name: 'CreateGroupCtrl',
+
+		      createGroup: function () {
+		      	GroupService.createGroup(vm.formData)
+		      		.then(function (data) {
+		      			vm.groups.push(data);
+		      			vm.formData = {};
+		      			// console.log(vm.groups);
+		      			$location.path('/group');
+		      		})
+		      		.catch(function (err) {
+		      			vm.error = err;
+		      			$log.error('Error: ', err);
+		      		});
+		      }
+
+		    });
 	});

@@ -13,19 +13,7 @@ angular
 
     angular.extend(vm, {
 
-      name: 'GroupCtrl',
-
-      createGroup: function () {
-      	GroupService.createGroup(vm.formData)
-      		.then(function (data) {
-      			vm.groups.push(data);
-      			console.log(vm.groups);
-      		})
-      		.catch(function (err) {
-      			vm.error = err;
-      			$log.error('Error: ', err);
-      		});
-      }
+      name: 'GroupCtrl'
 
     });
 
