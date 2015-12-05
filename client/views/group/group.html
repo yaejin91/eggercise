@@ -1,115 +1,68 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <!-- these first 3 meta tags need to come before anything else -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!-- *Bootstrap is mobile first; add in mobile first styles* -->
-    <meta name="viewport" content="width=device-width initial-scale=1">
-    <title>Eggercise</title>
-  </head>
-  <body>
-    <!-- this give the 'vm' name to know what page we are on -->
+<!-- this give the 'vm' name to know what page we are on -->
 
-    <div class="container">
-    {{ vm.name }}
-      <h1>My Groups</h1>
-      <div class="row">
-        <div class="col-xs-6">
-          <a href="https://google.com">
-            <div class="jumbotron">
-              <div class="row">
-                <div class="col-md-6 text-center">
-                  <div class="glyphicon glyphicon-pencil large-glyph">
-                  </div>
-                </div>
-                <div class="col-md-6 text-center">
-                  <div class="glyph-title">
-                    Log Exercise
-                  </div>
-                </div>
+<div class="container">
+  <h1>My Groups</h1>
+  <div class="row">
+    <div class="col-xs-6">
+      <a href="https://google.com">
+        <div class="jumbotron">
+          <div class="row">
+            <div class="col-md-6 text-center">
+              <div class="glyphicon glyphicon-pencil large-glyph">
               </div>
             </div>
-          </a>
-        </div>
-
-        <div class="col-xs-6">
-          <div class="jumbotron">
-            <div class="row">
-              <div class="col-md-6 text-center">
-                <div class="glyphicon glyphicon-plus large-glyph" data-toggle="modal" data-target="#addGroup">
-                </div>
-              </div>
-              <div class="col-md-6 text-center">
-                <div class="glyph-title">
-                  Add Group
-                </div>
+            <div class="col-md-6 text-center">
+              <div class="glyph-title">
+                Log Exercise
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </a>
+    </div>
 
-      <h2>Active Groups</h2>
-      <div class="row">
-        <div class="col-xs-12">
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h3 class="panel-title">Active Group 1</h3>
-            </div>
-            <div class="panel-body">
-              Group info here
+    <div class="col-xs-6">
+      <div class="jumbotron" data-toggle="modal" data-target="#addGroup">
+        <div class="row">
+          <div class="col-md-6 text-center">
+            <div class="glyphicon glyphicon-plus large-glyph">
             </div>
           </div>
-        </div>
-      </div>
-
-      <h2>Past Groups</h2>
-      <div class="row">
-        <div class="col-xs-12">
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h3 class="panel-title">Past Group 1</h3>
-            </div>
-            <div class="panel-body">
-              Group info here
+          <div class="col-md-6 text-center">
+            <div class="glyph-title">
+              Add Group
             </div>
           </div>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- Modal for creating a new group-->
-    <div class="modal fade" id="addGroup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <!-- Modal Header -->
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="myModalLabel">Create A New Group</h4>
-          </div>
-          <!-- Modal Body -->
-          <div class="modal-body">
-            <form role="form" ng-submit="vm.createGroup()">
-              <div class="row">
-                <div class="input-group col-md-4">
-                  <input ng-model="vm.formData.name" type="text" placeholder="New Group's Name" class="form-control">
-                  <input ng-model="vm.formData.bet" type="number" placeholder="Buy-In Price" class="form-control">
-                  <input ng-model="vm.formData.start" type="date" placeholder="Start Date" class="form-control">
-                  <input ng-model="vm.formData.end" type="date" placehodler="End Date" class="form-control">
-                  <input type="submit" class="btn btn-primary" value="CREATE GROUP">
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                </div>
-              </div>
-            </form>
-          </div>
-          <!-- Modal Footer -->
-          <div class="modal-footer">
-          </div>
+  <h2>Active Groups</h2>
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Active Group 1</h3>
+        </div>
+        <div class="panel-body">
+          Group info here
         </div>
       </div>
     </div>
-    <!-- End of Modal -->
+  </div>
 
-  </body>
-</html>
+  <h2>Past Groups</h2>
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Past Group 1</h3>
+        </div>
+        <div class="panel-body">
+          Group info here
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
