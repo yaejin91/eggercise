@@ -56,6 +56,8 @@
       <h2>Active Groups</h2>
       <div class="row">
         <div class="col-xs-12">
+          <!-- <div ui-sortable ng-model="vm.groups">
+            <div ng-repeat="group in vm.groups"> -->
           <div class="panel panel-default">
             <div class="panel-heading">
               <h3 class="panel-title">Active Group 1</h3>
@@ -65,7 +67,7 @@
             </div>
             <div class="panel-body">
               [hardcoded: sample group title]
-              <button class="btn btn-danger" ng-click="vm.removeGroup(group._id)" aria-label="Remove"> Delete</button>
+              <button class="btn btn-danger" ng-click="vm.deleteGroup(group._id)" aria-label="Remove"> Delete</button>
             </div>
           </div>
         </div>
