@@ -83,13 +83,11 @@
     <div class="modal fade" id="addGroup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
-
           <!-- Modal Header -->
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <h4 class="modal-title" id="myModalLabel">Create A New Group</h4>
           </div>
-
           <!-- Modal Body -->
           <div class="modal-body">
             <form role="form" ng-submit="vm.createGroup()">
@@ -99,15 +97,14 @@
                   <input ng-model="vm.formData.bet" type="number" placeholder="Buy-In Price" class="form-control">
                   <input ng-model="vm.formData.start" type="date" placeholder="Start Date" class="form-control">
                   <input ng-model="vm.formData.end" type="date" placehodler="End Date" class="form-control">
-                  <input type="submit" class="btn btn-primary" value="Create Group">
+                  <input type="submit" class="btn btn-primary" value="CREATE GROUP">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                 </div>
               </div>
             </form>
           </div>
-
           <!-- Modal Footer -->
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
           </div>
         </div>
       </div>

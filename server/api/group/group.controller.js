@@ -13,7 +13,7 @@ function handleError (res, err) {
 //Creates a new group in the DB.
 //TODO: should return new group created with the attributes.
 exports.create = function (req, res) {
-	console.log(req.user._id);
+	// console.log(req.user._id);
 	var creatorId = req.user._id;
 	var group = new Group ({
 		name: req.body.name,
