@@ -57,26 +57,34 @@ describe('Group', function() {
         _creator: creator._id
       }, function(err, newGroup) {
         console.log('This is newGroup: ', newGroup);
+        console.log('----------------------------');
         if (err) {
           done.fail(err);
         } else {
           testGroup = newGroup;
+          console.log('This is testGroup (beforeEach): ', testGroup);
+          console.log('----------------------------');
           done();
         }
       });
     });
 
-    it('should return no groups', function (done) {
-      console.log(auth);
-      request(app).get('/api/groups')
+    it('should return all groups', function (done) {
+      console.log('This is auth: ', auth);
+      console.log('----------------------------');
+      agent
+      .get('/api/groups')
+      .set('Authorization', 'Bearer ' + auth.token)
       .expect('Content-Type', /json/)
       .expect(200)
       .end(function (err, res) {
         if(err) {
-          // done.fail(err);
+          console.log('This is the err: ', err);
           done.fail(err);
         } else {
-          expect(res.body).toEqual([]);
+          console.log('This is res.body: ', res.body);
+          console.log('----------------------------');
+          expect(res.body.length).toEqual(1);
           done();
         }
       });
