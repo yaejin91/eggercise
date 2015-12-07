@@ -1,14 +1,14 @@
 'use strict';
 
 angular.module('eggercise')
-  .factory('EditProfile', function ($rootScope, $cookieStore, $q, $http) {
+  .service('EditProfile', function ($rootScope, $cookieStore, $q, $http) {
     var service = {};
-    var formData = {};
 
-    service.editProfile = function (user) {
+    service.editProfile = function (formData) {
       var deferred = $q.defer();
       $http.post('/api/users/updateProfile', formData)
         .success(function (data) {
+          formData = {};
           deferred.resolve(data);
         })
         .catch(function (err) {

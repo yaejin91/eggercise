@@ -1,20 +1,26 @@
 'use strict';
 
 angular.module('eggercise')
-  .controller('ProfileCtrl', ['EditProfile', '$routeParams', '$rootScope', '$cookieStore', '$log', function (EditProfile, $routeParams, $rootScope, $cookieStore, $log) {
+  .controller('ProfileCtrl', function (EditProfile, $routeParams, $rootScope, $cookieStore, $log, $location) {
 
     var vm = this;
     vm.user = {};
     vm.formData = {};
     vm.id = $rootScope._id;
 
-    //Edit Profile
-    EditProfile.editProfile(vm.formData)
-      .then(function (data) {
-        vm.user = data;
-      })
-      .catch(function (data) {
-        $log.log(data);
-      });
+    angular.extend(vm, {
 
-  }]);
+    //Edit Profile
+    editProfile: function () {
+      EditProfile.editProfile(vm.formData)
+        .then(function (data) {
+          vm.user = data;
+          $location.path('/');
+        })
+      .catch(function (err) {
+        vm.error = err;
+        $log.error('Error: ', err);
+      });
+    }
+   });
+});
