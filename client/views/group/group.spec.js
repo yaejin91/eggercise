@@ -1,17 +1,17 @@
-'use strict';
+// 'use strict';
 
-describe('Controller: GroupCtrl', function () {
+// describe('Controller: GroupCtrl', function () {
 
-  beforeEach(module('eggercise'));
+//   beforeEach(module('eggercise'));
 
-  var GroupCtrl;
+//   var GroupCtrl;
 
-  beforeEach(inject(function ($controller) {
-    GroupCtrl = $controller('GroupCtrl', {});
-  }));
+//   beforeEach(inject(function ($controller) {
+//     GroupCtrl = $controller('GroupCtrl', {});
+//   }));
 
-  it('should ...', function () {
-    expect(1).toBe(1);
-  });
+//   it('should ...', function () {
+//     expect(1).toBe(1);
+//   });
 
-});
+// });
