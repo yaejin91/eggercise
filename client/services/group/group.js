@@ -4,15 +4,16 @@ angular.module('eggercise')
   .service('GroupService', function ($rootScope, $cookieStore, $q, $http){
     var service = {};
 
-    // function handleError(){
+    var tempId = '566234fbc6e3a5280b12099f';
 
-    // }
 
   //delete group by group id
   service.deleteGroup = function (id){
-    console.log("I'm fabulous cuz im in GroupService! ", id);
+    console.log("I'm fabulous cuz im in GroupService!");
+    console.log('id: ', id);
 
-    return $http.post('/api/groups/delete/' + id)
+    // return $http.post('/api/groups/delete/' + id)
+    return $http.post('/api/groups/delete/' + tempId)
       .sucess(function (deletedGroup){
         return deletedGroup;
       })
