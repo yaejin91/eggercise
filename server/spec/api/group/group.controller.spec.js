@@ -44,7 +44,6 @@ describe('Group', function() {
     });
   });
 
-
   describe('with no data', function () {
     var testGroup;
 
@@ -91,7 +90,6 @@ describe('Group', function() {
       });
     });
   });
-
 
 
   describe('with data', function() {
@@ -175,9 +173,6 @@ describe('Group', function() {
         }
       });
     });
-
-
-
   });
 });
 
@@ -201,5 +196,4 @@ function loginUser (auth, done) {
       done();
     }
   }
-
 }
