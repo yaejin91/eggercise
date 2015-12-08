@@ -40,16 +40,6 @@ exports.create = function (req, res) {
 				return handleError(error, error);
 		}
 	});
-
-	// Group.create(req.body, function (err, createdGroup) {
-	// 	console.log('express side reached');
-	// 	if (err) {
-	// 		return handleError(res, err);
-	// 	}
-	// 	res.status(201).json({
-	// 		group: createdGroup
-	// 	});
-	// });
 }
 
 //view single group
