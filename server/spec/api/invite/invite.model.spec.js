@@ -1,7 +1,7 @@
 var request = require('supertest'),
-  Invite = require('../../api/invite/invite.model'),
-  User = require('../../api/user/user.model'),
-  Group = require('../../api/group/group.model');
+  Invite = require('../../../api/invite/invite.model'),
+  User = require('../../../api/user/user.model'),
+  Group = require('../../../api/group/group.model');
 
   describe ('Invite', function() {
     it('should have an email', function() {
