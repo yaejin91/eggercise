@@ -15,7 +15,7 @@ angular.module('eggercise')
 					deferred.resolve(data);
 				})
 				.error(function (error) {
-					deferred.reject('Error: ' + error);
+					deferred.reject('Error: ',  error);
 					console.log('error');
 				});
 			return deferred.promise;
@@ -37,8 +37,8 @@ angular.module('eggercise')
           deferred.resolve(deletedGroup);
         })
         .error(function (error){
-          deferred.reject('Error: ' + error);
-          console.log('Error: ' + error);
+          deferred.reject('Error: ',  error);
+          console.log('Error: ',  error);
         });
         return deferred.promise;
     };
