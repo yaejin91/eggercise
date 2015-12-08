@@ -106,7 +106,7 @@ describe('Group', function() {
     it('should delete the group', function (done) {
       var creatorId = creator._id;
       agent
-      .post('/api/groups/' + group._id)
+      .post('/api/groups/delete/' + group._id)
       .set('Authorization', 'Bearer ' + auth.token)
       .expect('Content-Type', /json/)
       .end(function (error, res) {

@@ -60,7 +60,7 @@ exports.delete = function (req, res){
       return handleError(err, err);
     }
     console.log('deletedGroup: ', deletedGroup);
-    res.status(400).json({
+    res.status(200).json({
       group: deletedGroup
     });
   });

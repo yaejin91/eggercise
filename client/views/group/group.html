@@ -48,9 +48,9 @@
         <div class="panel-body">
           Group info here
         </div>
-        <div>
+        <div ng-submit="vm.deleteGroup()">
           <p> Button placement
-          <button class="btn btn-danger" ng-click="vm.deleteGroup(group._id)" aria-label="Remove">X</button> </p>
+          <button class="btn btn-danger" ng-click="vm.deleteGroup(group._id)" aria-label="Delete"> Delete </button> </p>
         </div>
       </div>
     </div>

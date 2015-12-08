@@ -18,8 +18,7 @@ angular.module('eggercise')
 
     //delete a group
     vm.deleteGroup = function (id){
-      vm.formData.id = id;
-      GroupService.deleteGroup(vm.formData.id)
+      GroupService.deleteGroup(id)
       .then(function (data){
         console.log('successfully deleted');
         for(var i = 0; i < vm.groups.length; i++){
