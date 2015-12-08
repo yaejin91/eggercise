@@ -1,17 +1,59 @@
-// 'use strict';
+(function() {
+  'use strict';
+  beforeEach(module('eggercise'));
 
-// describe('Controller: GroupCtrl', function () {
+  describe('GroupCtrl', function() {
+    var rootScope, controller, groupService, passPromise;
 
-//   beforeEach(module('eggercise'));
+    beforeEach(inject (function ($rootScope, $controller, $q){
+      rootScope = $rootScope;
 
-//   var GroupCtrl;
+      // Mock GroupService methods to return the expected data.
+      // No need to call the actual GroupService. It has its own spec.
+      groupService = (function() {
+        return{
+          deleteGroup: function(id){
+            if(passPromise){
+              return $q.when({
+                _id: '56662b84c6e3a5280b1209aa'
+              });
+            }else{
+              return $q.reject('deleteGroup failed');
+            }
+          }
+        };
+      })();
 
-//   beforeEach(inject(function ($controller) {
-//     GroupCtrl = $controller('GroupCtrl', {});
-//   }));
+      // Create a spy to track calls to groupService.deleteGroup and pass the call to the mocked up method
+      spyOn(groupService, 'deleteGroup').and.callThrough();
 
-//   it('should ...', function () {
-//     expect(1).toBe(1);
-//   });
+      // Create the controller we are testing and inject the mock service we declared above
+      controller = $controller('GroupCtrl', {
+      });
+    }));
 
-// });
+    it('should define vm', function() {
+      expect(controller).toBeDefined();
+      expect(controller.groups).toBeDefined();
+      expect(controller.formData).toBeDefined();
+    });
+
+    it('should delete a group', function() {
+      // Test a successful call to the GroupService
+      passPromise = true;
+
+      // Explicitly call the controller actions we are testing
+      controller.deleteGroup();
+      // Force the action to be executed and the promise to be resolved
+      rootScope.$digest();
+      // Test that the controller called the correct method on the service
+      expect(groupService.deleteGroup).toHaveBeenCalled();
+      // Test to make sure the controller did what was expected in an error case
+      expect(controller.groups[0]).toBeDefined();
+    });
+
+  })
+
+
+
+})

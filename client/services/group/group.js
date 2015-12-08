@@ -3,7 +3,7 @@
 angular.module('eggercise')
 	.service('GroupService', function ($rootScope, $q, $http) {
 		var service = {};
-    var tempId = '5666259dc6e3a5280b1209a6';
+    var tempId = '56662b84c6e3a5280b1209aa';
 
 		service.createGroup = function (formData) {
 			var deferred = $q.defer();
@@ -27,7 +27,6 @@ angular.module('eggercise')
     //delete group by group id
     service.deleteGroup = function (id){
       var deferred = $q.defer();
-      console.log("I'm fabulous cuz im in GroupService!");
       console.log('id: ', id);
 
       // return $http.post('/api/groups/delete/' + id)
