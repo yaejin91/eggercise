@@ -6,7 +6,6 @@ angular.module('eggercise')
 
 		service.createGroup = function (formData) {
 			var deferred = $q.defer();
-			console.log(formData);
 			//Create a new group by calling the api route for create group
 			$http.post('api/groups/create/', formData)
 				.success(function (data) {
