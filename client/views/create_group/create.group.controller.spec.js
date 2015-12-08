@@ -12,6 +12,7 @@
       // No need to call the actual GroupService. It has its own spec.
       groupService = (function() {
         return {
+          // The function definition must match the function being mocked up. Even if the parameter is not used in the mock.
           createGroup: function(formData) {
             if (passPromise) {
               return $q.when({ 
