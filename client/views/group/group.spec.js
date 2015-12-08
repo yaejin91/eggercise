@@ -24,10 +24,12 @@
         };
       })();
 
-      // Create a spy to track calls to groupService.deleteGroup and pass the call to the mocked up method
+      // Create a spy to track calls to groupService.deleteGroup 
+      //and pass the call to the mocked up method
       spyOn(groupService, 'deleteGroup').and.callThrough();
 
-      // Create the controller we are testing and inject the mock service we declared above
+      // Create the controller we are testing and i
+      //nject the mock service we declared above
       controller = $controller('GroupCtrl', {
       });
     }));
