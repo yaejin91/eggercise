@@ -54,8 +54,24 @@ afterAll(function (done) {
 });
 
 describe ('Workout', function() {
-	it('should belong to a user', function (done) {
-		expect(1).toBe(1);
-		done();
+	it('should create a new Workout log', function (done) {
+		Workout.create({
+			_user: dummyUser._id,
+			_group: dummyGroup._id,
+			log: '12-11-2015'
+		}, function (error, newWorkout) {
+			if (error) {
+				done.fail(error)
+			} else {
+				expect(newWorkout).toBeDefined();
+				newWorkout.remove(function (error) {
+					if (error) {
+						done.fail(error);
+					} else {
+						done();
+					}
+				});
+			}
+		});
 	});
 });
