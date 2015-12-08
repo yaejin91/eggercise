@@ -3,9 +3,10 @@
 var express = require('express');
 var router = express.Router();
 var controller = require('./group.controller');
+var auth = require('../../auth/auth.service');
 
-router.post('/create', controller.create);
-router.post('/:group_id', controller.delete);
-
+router.get('/', controller.showAllGroups);
+router.post('/create', auth.isAuthenticated(), controller.create);
+router.post('/delete/:group_id', auth.isAuthenticated(), controller.delete);
 
 module.exports = router;
