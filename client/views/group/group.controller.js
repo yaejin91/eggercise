@@ -1,14 +1,19 @@
 'use strict';
 
 angular.module('eggercise')
-  .controller('GroupCtrl', ['GroupService', function (GroupService) {
+  .controller('GroupCtrl', ['$log', '$routeParams', 'GroupService', function ($log, $routeParams,GroupService) {
 
     var vm = this;
     vm.formData = {};
     vm.groups =[];
 
+    // var creatorId = $routeParams.creatorId;
+    // vm.formData._creator = creatorId
+
     angular.extend(vm, {
+
       name: 'GroupCtrl'
+
     });
 
     //delete a group
