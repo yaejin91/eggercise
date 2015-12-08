@@ -49,7 +49,6 @@ describe('Group', function() {
 		beforeEach(function (done) {
 			Group.create({
 				name: 'testGroup',
-				email: 'testGroup@test.com',
 				bet: 100,
 				start:'12-01-2015',
 				end:'12-31-2015',
@@ -103,6 +102,37 @@ describe('Group', function() {
 			});
 		});
 
+		//view singele member page
+		it('should show a single group', function (done) {
+			console.log('auth: ', auth);
+      agent
+      .get('/api/users/me')
+      .set('Authorization', 'Bearer ' + auth.token)
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .end(function (error, res) {
+        if (error) {
+          done.fail(error);
+        } else {
+          var group_id = group._id;
+          agent
+          .get('/api/groups/' + group_id)
+          .set('Authorization', 'Bearer ' + auth.token)
+          // .expect('Content-Type', /json/)
+          // .expect(200)
+          .end(function (error, res) {
+          	console.log(error);
+          	console.log(res.body);
+            if (error) {
+              done.fail(error);
+            } else {
+              expect(res.body.name).toBe('testGroup');
+              done();
+            }
+          })
+        }
+			})
+		});
 	});
 });
 
@@ -121,10 +151,11 @@ function loginUser (auth, done) {
 			console.log(error);
 			throw error;
 		} else {
+			console.log(res.body.token);
 			auth.token = res.body.token;
 			agent.saveCookies(res);
 			done();
 		}
 	};
-	
+
 }

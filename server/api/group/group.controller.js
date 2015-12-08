@@ -7,7 +7,7 @@ var Group = require('./group.model'),
 	User = require('../user/user.model');
 
 function handleError (res, err) {
-	return res.status(500).send(err);
+	return res.status(500).json({err: 'error'});
 }
 
 //Creates a new group in the DB.
@@ -50,6 +50,20 @@ exports.create = function (req, res) {
 	// 		group: createdGroup
 	// 	});
 	// });
+}
+
+//view single group
+exports.showGroup = function (req, res) {
+	console.log('made it to showGroup!');
+	Group.findOne(req.params.id, function (err, group) {
+		console.log('show group: ', req.user._id);
+		if (err) { return handleError(res, err); }
+		if(req.user._id === group._creator || indexOf(group._members) > -1) {
+			res.status(200).json(group);
+		} else {
+			res.status(404).json({err: 'not found'});
+		}
+	});
 }
 
 //Delete a group
