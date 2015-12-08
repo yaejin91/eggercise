@@ -13,7 +13,11 @@
       groupService = (function() {
         return {
           showGroup: function() {
-
+            if(passPromise) {
+              return $q.when({   })
+            } else {
+              return $q.reject('showGroup failed');
+            }
           },
           deleteGroup: function(id) {
             if(passPromise) {
@@ -27,6 +31,32 @@
         };
       })();
 
+
+      // Create a spy to track calls to groupService.deleteGroup
+      //and pass the call to the mocked up method
+      spyOn(groupService, 'showGroup').and.callThrough();
+
+      // Create the controller we are testing and i
+      //nject the mock service we declared above
+      controller = $controller('GroupCtrl', {
+      });
+    }));
+
+    it('should show all groups', function() {
+      // Test a successful call to the GroupService
+      passPromise = true;
+
+      // Explicitly call the controller actions we are testing
+      controller.showGroup();
+      // Force the action to be executed and the promise to be resolved
+      rootScope.$digest();
+      // Test that the controller called the correct method on the service
+      expect(groupService.showGroup).toHaveBeenCalled();
+    });
+
+
+
+
       // Create a spy to track calls to groupService.deleteGroup
       //and pass the call to the mocked up method
       spyOn(groupService, 'deleteGroup').and.callThrough();
@@ -36,6 +66,8 @@
       controller = $controller('GroupCtrl', {
       });
     }));
+
+
 
     it('should define vm', function() {
       expect(controller).toBeDefined();

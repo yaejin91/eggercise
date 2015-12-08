@@ -15,7 +15,6 @@ var auth = {};
 //variables
 var creator;
 
-
 describe('Group', function() {
   beforeAll(function (done) {
     User.create({
@@ -44,27 +43,9 @@ describe('Group', function() {
     });
   });
 
-  describe('with no data', function () {
-    var testGroup;
+  describe('without data', function() {
 
-    beforeEach(function(done) {
-      Group.create({
-        name: 'test group 1',
-        bet: '5',
-        start: '12-04-2015',
-        end: '01-31-2016',
-        _creator: creator._id
-      }, function(err, newGroup) {
-        if (err) {
-          done.fail(err);
-        } else {
-          testGroup = newGroup;
-          done();
-        }
-      });
-    });
-
-    it('should return all groups', function (done) {
+    it('should return no groups', function (done) {
       agent
       .get('/api/groups')
       .set('Authorization', 'Bearer ' + auth.token)
@@ -74,17 +55,7 @@ describe('Group', function() {
         if(err) {
           done.fail(err);
         } else {
-          expect(res.body.length).toEqual(1);
-          done();
-        }
-      });
-    });
-
-    afterEach(function(done) {
-      testGroup.remove(function(err, removedGroup) {
-        if (err) {
-          done.fail(err);
-        } else {
+          expect(res.body.length).toEqual(0);
           done();
         }
       });
@@ -123,6 +94,23 @@ describe('Group', function() {
       });
     });
 
+
+    it('should return all groups', function (done) {
+      agent
+      .get('/api/groups')
+      .set('Authorization', 'Bearer ' + auth.token)
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .end(function (err, res) {
+        if(err) {
+          done.fail(err);
+        } else {
+          expect(res.body.length).toEqual(1);
+          done();
+        }
+      });
+    });
+
     // it('login', loginUser());
     it('should create a new group', function (done) {
       var creatorId = creator._id;
@@ -141,7 +129,7 @@ describe('Group', function() {
         if (error) {
           done.fail(error);
         } else {
-          var returnedGroup = res.body.group;
+          var returnedGroup = res.body;
           expect(returnedGroup.name).toBe('testGroupCreate1');
           Group.findOne({ _id: returnedGroup._id})
           .remove(function (error) {
@@ -173,7 +161,6 @@ describe('Group', function() {
     });
   });
 });
-
 
 function loginUser (auth, done) {
   agent

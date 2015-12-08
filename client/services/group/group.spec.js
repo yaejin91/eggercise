@@ -29,10 +29,20 @@
       spyOn(handler, 'error').and.callThrough();
     }));
 
-    //Test for showGroup()
+    //Test for showAllGroups()
     it('should show the list of groups', function () {
+      var id = '56662b84c6e3a5280b1209aa';
+      var existingGroup = {
+        _id : id,
+        name : 'New Group',
+        email : 'new3@email.com',
+        bet : 25,
+        start: '2015-12-01T08:00:00Z',
+        end: '2015-12-31T08:00:00Z',
+        _creator : '565f912726c74d251d0a7b03'
+      };
       // expect(200);
-      var showG = service.showGroup()
+      var response = service.showGroup()
         .then(function () {
           console.log('successful');
         })
@@ -40,7 +50,7 @@
           console.log('Error!!!', err);
         });
 
-      expect(showG).toBeTruthy();
+      expect(response).toBeTruthy();
       // $httpBackend.flush();
     })
 

@@ -16,6 +16,21 @@ angular.module('eggercise')
 
     });
 
+    //show a group
+    vm.showGroup = function (id){
+      GroupService.showGroup()
+      .then(function (data){
+        console.log('This is the data from showGroup: ', data);
+        for(var i = 0; i < data.length; i++){
+          vm.groups.push(data[i]);
+        }
+      })
+      .catch(function (err){
+        console.log('deleteGroup err:' + err);
+      })
+    }
+
+
     //delete a group
     vm.deleteGroup = function (id){
       GroupService.deleteGroup(id)
@@ -25,7 +40,7 @@ angular.module('eggercise')
           if(vm.groups[i]._id === data._id){
             vm.groups.splice(i,1);
             break;
-          } 
+          }
         }
       })
       .catch(function (err){

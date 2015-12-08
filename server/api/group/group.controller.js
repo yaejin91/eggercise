@@ -11,12 +11,12 @@ function handleError (res, err) {
 }
 
 //Show all groups
-exports.showAll = function (req, res) {
+exports.showAllGroups = function (req, res) {
   Group.find({}, function (err, foundGroups) {
     if (err) {
       return handleError(res, err);
     } else if (foundGroups) {
-      console.log('These are the foundGroups: ', foundGroups);
+      // console.log('These are the foundGroups: ', foundGroups);
       res.json(foundGroups);
     }
   });
@@ -72,7 +72,7 @@ exports.delete = function (req, res){
     if(err){
       return handleError(err, err);
     }
-    console.log('deletedGroup: ', deletedGroup);
+    // console.log('deletedGroup: ', deletedGroup);
     res.status(200).json({
       group: deletedGroup
     });
