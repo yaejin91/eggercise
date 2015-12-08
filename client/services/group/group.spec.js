@@ -29,6 +29,22 @@
       spyOn(handler, 'error').and.callThrough();
     }));
 
+    //Test for showGroup()
+    it('should show the list of groups', function () {
+      // expect(200);
+      var showG = service.showGroup()
+        .then(function () {
+          console.log('successful');
+        })
+        .catch(function (err) {
+          console.log('Error!!!', err);
+        });
+
+      expect(showG).toBeTruthy();
+      // $httpBackend.flush();
+    })
+
+
     //Test for createGroup()
     it('should create a new group', function () {
       // expect(200);

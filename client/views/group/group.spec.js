@@ -11,13 +11,16 @@
       // Mock GroupService methods to return the expected data.
       // No need to call the actual GroupService. It has its own spec.
       groupService = (function() {
-        return{
-          deleteGroup: function(id){
-            if(passPromise){
+        return {
+          showGroup: function() {
+
+          },
+          deleteGroup: function(id) {
+            if(passPromise) {
               return $q.when({
                 _id: '56662b84c6e3a5280b1209aa'
               });
-            }else{
+            } else {
               return $q.reject('deleteGroup failed');
             }
           }

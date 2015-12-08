@@ -46,11 +46,11 @@
           <h3 class="panel-title">Active Group 1</h3>
         </div>
         <div class="panel-body">
-          Group info here
-        </div>
-        <div ng-submit="vm.deleteGroup()">
-          <p> Button placement
-          <button class="btn btn-danger" ng-click="vm.deleteGroup(group._id)" aria-label="Delete"> Delete </button> </p>
+          <!-- Current user name display and edit (form field) -->
+          <div ui-sortable ng-model="vm.showGroup()">
+            <div ng-submit="vm.deleteGroup()">
+              <p> Button placement
+              <button class="btn btn-danger" ng-click="vm.deleteGroup(group._id)" aria-label="Delete"> Delete </button> </p>
         </div>
       </div>
     </div>
