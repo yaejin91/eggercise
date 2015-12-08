@@ -138,15 +138,16 @@ function loginUser (auth, done) {
   .expect(200)
   .end(onResponse);
 
-  function onResponse(error, res) {
-    if(error) {
-      console.log(error);
-      throw error;
-    } else {
-      auth.token = res.body.token;
-      agent.saveCookies(res);
-      done();
-    }
-  };
-  
+
+	function onResponse(error, res) {
+		if(error) {
+			console.log(error);
+			throw error;
+		} else {
+			auth.token = res.body.token;
+			agent.saveCookies(res);
+			done();
+		}
+	};
+
 }
