@@ -54,11 +54,9 @@ exports.create = function (req, res) {
 
 //view single group
 exports.showGroup = function (req, res) {
-	console.log('made it to showGroup!');
 	Group.findOne(req.params.id, function (err, group) {
-		console.log('show group: ', req.user._id);
 		if (err) { return handleError(res, err); }
-		if(req.user._id === group._creator || indexOf(group._members) > -1) {
+		if(req.user._id + '' == group._creator || group._members.indexOf() > -1) {
 			res.status(200).json(group);
 		} else {
 			res.status(404).json({err: 'not found'});

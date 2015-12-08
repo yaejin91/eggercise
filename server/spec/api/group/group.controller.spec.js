@@ -23,12 +23,10 @@ describe('Group', function() {
 			email: 'dummy@test.com'
 		}, function (error, dummyUser) {
 			if(error) {
-				console.log(error);
 				done.fail(error);
 			} else {
 				creator = dummyUser;
 				loginUser(auth, done);
-				done();
 			}
 		});
 	});
@@ -92,7 +90,7 @@ describe('Group', function() {
 				if (error) {
 					done.fail(error);
 				} else {
-					var returnedGroup = res.body.group;
+					var returnedGroup = res.body;
 					expect(returnedGroup.name).toBe('testGroupCreate1');
 					Group.findOne({ _id: returnedGroup._id})
 					.remove(function (error) {
@@ -102,37 +100,23 @@ describe('Group', function() {
 			});
 		});
 
-		//view singele member page
+		// //view singele member page
 		it('should show a single group', function (done) {
-			console.log('auth: ', auth);
+      var group_id = group._id;
       agent
-      .get('/api/users/me')
+      .get('/api/groups/' + group_id)
       .set('Authorization', 'Bearer ' + auth.token)
-      .expect('Content-Type', /json/)
-      .expect(200)
+      // .expect('Content-Type', /json/)
+      // .expect(200)
       .end(function (error, res) {
         if (error) {
           done.fail(error);
         } else {
-          var group_id = group._id;
-          agent
-          .get('/api/groups/' + group_id)
-          .set('Authorization', 'Bearer ' + auth.token)
-          // .expect('Content-Type', /json/)
-          // .expect(200)
-          .end(function (error, res) {
-          	console.log(error);
-          	console.log(res.body);
-            if (error) {
-              done.fail(error);
-            } else {
-              expect(res.body.name).toBe('testGroup');
-              done();
-            }
-          })
+          expect(res.body.name).toBe('testGroup');
+          done();
         }
-			})
-		});
+      })
+    })
 	});
 });
 
@@ -148,14 +132,11 @@ function loginUser (auth, done) {
 
 	function onResponse(error, res) {
 		if(error) {
-			console.log(error);
 			throw error;
 		} else {
-			console.log(res.body.token);
 			auth.token = res.body.token;
 			agent.saveCookies(res);
 			done();
 		}
-	};
-
+	}
 }
