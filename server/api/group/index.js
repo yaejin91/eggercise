@@ -8,6 +8,7 @@ var auth = require('../../auth/auth.service');
 router.post('/create', auth.isAuthenticated(), controller.create);
 router.post('/:group_id', auth.isAuthenticated(), controller.delete);
 router.get('/:group_id', auth.isAuthenticated(), controller.showGroup);
+router.post('/delete/:group_id', auth.isAuthenticated(), controller.delete);
 
 
 module.exports = router;
