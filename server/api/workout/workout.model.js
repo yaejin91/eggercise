@@ -7,9 +7,7 @@ var Schema = mongoose.Schema;
 var WorkoutSchema = new Schema({
 	_user: { type: mongoose.Schema.Types.ObjectId, ref:'User', required: true },
 	_group: { type: mongoose.Schema.Types.ObjectId, ref:'Group', required: true },
-	log: [{ type: Date, required: true}],
-	created_at: Date,
-	updated_at: Date
+	log: [{ type: Date, required: true}]
 });
 
 module.exports = mongoose.model('Workout', WorkoutSchema);
