@@ -92,12 +92,31 @@ describe('Group', function() {
         if (error) {
           done.fail(error);
         } else {
-          var returnedGroup = res.body.group;
+          var returnedGroup = res.body;
           expect(returnedGroup.name).toBe('testGroupCreate1');
           Group.findOne({ _id: returnedGroup._id})
           .remove(function (error) {
             done();
           })
+        }
+      });
+    });
+
+
+    // //view singele member page
+    it('should show a single group', function (done) {
+      var group_id = group._id;
+      agent
+      .get('/api/groups/' + group_id)
+      .set('Authorization', 'Bearer ' + auth.token)
+      // .expect('Content-Type', /json/)
+      // .expect(200)
+      .end(function (error, res) {
+        if (error) {
+          done.fail(error);
+        } else {
+          expect(res.body.name).toBe('testGroup');
+          done();
         }
       });
     });
