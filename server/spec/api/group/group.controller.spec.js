@@ -29,7 +29,7 @@ describe('Group', function() {
       } else {
         creator = dummyUser;
         loginUser(auth, done);
-        // done();
+        done();
       }
     });
   });
@@ -91,7 +91,6 @@ describe('Group', function() {
     });
   });
 
-
   describe('with data', function() {
     var group;
 
@@ -105,6 +104,7 @@ describe('Group', function() {
         _creator:creator._id
       }, function (error, newGroup) {
         if (error) {
+          console.log(error);
           done.fail(error);
         } else {
           group = newGroup;
@@ -124,14 +124,12 @@ describe('Group', function() {
     });
 
     // it('login', loginUser());
-
     it('should create a new group', function (done) {
       var creatorId = creator._id;
       agent
       .post('/api/groups/create')
       .send({
         name:'testGroupCreate1',
-        email: 'create@test.com',
         bet: 9000,
         start:'01-01-2016',
         end: '01-31-2016',
@@ -156,7 +154,7 @@ describe('Group', function() {
     it('should delete the group', function (done) {
       var creatorId = creator._id;
       agent
-      .post('/api/groups/' + group._id)
+      .post('/api/groups/delete/' + group._id)
       .set('Authorization', 'Bearer ' + auth.token)
       .expect('Content-Type', /json/)
       .end(function (error, res) {
@@ -176,6 +174,7 @@ describe('Group', function() {
   });
 });
 
+
 function loginUser (auth, done) {
   agent
   .post('/auth/local/')
@@ -183,7 +182,7 @@ function loginUser (auth, done) {
     email: 'dummy@test.com',
     password: 'dummypw'
   })
-  // .expect(200)
+  .expect(200)
   .end(onResponse);
 
   function onResponse(error, res) {

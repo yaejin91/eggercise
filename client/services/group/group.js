@@ -3,6 +3,7 @@
 angular.module('eggercise')
 	.service('GroupService', function ($rootScope, $q, $http) {
 		var service = {};
+    var tempId = '56662b84c6e3a5280b1209aa';
 
 		service.createGroup = function (formData) {
 			var deferred = $q.defer();
@@ -13,7 +14,7 @@ angular.module('eggercise')
 					deferred.resolve(data);
 				})
 				.error(function (error) {
-					deferred.reject('Error: ' + error);
+					deferred.reject('Error: ',  error);
 					console.log('error');
 				});
 			return deferred.promise;
@@ -21,5 +22,25 @@ angular.module('eggercise')
 			//should return 200
 			//TODO: should return new group created with the attributes.
 		}
+
+    //delete group by group id
+    service.deleteGroup = function (id){
+      var deferred = $q.defer();
+      console.log('id: ', id);
+
+      // return $http.post('/api/groups/delete/' + id)
+      $http.post('/api/groups/delete/' + tempId)
+        .success(function (deletedGroup){
+          console.log('deletedGroup: ', deletedGroup);
+          deferred.resolve(deletedGroup);
+        })
+        .error(function (error){
+          deferred.reject('Error: ',  error);
+          console.log('Error: ',  error);
+        });
+        return deferred.promise;
+    };
+
+
 		return service;
 	});
