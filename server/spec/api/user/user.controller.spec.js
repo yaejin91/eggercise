@@ -116,6 +116,33 @@ describe('User', function() {
         }
       });
     });
+
+    //Test for logging an exercise
+    //TODO: Possible negative case is user trying to log workout
+    //before the date they joined the group. Test this case.
+    it('should log an exercise', function (done) {
+      var rawDate = '12-12-2015'
+      agent
+      .post('/api/users/log/')
+      .send({
+        exercises: rawDate
+      })
+      .set('Authorization', 'Bearer ' + auth.token)
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .end(function (error,res) {
+        if(error) {
+          done.fail(error);
+        } else {
+          var convertedDate = new Date(rawDate);
+          var returnedUser = res.body;
+          var returnedConverted = new Date(res.body.exercises[1]);
+          expect(returnedConverted+'').toBe(convertedDate+'');
+          done();
+        }
+      });
+    });
+
   });
 });
 
