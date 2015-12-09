@@ -43,8 +43,8 @@ angular.module('eggercise')
           }
         }
       })
-      .catch(function (err){
-        console.log('deleteGroup err:' + err);
+      .catch(function (error){
+        console.log('deleteGroup error:' + error);
       })
     }
 
