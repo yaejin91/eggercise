@@ -1,6 +1,7 @@
 'use strict';
 
-var _ = require('lodash');
+var _ = require('lodash'),
+  mongoose = require('mongoose');
 
 var authService = require('../../auth/auth.service');
 var User = require('./user.model');
@@ -67,5 +68,19 @@ exports.updateProfile = function (req, res) {
     if (err) { return handleError(res, err);}
     if (!user) { return res.json(401);}
     res.status(200).json(user);
+  });
+};
+
+exports.logWorkout = function (req, res) {
+  var query = {'_id': req.user._id};
+  User.findById(query, function (err, user) {
+    if (err) {
+      return handleError(error, error);
+    } else {
+      var date = req.body.exercises;
+      user.exercises.push(date);
+      user.save();
+      res.json(user);
+    }
   });
 };
