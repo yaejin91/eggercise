@@ -20,9 +20,7 @@ angular.module('eggercise')
   vm.showAllGroups = function () {
     GroupService.showAllGroups()
     .then(function (foundGroups){
-      console.log('These are the foundGroups from showAllGroups in Group Controller (Angular): ', foundGroups);
       for(var i = 0; i < foundGroups.length; i++){
-        console.log('This is the foundGroups[i]: ', foundGroups[i]);
         vm.groups.push(foundGroups[i]);
       }
     })
