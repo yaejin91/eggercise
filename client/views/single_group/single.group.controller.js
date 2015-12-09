@@ -10,8 +10,15 @@ angular.module('eggercise')
 
         name: 'ShowGroupCtrl',
 
-        showGroup: function () {
-          GroupService.createGroup
+        showGroup: function (id) {
+          GroupService.showGroup(id)
+            .then(function (data) {
+              $location.path('/group/showgroup');
+            })
+            .catch(function (err) {
+              vm.error = err;
+              $log.error('Error: ', err);
+            });
         }
-      })
+      });
   }])

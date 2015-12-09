@@ -23,6 +23,19 @@ angular.module('eggercise')
 			//TODO: should return new group created with the attributes.
 		}
 
+    //show group by group id
+    service.showGroup = function (id) {
+      var deferred = $q.defer();
+      $http.get('/api/groups/' + id)
+        .success(function (showGroup) {
+          deferred.resolve(showGroup);
+        })
+        .error(function (error) {
+          deferred.reject('Error: ', error);
+        });
+        return deferred.promise;
+    };
+
     //delete group by group id
     service.deleteGroup = function (id){
       var deferred = $q.defer();
