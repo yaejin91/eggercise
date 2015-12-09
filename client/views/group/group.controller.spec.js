@@ -14,7 +14,7 @@
         return {
           showAllGroups: function() {
             if(passPromise) {
-              return $q.when([{ name: 'New Group', }])
+              return $q.when([{ name: 'New Group', bet : 25 }])
             } else {
               return $q.reject('showAllGroups failed');
             }
