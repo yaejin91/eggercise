@@ -46,7 +46,6 @@ describe ('Group', function() {
 		Group.create({
 			name: 'createMe',
 			bet: 9999,
-			//_creator: 'imacreatorpotato',
 			_creator: dummy._id,
 			start: '12-03-2015',
 			end: '01-31-2016'
