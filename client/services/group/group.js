@@ -3,7 +3,6 @@
 angular.module('eggercise')
   .service('GroupService', function ($rootScope, $q, $http) {
     var service = {};
-    var tempId = '56662b84c6e3a5280b1209aa';
 
     service.showAllGroups = function () {
       var deferred = $q.defer();
@@ -41,9 +40,7 @@ angular.module('eggercise')
     service.deleteGroup = function (id){
       var deferred = $q.defer();
       console.log('id: ', id);
-
-      // return $http.post('/api/groups/delete/' + id)
-      $http.post('/api/groups/delete/' + tempId)
+      $http.post('/api/groups/delete/' + id)
         .success(function (deletedGroup){
           console.log('deletedGroup: ', deletedGroup);
           deferred.resolve(deletedGroup);
