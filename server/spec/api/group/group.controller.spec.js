@@ -16,30 +16,48 @@ var auth = {};
 var creator;
 
 describe('Group', function() {
-  beforeAll(function (done) {
-    User.create({
-      name: 'loginDummy',
-      password: 'dummypw',
-      email: 'dummy@test.com'
-    }, function (error, dummyUser) {
-      if(error) {
-        console.log(error);
-        done.fail(error);
-      } else {
-        creator = dummyUser;
-        loginUser(auth, done);
-        done();
-      }
-    });
-  });
 
-  afterAll(function (done) {
-    User.remove({_id: creator._id}, function (error, removedCreator) {
-      if (error) {
-        done.fail(error);
-      } else {
-        done();
-      }
+	beforeAll(function (done) {
+		User.create({
+			name: 'loginDummy',
+			password: 'dummypw',
+			email: 'dummy@test.com'
+		}, function (error, dummyUser) {
+			if(error) {
+				done.fail(error);
+			} else {
+				creator = dummyUser;
+				loginUser(auth, done);
+			}
+		});
+	});
+
+	afterAll(function (done) {
+		User.remove({_id: creator._id}, function (error, removedCreator) {
+			if (error) {
+				done.fail(error);
+			} else {
+				done();
+			}
+		});
+	});
+
+  describe('without data', function() {
+
+    it('should return no groups', function (done) {
+      agent
+      .get('/api/groups')
+      .set('Authorization', 'Bearer ' + auth.token)
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .end(function (err, res) {
+        if(err) {
+          done.fail(err);
+        } else {
+          expect(res.body.length).toEqual(0);
+          done();
+        }
+      });
     });
   });
 
@@ -75,7 +93,23 @@ describe('Group', function() {
       });
     });
 
-    // it('login', loginUser());
+
+    it('should return all groups', function (done) {
+      agent
+      .get('/api/groups')
+      .set('Authorization', 'Bearer ' + auth.token)
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .end(function (err, res) {
+        if(err) {
+          done.fail(err);
+        } else {
+          expect(res.body.length).toEqual(1);
+          done();
+        }
+      });
+    });
+
     it('should create a new group', function (done) {
       var creatorId = creator._id;
       agent
@@ -93,7 +127,7 @@ describe('Group', function() {
         if (error) {
           done.fail(error);
         } else {
-          var returnedGroup = res.body.group;
+          var returnedGroup = res.body;
           expect(returnedGroup.name).toBe('testGroupCreate1');
           Group.findOne({ _id: returnedGroup._id})
           .remove(function (error) {
@@ -103,6 +137,41 @@ describe('Group', function() {
       });
     });
 
+
+    //view single member page (positive)
+    it('should show a single group', function (done) {
+      var group_id = group._id;
+      agent
+      .get('/api/groups/' + group_id)
+      .set('Authorization', 'Bearer ' + auth.token)
+      .end(function (error, res) {
+        if (error) {
+          done.fail(error);
+        } else {
+          expect(res.body.name).toBe('testGroup');
+          done();
+        }
+      });
+    });
+
+    //view single page (negative)
+    it('should show a single group', function (done) {
+      var group_id = 'wehsdlkjflksdliur';
+      agent
+      .get('/api/groups/' + group_id)
+      .set('Authorization', 'Bearer ' + auth.token)
+      .end(function (error, res) {
+        if (res) {
+          expect(res.status).toBe(404);
+          expect(res.body.err).toBe('not found');
+          done();
+        } else {
+          done.fail(error);
+        }
+      });
+    });
+
+    //delete group
     it('should delete the group', function (done) {
       var creatorId = creator._id;
       agent
@@ -122,11 +191,9 @@ describe('Group', function() {
           })
         }
       });
-    })
-
+    });
   });
 });
-
 
 function loginUser (auth, done) {
   agent
@@ -138,16 +205,14 @@ function loginUser (auth, done) {
   .expect(200)
   .end(onResponse);
 
-
-	function onResponse(error, res) {
-		if(error) {
-			console.log(error);
-			throw error;
-		} else {
-			auth.token = res.body.token;
-			agent.saveCookies(res);
-			done();
-		}
-	};
-
+  function onResponse(error, res) {
+    if(error) {
+      console.log(error);
+      throw error;
+    } else {
+      auth.token = res.body.token;
+      agent.saveCookies(res);
+      done();
+    }
+  }
 }

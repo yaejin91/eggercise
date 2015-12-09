@@ -48,23 +48,26 @@ exports.getMe = function (req, res) {
  * @param res
  */
 exports.updateProfile = function (req, res) {
-  var query = {'_id': req.user._id};
+  var query = req.user._id;
+  var options = {new: true};
+
   var formInputs = {
     name: req.body.name,
     email: req.body.email,
     password: req.body.password
   };
+
   var update = {};
   for (var key in formInputs) {
     if(formInputs[key]) {
       update[key] = formInputs[key];
     }
   }
-  User.findByIdAndUpdate(query, req.body, function (err, user) {
+
+  User.findByIdAndUpdate(query, update, options, function (err, user) {
     if (err) { return handleError(res, err);}
     if (!user) { return res.json(401);}
     res.status(200).json(user);
-
   });
 };
 
