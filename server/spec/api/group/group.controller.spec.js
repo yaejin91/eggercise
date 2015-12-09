@@ -17,30 +17,30 @@ var creator;
 
 describe('Group', function() {
 
-	beforeAll(function (done) {
-		User.create({
-			name: 'loginDummy',
-			password: 'dummypw',
-			email: 'dummy@test.com'
-		}, function (error, dummyUser) {
-			if(error) {
-				done.fail(error);
-			} else {
-				creator = dummyUser;
-				loginUser(auth, done);
-			}
-		});
-	});
+  beforeAll(function (done) {
+    User.create({
+      name: 'loginDummy',
+      password: 'dummypw',
+      email: 'dummy@test.com'
+    }, function (error, dummyUser) {
+      if(error) {
+        done.fail(error);
+      } else {
+        creator = dummyUser;
+        loginUser(auth, done);
+      }
+    });
+  });
 
-	afterAll(function (done) {
-		User.remove({_id: creator._id}, function (error, removedCreator) {
-			if (error) {
-				done.fail(error);
-			} else {
-				done();
-			}
-		});
-	});
+  afterAll(function (done) {
+    User.remove({_id: creator._id}, function (error, removedCreator) {
+      if (error) {
+        done.fail(error);
+      } else {
+        done();
+      }
+    });
+  });
 
   describe('without data', function() {
 
