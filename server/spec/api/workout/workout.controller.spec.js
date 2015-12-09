@@ -96,14 +96,33 @@ describe('Workout', function () {
 	  	});
 
 	  	//TODO: Test if I can have multiple workout log dates
-	  	//Keep in mind: Do I want to create a workout model automatically on member join?
+	  	//Keep in mind: Do I want to create a workout model 
+	  	//							automatically on joining/creating a group?
 	  	it('should create a new workout', function (done) {
-	  		expect(1).toBe(1);
-	  		done();
-	  	})
-
+	  		agent
+	  		.post('/api/workouts/create')
+	  		.send({
+	  			_user: creator._id,
+	  			_group: group._id,
+	  		})
+	  		.set('Authorization', 'Bearer ' + auth.token)
+	  		.expect('Content-Type', /json/)
+	  		.end(function (error,res) {
+	  			if (error) {
+	  				done.fail(error);
+	  			} else {
+	  				var returnedWorkout = res.body.workout;
+	  				expect(returnedWorkout._user).toBe(creator._id);
+	  				expect(returnedWorkout._group).toBe(group._id);
+	  				Workout.findOne({ _id: returnedWorkout._id})
+	  				.remove(function (error) {
+	  					done();
+	  				});
+	  			}
+	  		});
+	  	});
 	  });
-})
+});
 
 //Function for fake User login
 function loginUser (auth, done) {

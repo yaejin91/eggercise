@@ -12,11 +12,15 @@ function handleError (res, err) {
 }
 
 //Creates a new workout
-// exports.create = function (req, res) {
-// 	var userId = req.user._id;
-// 	var groupId = req.group._id;
-// 	var workout = new Workout({
-// 		_user: userId,
-// 		_group: groupId
-// 	});
-// }
+exports.create = function (req, res) {
+	var userId = req.user._id;
+	var groupId = req.group._id;
+	var workout = new Workout({
+		_user: userId,
+		_group: groupId
+	});
+
+	workout.save(function (error,data) {
+		
+	})
+}

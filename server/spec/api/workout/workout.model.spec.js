@@ -12,7 +12,7 @@ beforeAll(function (done) {
 	User.create({
 		name:'imadummy',
 		password: 'dummmypw',
-		email:'dummy@test.com'
+		email:'dummy2@test.com'
 	}, function (error, newUser) {
 		if (error) {
 			done.fail(error);
@@ -63,6 +63,7 @@ describe ('Workout', function() {
 			if (error) {
 				done.fail(error)
 			} else {
+				// newWorkout = 'potato';
 				expect(newWorkout).toBeDefined();
 				newWorkout.remove(function (error) {
 					if (error) {
