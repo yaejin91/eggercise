@@ -9,4 +9,5 @@ router.get('/me', auth.isAuthenticated(), controller.getMe);
 router.post('/', controller.create);
 router.post('/updateProfile', auth.isAuthenticated(), controller.updateProfile);
 
+
 module.exports = router;
