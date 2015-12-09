@@ -16,7 +16,7 @@ exports.showAllGroups = function (req, res) {
     if (err) {
       return handleError(res, err);
     } else if (foundGroups) {
-      // console.log('These are the foundGroups: ', foundGroups);
+      console.log('These are the foundGroups: ', foundGroups);
       res.json(foundGroups);
     }
   });

@@ -5,13 +5,13 @@ angular.module('eggercise')
     var service = {};
     var tempId = '56662b84c6e3a5280b1209aa';
 
-    service.showGroup = function () {
+    service.showAllGroups = function () {
       var deferred = $q.defer();
       //Create a new group by calling the api route for create group
       $http.get('api/groups/')
-        .success(function (data) {
-          console.log('This is data from the GroupService: ', data);
-          deferred.resolve(data);
+        .success(function (returnedGroups) {
+          console.log('These are the returnedGroups from the GroupService: ', returnedGroups);
+          deferred.resolve(returnedGroups);
         })
         .error(function (error) {
           deferred.reject('Error: ',  error);

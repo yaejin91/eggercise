@@ -5,7 +5,7 @@
   describe('GroupCtrl', function() {
     var rootScope, controller, groupService, passPromise;
 
-    beforeEach(inject (function ($rootScope, $controller, $q){
+    beforeEach(inject (function ($rootScope, $controller, $q) {
       rootScope = $rootScope;
 
       // Mock GroupService methods to return the expected data.
@@ -47,11 +47,11 @@
       passPromise = true;
 
       // Explicitly call the controller actions we are testing
-      controller.showGroup();
+      controller.showAllGroups();
       // Force the action to be executed and the promise to be resolved
       rootScope.$digest();
       // Test that the controller called the correct method on the service
-      expect(groupService.showGroup).toHaveBeenCalled();
+      expect(groupService.showAllGroups).toHaveBeenCalled();
     });
 
 
