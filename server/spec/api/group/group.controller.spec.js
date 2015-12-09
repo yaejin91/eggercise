@@ -42,6 +42,25 @@ describe('Group', function() {
 		});
 	});
 
+  describe('without data', function() {
+
+    it('should return no groups', function (done) {
+      agent
+      .get('/api/groups')
+      .set('Authorization', 'Bearer ' + auth.token)
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .end(function (err, res) {
+        if(err) {
+          done.fail(err);
+        } else {
+          expect(res.body.length).toEqual(0);
+          done();
+        }
+      });
+    });
+  });
+
   describe('with data', function() {
     var group;
 
@@ -69,6 +88,23 @@ describe('Group', function() {
         if (error) {
           done.fail(error);
         } else {
+          done();
+        }
+      });
+    });
+
+
+    it('should return all groups', function (done) {
+      agent
+      .get('/api/groups')
+      .set('Authorization', 'Bearer ' + auth.token)
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .end(function (err, res) {
+        if(err) {
+          done.fail(err);
+        } else {
+          expect(res.body.length).toEqual(1);
           done();
         }
       });
@@ -140,11 +176,15 @@ describe('Group', function() {
           })
         }
       });
+<<<<<<< HEAD
     })
   })
 
+=======
+    });
+  });
+>>>>>>> dev
 });
-
 
 function loginUser (auth, done) {
   agent
@@ -156,6 +196,7 @@ function loginUser (auth, done) {
   .expect(200)
   .end(onResponse);
 
+<<<<<<< HEAD
 
 	function onResponse(error, res) {
 		if(error) {
@@ -167,3 +208,16 @@ function loginUser (auth, done) {
 		}
 	}
 };
+=======
+  function onResponse(error, res) {
+    if(error) {
+      console.log(error);
+      throw error;
+    } else {
+      auth.token = res.body.token;
+      agent.saveCookies(res);
+      done();
+    }
+  }
+}
+>>>>>>> dev
