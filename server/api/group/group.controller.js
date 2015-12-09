@@ -13,10 +13,11 @@ function handleError (res, err) {
 //Show all groups
 exports.showAllGroups = function (req, res) {
   Group.find({}, function (err, foundGroups) {
+    console.log('This is the err: ', err)
+    console.log('This is the foundGroups: ', foundGroups);
     if (err) {
       return handleError(res, err);
     } else if (foundGroups) {
-      console.log('These are the foundGroups: ', foundGroups);
       res.json(foundGroups);
     }
   });
