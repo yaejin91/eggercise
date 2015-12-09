@@ -154,8 +154,8 @@ describe('Group', function() {
       });
     });
 
-    //view single page (negative)
-    it('should show a single group', function (done) {
+    //will not show a single page (negative)
+    it('should not show a single group', function (done) {
       var group_id = 'wehsdlkjflksdliur';
       agent
       .get('/api/groups/' + group_id)

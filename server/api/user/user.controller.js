@@ -65,7 +65,6 @@ exports.updateProfile = function (req, res) {
 
   User.findByIdAndUpdate(query, update, options, function (err, user) {
     if (err) { return handleError(res, err);}
-    if (!user) { return res.json(401);}
     res.status(200).json(user);
   });
 };
