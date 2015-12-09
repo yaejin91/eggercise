@@ -42,7 +42,7 @@
         _creator : '565f912726c74d251d0a7b03'
       };
       // expect(200);
-      var response = service.showGroup()
+      var response = service.showAllGroups()
         .then(function () {
           console.log('successful');
         })

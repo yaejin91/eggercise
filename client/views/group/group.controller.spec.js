@@ -12,7 +12,7 @@
       // No need to call the actual GroupService. It has its own spec.
       groupService = (function() {
         return {
-          showGroup: function() {
+          showAllGroups: function() {
             if(passPromise) {
               return $q.when({   })
             } else {

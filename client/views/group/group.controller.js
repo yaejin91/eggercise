@@ -17,6 +17,7 @@ angular.module('eggercise')
     });
 
     //Show all exisiting groups in database
+  vm.showAllGroups = function () {
     GroupService.showAllGroups()
     .then(function (foundGroups){
       console.log('These are the foundGroups from showAllGroups in Group Controller (Angular): ', foundGroups);
@@ -28,7 +29,7 @@ angular.module('eggercise')
     .catch(function (err){
       console.log('deleteGroup err:' + err);
     })
-
+  }
 
 
     //delete a group
