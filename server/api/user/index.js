@@ -8,5 +8,6 @@ var auth = require('../../auth/auth.service');
 router.get('/me', auth.isAuthenticated(), controller.getMe);
 router.post('/', controller.create);
 router.post('/updateProfile', auth.isAuthenticated(), controller.updateProfile);
+router.post('/log', auth.isAuthenticated(), controller.logWorkout);
 
 module.exports = router;

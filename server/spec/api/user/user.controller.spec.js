@@ -1,17 +1,29 @@
 'use strict';
 
+//packages and modules required
 var request = require('supertest'),
   app = require('../../../server'),
-  agent = request.agent(app),
-  User = require('../../../api/user/user.model');
+  agent = request.agent(app);
 
+//model
+var User = require('../../../api/user/user.model');
+
+//auth
 var auth = {};
+
+//variables
+var user;
 
 describe('User', function() {
   describe('with data', function() {
     var user;
     beforeEach(function (done) {
-      User.create({name: 'test', email: 'test@test.com', password: 'testing'}, function (error, newUser) {
+      User.create({
+        name: 'test', 
+        email: 'test@test.com', 
+        password: 'testing',
+        exercises: '12-09-2015'
+      }, function (error, newUser) {
         if (error) {
           done.fail(error);
         } else {
@@ -31,6 +43,7 @@ describe('User', function() {
       });
     });
 
+    //Test for showing an existing user
     it('should return an existing user', function (done) {
       agent
       .get('/api/users/me')
@@ -48,6 +61,7 @@ describe('User', function() {
       });
     });
 
+    //Test for creating a new user
     it('should create a new user', function (done) {
       request(app)
       .post('/api/users/')
@@ -71,6 +85,7 @@ describe('User', function() {
       });
     });
 
+    //Test for updating an existing user
     it('should modify an existing user', function (done) {
       agent
       .get('/api/users/me')
@@ -101,13 +116,43 @@ describe('User', function() {
         }
       });
     });
+
+    //Test for logging an exercise
+    //TODO: Possible negative case is user trying to log workout
+    //before the date they joined the group. Test this case.
+    it('should log an exercise', function (done) {
+      var rawDate = '12-12-2015'
+      agent
+      .post('/api/users/log/')
+      .send({
+        exercises: rawDate
+      })
+      .set('Authorization', 'Bearer ' + auth.token)
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .end(function (error,res) {
+        if(error) {
+          done.fail(error);
+        } else {
+          var convertedDate = new Date(rawDate);
+          var returnedUser = res.body;
+          var returnedConverted = new Date(res.body.exercises[1]);
+          expect(returnedConverted+'').toBe(convertedDate+'');
+          done();
+        }
+      });
+    });
+
   });
 });
 
 function loginUser(auth, done) {
   agent
   .post('/auth/local/')
-  .send({email: 'test@test.com', password: 'testing'})
+  .send({
+    email: 'test@test.com', 
+    password: 'testing'
+  })
   .end(onResponse);
   function onResponse(error, res) {
     if (error) {
@@ -117,5 +162,5 @@ function loginUser(auth, done) {
       agent.saveCookies(res);
       done();
     }
-  }
+  };
 }
