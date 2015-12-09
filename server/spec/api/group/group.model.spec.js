@@ -42,27 +42,26 @@ describe ('Group', function() {
     expect(group.bet).toBe(9000);
   });
 
-  it('should create a new group', function (done) {
-    Group.create({
-      name: 'createMe',
-      bet: 9999,
-      //_creator: 'imacreatorpotato',
-      _creator: dummy._id,
-      start: '12-03-2015',
-      end: '01-31-2016'
-    }, function (error, newGroup) {
-      if (error) {
-        done.fail(error)
-      } else {
-        expect(newGroup).toBeDefined();
-        newGroup.remove(function (error, newGroup) {
-          if (error) {
-            done.fail(error);
-          } else {
-            done();
-          }
-        });
-      }
-    });
-  });
+	it('should create a new group', function (done) {
+		Group.create({
+			name: 'createMe',
+			bet: 9999,
+			_creator: dummy._id,
+			start: '12-03-2015',
+			end: '01-31-2016'
+		}, function (error, newGroup) {
+			if (error) {
+				done.fail(error)
+			} else {
+				expect(newGroup).toBeDefined();
+				newGroup.remove(function (error, newGroup) {
+					if (error) {
+						done.fail(error);
+					} else {
+						done();
+					}
+				});
+			}
+		});
+	});
 });
