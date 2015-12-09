@@ -1,17 +1,29 @@
 'use strict';
 
+//packages and modules required
 var request = require('supertest'),
   app = require('../../../server'),
-  agent = request.agent(app),
-  User = require('../../../api/user/user.model');
+  agent = request.agent(app);
 
+//model
+var User = require('../../../api/user/user.model');
+
+//auth
 var auth = {};
+
+//variables
+var user;
 
 describe('User', function() {
   describe('with data', function() {
     var user;
     beforeEach(function (done) {
-      User.create({name: 'test', email: 'test@test.com', password: 'testing'}, function (error, newUser) {
+      User.create({
+        name: 'test', 
+        email: 'test@test.com', 
+        password: 'testing',
+        exercises: '12-09-2015'
+      }, function (error, newUser) {
         if (error) {
           done.fail(error);
         } else {
@@ -31,6 +43,7 @@ describe('User', function() {
       });
     });
 
+    //Test for showing an existing user
     it('should return an existing user', function (done) {
       agent
       .get('/api/users/me')
@@ -48,6 +61,7 @@ describe('User', function() {
       });
     });
 
+    //Test for creating a new user
     it('should create a new user', function (done) {
       request(app)
       .post('/api/users/')
@@ -71,6 +85,7 @@ describe('User', function() {
       });
     });
 
+    //Test for updating an existing user
     it('should modify an existing user', function (done) {
       agent
       .get('/api/users/me')
@@ -97,7 +112,7 @@ describe('User', function() {
               expect(postUser.email).toBe('changed2@changed.com');
               done();
             }
-          })
+          });
         }
       });
     });
@@ -107,7 +122,10 @@ describe('User', function() {
 function loginUser(auth, done) {
   agent
   .post('/auth/local/')
-  .send({email: 'test@test.com', password: 'testing'})
+  .send({
+    email: 'test@test.com', 
+    password: 'testing'
+  })
   .end(onResponse);
   function onResponse(error, res) {
     if (error) {
@@ -117,5 +135,5 @@ function loginUser(auth, done) {
       agent.saveCookies(res);
       done();
     }
-  }
+  };
 }

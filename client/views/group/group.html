@@ -47,7 +47,7 @@
         </div>
         <div class="panel-body">
           <!-- Current user name display and edit (form field) -->
-          <div ui-sortable>
+          <div ui-sortable ng-init="vm.showAllGroups()">
           <div ng-repeat="group in vm.groups">
             <div ng-submit="vm.deleteGroup()">
               <p> <a href="#">{{ group.name }}</a> - ${{ group.bet }}
