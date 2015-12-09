@@ -9,7 +9,6 @@ angular.module('eggercise')
       //Create a new group by calling the api route for create group
       $http.get('api/groups/')
         .success(function (returnedGroups) {
-          console.log('These are the returnedGroups from the GroupService: ', returnedGroups);
           deferred.resolve(returnedGroups);
         })
         .error(function (error) {
@@ -17,9 +16,6 @@ angular.module('eggercise')
           console.log('error');
         });
       return deferred.promise;
-      //body requires name, email, bet, start, end, _creator
-      //should return 200
-      //TODO: should return new group created with the attributes.
     }
 
     service.createGroup = function (formData) {
