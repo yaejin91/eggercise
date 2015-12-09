@@ -80,25 +80,26 @@ exports.delete = function (req, res){
 }
 
 //Update a group
-// exports.update = function (req, res){
-//   var creatorId = req.user._id;
-//   var groupId = {_id: req.params.group_id};
-//   Group.update( groupId, {
-//     name: req.body.name,
-//     bet: req.body.bet,
-//     start: req.body.start,
-//     end: req.body.end
-//   }, function (err, updatedGroup){ 
-//     console.log('updatedGroup')
-//     if(err){
-//       return handleError(err, err);
-//     }
-//     console.log('updatedGroup: ', updatedGroup);
-//     res.status(200).json({
-//       group: updatedGroup
-//     });
-//   });
-// }
+exports.update = function (req, res){
+  var creatorId = req.user._id;
+  var groupId = {_id: req.params.group_id};
+  Group.update( groupId, {
+    name: req.body.name,
+    bet: req.body.bet,
+    start: req.body.start,
+    end: req.body.end,
+    _creator: creatorId
+  }, function (err, updatedGroup){ 
+    console.log('updatedGroup: ', updatedGroup);
+    if(err){
+      return handleError(err, err);
+    }
+    console.log('updatedGroup: ', updatedGroup);
+    res.status(200).json({
+      group: updatedGroup
+    });
+  });
+}
 
 
 
