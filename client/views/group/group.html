@@ -47,10 +47,12 @@
         </div>
         <div class="panel-body">
           <!-- Current user name display and edit (form field) -->
-          <div ui-sortable ng-model="vm.showGroup()">
+          <div ui-sortable>
+          <div ng-repeat="group in vm.groups">
             <div ng-submit="vm.deleteGroup()">
-              <p> Button placement
-              <button class="btn btn-danger" ng-click="vm.deleteGroup(group._id)" aria-label="Delete"> Delete </button> </p>
+              <p> <a href="#">{{ group.name }}</a> - ${{ group.bet }}
+              <button class="btn btn-danger" ng-click="vm.deleteGroup(group._id)" aria-label="Delete"> Delete </button>
+              </p>
         </div>
       </div>
     </div>

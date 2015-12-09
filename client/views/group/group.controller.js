@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('eggercise')
-  .controller('GroupCtrl', ['$log', '$routeParams', 'GroupService', function ($log, $routeParams,GroupService) {
+  .controller('GroupCtrl', ['$location', '$log', '$routeParams', 'GroupService', function ($location, $log, $routeParams,GroupService) {
 
     var vm = this;
     vm.formData = {};
@@ -16,19 +16,19 @@ angular.module('eggercise')
 
     });
 
-    //show a group
-    vm.showGroup = function (id){
-      GroupService.showGroup()
-      .then(function (data){
-        console.log('This is the data from showGroup: ', data);
-        for(var i = 0; i < data.length; i++){
-          vm.groups.push(data[i]);
-        }
-      })
-      .catch(function (err){
-        console.log('deleteGroup err:' + err);
-      })
-    }
+    //Show all exisiting groups in database
+    GroupService.showAllGroups()
+    .then(function (foundGroups){
+      console.log('These are the foundGroups from showAllGroups in Group Controller (Angular): ', foundGroups);
+      for(var i = 0; i < foundGroups.length; i++){
+        console.log('This is the foundGroups[i]: ', foundGroups[i]);
+        vm.groups.push(foundGroups[i]);
+      }
+    })
+    .catch(function (err){
+      console.log('deleteGroup err:' + err);
+    })
+
 
 
     //delete a group
