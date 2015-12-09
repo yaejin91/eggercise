@@ -139,7 +139,8 @@ describe('Group', function() {
       });
     });
 
-    it('should delete the group', function (done) {
+    //Positive
+    it('should delete the group (positive) ', function (done) {
       var creatorId = creator._id;
       agent
       .post('/api/groups/delete/' + group._id)
@@ -159,6 +160,31 @@ describe('Group', function() {
         }
       });
     });
+
+
+    //Negative || when error in deleting group happens, do this
+    it('should delete the group (negative)', function (done) {
+      var creatorId = creator._id;
+      var group_id = 'bull12345692owopk'
+      agent
+      .post('/api/groups/delete/' + group_id)
+      .set('Authorization', 'Bearer ' + auth.token)
+      .expect('Content-Type', /json/)
+      .end(function (error, res) {
+        console.log('res.error: ', res.error);
+        console.log('res.body: ', res.body);
+        if (res) {
+          expect(res.status).toBe(400);
+          expect(res.body.err).toBe('deletedGroup not found');
+          done();
+        } else {
+          done.fail(error);
+        }
+      });
+    });
+
+
+
   });
 });
 
