@@ -54,8 +54,22 @@
       expect(controller.groups[0]).toBeDefined();
     });
 
+    
+    it('should not delete a group', function() {
+      // Test an unsuccessful call to the GroupService
+      passPromise = false;
+
+      // Explicitly call the controller actions we are testing
+      controller.deleteGroup();
+      // Force the action to be executed and the promise to be resolved
+      rootScope.$digest();
+      // Test that the controller called the correct method on the service
+      expect(groupService.deleteGroup).toHaveBeenCalled();
+      // Tests to make sure the controller did what was expected in an error case
+      expect(controller.groups.length).toEqual(0);
+      expect(controller.error).toBeDefined();
+    });
+
   })
-
-
 
 })
