@@ -124,6 +124,38 @@ describe('Group', function() {
       });
     })
 
+    it('should update an existing group', function (done){
+      var creatorId = creator._id;
+      agent
+      .post('/api/group/update/' + '?group_id=' + group._id)
+      .send({
+        name:'update',
+        bet: 10,
+        start:'02-01-2016',
+        end: '02-31-2016'
+      })
+      .set('Authorization', 'Bearer ' + auth.token)
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .end(function (error, res){
+        console.log('res.body: ', res.body);
+        if(error){
+          done.fail(error);
+        }else {
+          Group.findOne({name: 'update', _creator: creatorId}, function (error, updatedGroup){
+            if(error){
+              done.fail(error);
+            }else{
+              var updatedGroup = res.body;
+              expect(updatedGroup.name).toBe('update');
+              return done();
+            }
+          })
+        }
+      })
+    })
+
+
   });
 });
 
