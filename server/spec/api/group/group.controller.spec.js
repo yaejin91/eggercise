@@ -16,32 +16,31 @@ var auth = {};
 var creator;
 
 describe('Group', function() {
-  beforeAll(function (done) {
-    User.create({
-      name: 'loginDummy',
-      password: 'dummypw',
-      email: 'dummy@test.com'
-    }, function (error, dummyUser) {
-      if(error) {
-        console.log(error);
-        done.fail(error);
-      } else {
-        creator = dummyUser;
-        loginUser(auth, done);
-        done();
-      }
-    });
-  });
 
-  afterAll(function (done) {
-    User.remove({_id: creator._id}, function (error, removedCreator) {
-      if (error) {
-        done.fail(error);
-      } else {
-        done();
-      }
-    });
-  });
+	beforeAll(function (done) {
+		User.create({
+			name: 'loginDummy',
+			password: 'dummypw',
+			email: 'dummy@test.com'
+		}, function (error, dummyUser) {
+			if(error) {
+				done.fail(error);
+			} else {
+				creator = dummyUser;
+				loginUser(auth, done);
+			}
+		});
+	});
+
+	afterAll(function (done) {
+		User.remove({_id: creator._id}, function (error, removedCreator) {
+			if (error) {
+				done.fail(error);
+			} else {
+				done();
+			}
+		});
+	});
 
   describe('without data', function() {
 
@@ -111,7 +110,6 @@ describe('Group', function() {
       });
     });
 
-    // it('login', loginUser());
     it('should create a new group', function (done) {
       var creatorId = creator._id;
       agent
@@ -139,6 +137,41 @@ describe('Group', function() {
       });
     });
 
+
+    //view single member page (positive)
+    it('should show a single group', function (done) {
+      var group_id = group._id;
+      agent
+      .get('/api/groups/' + group_id)
+      .set('Authorization', 'Bearer ' + auth.token)
+      .end(function (error, res) {
+        if (error) {
+          done.fail(error);
+        } else {
+          expect(res.body.name).toBe('testGroup');
+          done();
+        }
+      });
+    });
+
+    //view single page (negative)
+    it('should show a single group', function (done) {
+      var group_id = 'wehsdlkjflksdliur';
+      agent
+      .get('/api/groups/' + group_id)
+      .set('Authorization', 'Bearer ' + auth.token)
+      .end(function (error, res) {
+        if (res) {
+          expect(res.status).toBe(404);
+          expect(res.body.err).toBe('not found');
+          done();
+        } else {
+          done.fail(error);
+        }
+      });
+    });
+
+    //delete group
     it('should delete the group', function (done) {
       var creatorId = creator._id;
       agent
