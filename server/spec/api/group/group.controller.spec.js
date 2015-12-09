@@ -110,7 +110,6 @@ describe('Group', function() {
       });
     });
 
-    // it('login', loginUser());
     it('should create a new group', function (done) {
       var creatorId = creator._id;
       agent
@@ -139,14 +138,12 @@ describe('Group', function() {
     });
 
 
-    // //view singele member page
+    //view single member page (positive)
     it('should show a single group', function (done) {
       var group_id = group._id;
       agent
       .get('/api/groups/' + group_id)
       .set('Authorization', 'Bearer ' + auth.token)
-      // .expect('Content-Type', /json/)
-      // .expect(200)
       .end(function (error, res) {
         if (error) {
           done.fail(error);
@@ -157,6 +154,24 @@ describe('Group', function() {
       });
     });
 
+    //view single page (negative)
+    it('should show a single group', function (done) {
+      var group_id = 'wehsdlkjflksdliur';
+      agent
+      .get('/api/groups/' + group_id)
+      .set('Authorization', 'Bearer ' + auth.token)
+      .end(function (error, res) {
+        if (res) {
+          expect(res.status).toBe(404);
+          expect(res.body.err).toBe('not found');
+          done();
+        } else {
+          done.fail(error);
+        }
+      });
+    });
+
+    //delete group
     it('should delete the group', function (done) {
       var creatorId = creator._id;
       agent
@@ -176,14 +191,8 @@ describe('Group', function() {
           })
         }
       });
-<<<<<<< HEAD
-    })
-  })
-
-=======
     });
   });
->>>>>>> dev
 });
 
 function loginUser (auth, done) {
@@ -196,19 +205,6 @@ function loginUser (auth, done) {
   .expect(200)
   .end(onResponse);
 
-<<<<<<< HEAD
-
-	function onResponse(error, res) {
-		if(error) {
-			throw error;
-		} else {
-			auth.token = res.body.token;
-			agent.saveCookies(res);
-			done();
-		}
-	}
-};
-=======
   function onResponse(error, res) {
     if(error) {
       console.log(error);
@@ -220,4 +216,3 @@ function loginUser (auth, done) {
     }
   }
 }
->>>>>>> dev

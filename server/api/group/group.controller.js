@@ -16,7 +16,6 @@ exports.showAllGroups = function (req, res) {
     if (err) {
       return handleError(res, err);
     } else if (foundGroups) {
-      console.log('These are the foundGroups: ', foundGroups);
       res.json(foundGroups);
     }
   });
@@ -57,14 +56,22 @@ exports.create = function (req, res) {
 
 //view single group
 exports.showGroup = function (req, res) {
-	Group.findOne(req.params.id, function (err, group) {
-		if (err) { return handleError(res, err); }
-		if(req.user._id + '' == group._creator || group._members.indexOf() > -1) {
-			res.status(200).json(group);
-		} else {
-			res.status(404).json({err: 'not found'});
-		}
-	});
+  if (mongoose.Types.ObjectId.isValid(req.params.group_id)) {
+  	Group.findOne({_id: req.params.group_id}, function (err, group) {
+      if (err) { return handleError(res, err);
+      } else if (group) {
+    		if(req.user._id + '' == group._creator || group._members.indexOf() > -1) {
+    			res.status(200).json(group);
+    		} else {
+    			res.status(401).json({err: 'not authorized'});
+    		}
+      } else {
+        res.status(404).json({err: 'not found'});
+      }
+    });
+  } else {
+    res.status(404).json({err: 'not found'});
+  }
 }
 
 //Delete a group
