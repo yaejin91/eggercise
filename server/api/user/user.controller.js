@@ -77,7 +77,9 @@ exports.updateProfile = function (req, res) {
  * @param res
  */
 exports.logWorkout = function (req, res) {
-  var query = {'_id': req.user._id};
+  //Try changing this to req.params._id;
+  var query = {'_id': req.params.id};
+  // var query = {'_id': req.user._id};
   User.findById(query, function (err, user) {
     if (err) {
       return handleError(error, error);
@@ -97,7 +99,8 @@ exports.logWorkout = function (req, res) {
  * @param res
  */
 exports.unlogWorkout = function (req, res) {
-  var query = {'_id': req.user._id};
+  var query = {'_id': req.params.id};
+  // var query = {'_id': req.user._id};
   User.findById(query, function (err, user) {
     if (err) {
       return handleError(error, error);

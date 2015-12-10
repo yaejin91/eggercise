@@ -120,7 +120,7 @@ describe('User', function() {
     it('should log an exercise', function (done) {
       var rawDate = '12-12-2015';
       agent
-      .post('/api/users/log/')
+      .post('/api/users/log/' + user._id)
       .send({
         exercises: rawDate
       })
@@ -143,7 +143,7 @@ describe('User', function() {
     //Test for unlogging an exercise
     it('should unlog an exercise', function (done) {
       agent
-      .post('/api/users/unlog/')
+      .post('/api/users/unlog/' + user._id)
       .set('Authorization', 'Bearer ' + auth.token)
       .send({
         exercises: user.exercises[user.exercises.length-1]

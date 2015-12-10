@@ -31,15 +31,42 @@
 
     //Test for logWorkout()
     it('should let a user log workout', function () {      
-      // var id ='jibberish';
-      // Need Authentication? Since it's updating user...
-      // var existingUser = {
-      //   _id: id,
-      //   name: '',
+      var id = '5669e40077cc88a84bbb5c13';
+      var newDate = '12-31-2015';
+      var existingUser = {
+        _id: id,
+        name: 'yaejintest3',
+        email: 'yaejintest3@test.com',
+        password: 'test',
+        exercises: []
+      };
 
-      // }
-      expect(1).toBe(1);
-      // $httpBackend.whenPOST()
+      var updatedExerciseUser = {
+        _id: id,
+        name: 'yaejintest3',
+        email: 'yaejintest3@test.com',
+        password: 'test',
+        exercises: [newDate];
+      };
+
+      $httpBackend.whenPOST(/log/)
+        .respond (function (method, url, params) {
+          // var re = /.*\/log/;
+          if (newDate) {
+            return [200, updatedExerciseUser];
+          } else {
+            return[404, { message: 'Not Found'}];
+          }
+        });
+
+      // setup the service to use the success and error handler functions we defined in the beforeEach block.
+      service.logworkout.then(handler.success, handler.error);
+      
+      // tests the results
+      // expect(handler.success).toHaveBeenCalled();
+      expect(newDate).toEqual(updatedExerciseUser.exercises[0]);
+      expect(handler.error).not.toHaveBeenCalled();
+      expect(errorMessage).toBeUndefined();
     })
-  })
-})
+  });
+})();
