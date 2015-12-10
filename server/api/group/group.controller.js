@@ -12,11 +12,12 @@ function handleError (res, err, status) {
 
 //Show all groups
 exports.showAllGroups = function (req, res) {
-  Group.find({}, function (err, foundGroups) {
-    console.log('This is the err: ', err)
+  console.log('this is the req.user', req.user);
+  var loggedUserId = req.user._id;
+  Group.find({ _id: loggedUserId}, function (error, foundGroups) {
     console.log('This is the foundGroups: ', foundGroups);
-    if (err) {
-      return handleError(res, err, 500);
+    if (error) {
+      return handleError(res, error, 500);
     } else if (foundGroups) {
       res.json(foundGroups);
     }

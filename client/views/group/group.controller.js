@@ -24,8 +24,8 @@ angular.module('eggercise')
         vm.groups.push(foundGroups[i]);
       }
     })
-    .catch(function (err){
-      console.log('deleteGroup err:' + err);
+    .catch(function (error){
+      console.log('showAllGroups err:' + error);
     })
   }
 
