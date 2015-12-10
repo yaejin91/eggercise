@@ -4,12 +4,11 @@ angular.module('eggercise')
   .service('WorkoutService', function ($rootScope, $q, $http) {
     var service = {};
 
-    service.logWorkout = function (formData) {
+    service.logWorkout = function (id) {
       var deferred = $q.defer();
-      $http.post('/api/users/log/', formData)
-        .success(function (data) {
-          formData = {};
-          deferred.resolve(data);
+      $http.post('/api/users/log/' + id)
+        .success(function (updatedWorkout) {
+          deferred.resolve(updatedWorkout);
         })
         .catch(function (err) {
           deferred.reject(err.data);
