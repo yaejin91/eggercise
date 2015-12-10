@@ -52,7 +52,6 @@
     it('should show all groups', function() {
       // Test a successful call to the GroupService
       passPromise = true;
-
       // Explicitly call the controller actions we are testing
       controller.showAllGroups();
       // Force the action to be executed and the promise to be resolved
@@ -78,7 +77,7 @@
 
     it('should not delete a group', function() {
       passPromise = false;
-      
+
       controller.deleteGroup();
       rootScope.$digest();
       expect(groupService.deleteGroup).toHaveBeenCalled();
