@@ -55,7 +55,6 @@ describe('Group', function() {
         if (error) {
           done.fail(error);
         } else if (res) {
-          console.log('This is res: ', res)
           expect(res.status).toBe(200);
           expect(res.body.length).toEqual(0);
           done();
@@ -225,8 +224,6 @@ describe('Group', function() {
       .set('Authorization', 'Bearer ' + auth.token)
       .expect('Content-Type', /json/)
       .end(function (error, res) {
-        console.log('res.error: ', res.error);
-        console.log('res.body: ', res.body);
         if (res) {
           expect(res.status).toBe(404);
           expect(res.body.err).toBe('deletedGroup not found');
@@ -253,8 +250,6 @@ describe('Group', function() {
       .expect('Content-Type', /json/)
       .expect(200)
       .end(function (error, res){
-        console.log('error: ', error);
-        console.log('res.body: ', res.body);
         if(error){
           done.fail(error);
         }else {
@@ -271,7 +266,7 @@ describe('Group', function() {
       })
     });
 
-    //update an group (negative) 
+    //update an group (negative)
     it('should not update an existing group(negative)', function (done){
       var creatorId = creator._id;
       var group_id = 'ball12345692owopk'

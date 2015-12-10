@@ -13,7 +13,6 @@ function handleError (res, err, status) {
 //Show all groups
 exports.showAllGroups = function (req, res) {
   var loggedUserId = req.user._id;
-  console.log('this is the loggedUserId: ', loggedUserId);
   User.findOne({ _id: loggedUserId})
     .populate('_groups')
     .exec(function (error, foundUser) {
