@@ -44,16 +44,19 @@ describe('Group', function() {
 
   describe('without data', function() {
 
+    // View all groups (when there is no data)
     it('should return no groups', function (done) {
       agent
       .get('/api/groups')
       .set('Authorization', 'Bearer ' + auth.token)
       .expect('Content-Type', /json/)
       .expect(200)
-      .end(function (err, res) {
-        if(err) {
-          done.fail(err);
-        } else {
+      .end(function (error, res) {
+        if (error) {
+          done.fail(error);
+        } else if (res) {
+          console.log('This is res: ', res)
+          expect(res.status).toBe(200);
           expect(res.body.length).toEqual(0);
           done();
         }
@@ -93,22 +96,40 @@ describe('Group', function() {
       });
     });
 
-
+    // View all groups (success)
     it('should return all groups', function (done) {
       agent
       .get('/api/groups')
       .set('Authorization', 'Bearer ' + auth.token)
       .expect('Content-Type', /json/)
       .expect(200)
-      .end(function (err, res) {
-        if(err) {
-          done.fail(err);
+      .end(function (error, res) {
+        if(error) {
+          done.fail(error);
         } else {
           expect(res.body.length).toEqual(1);
           done();
         }
       });
     });
+
+    // View all groups (error handling)
+    it('should handle an error when returning all groups', function (done) {
+      agent
+      .get('/api/groups')
+      .set('Authorization', 'Bearer ' + auth.token)
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .end(function (error, res) {
+        if(error) {
+          done.fail(error);
+        } else {
+          expect(res.body.length).toEqual(1);
+          done();
+        }
+      });
+    });
+
 
     it('should create a new group', function (done) {
       var creatorId = creator._id;
