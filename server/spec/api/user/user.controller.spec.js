@@ -16,7 +16,6 @@ var user;
 
 describe('User', function() {
   describe('with data', function() {
-    var user;
     beforeEach(function (done) {
       User.create({
         name: 'test', 
@@ -42,7 +41,6 @@ describe('User', function() {
         }
       });
     });
-
     //Test for showing an existing user
     it('should return an existing user', function (done) {
       agent
@@ -117,11 +115,32 @@ describe('User', function() {
       });
     });
 
+    //Test for unlogging an exercise
+    fit('should unlog an exercise', function (done) {
+      agent
+      .post('/api/users/unlog/')
+      .set('Authorization', 'Bearer ' + auth.token)
+      .send({
+        exercises: user.exercises[user.exercises.length-1]
+      })
+      // .expect('Content-Type', /json/)
+      .end(function (error, res) {
+        if (error) {
+          done.fail(error);
+        } else {
+          // console.log(res.body)
+          var returnedUser = res.body;
+          expect(returnedUser.exercises.length).toBe(0);
+          done();
+        }
+      });
+    });
+
     //Test for logging an exercise
     //TODO: Possible negative case is user trying to log workout
     //before the date they joined the group. Test this case.
     it('should log an exercise', function (done) {
-      var rawDate = '12-12-2015'
+      var rawDate = '12-12-2015';
       agent
       .post('/api/users/log/')
       .send({
@@ -142,6 +161,7 @@ describe('User', function() {
         }
       });
     });
+
 
   });
 });

@@ -71,6 +71,12 @@ exports.updateProfile = function (req, res) {
   });
 };
 
+/**
+ * Log workout on a day.
+ *
+ * @param req
+ * @param res
+ */
 exports.logWorkout = function (req, res) {
   var query = {'_id': req.user._id};
   User.findById(query, function (err, user) {
@@ -82,5 +88,48 @@ exports.logWorkout = function (req, res) {
       user.save();
       res.json(user);
     }
+  });
+};
+
+/**
+ * Unlog workout on a day.
+ *
+ * @param req
+ * @param res
+ */
+exports.unlogWorkout = function (req, res) {
+  var query = {'_id': req.user._id};
+  User.findById(query, function (err, user) {
+    if (err) {
+      return handleError(error, error);
+    } else {
+      var date = req.body.exercises;
+      console.log('date: ',req.body.exercises);
+      console.log('user.exercises[0]: ',user.exercises[0]);
+      for (var i = 0; i < user.exercises.length; i++) {
+        var convertedDate = user.exercises[i].toDateString().substr(4,12)
+        if(date == user.exercises[i]){
+          user.exercises.splice(i,1);
+          user.save();
+          console.log('end of function');
+          break;
+        }
+      }
+      res.json(user);
+    }
+    // else {
+    //       var date = req.body.exercises;
+    //       console.log('date: ',req.body.exercises);
+    //       console.log('user.exercises[0]: ',user.exercises[0]);
+    //       for (var i = 0; i < user.exercises.length; i++) {
+    //         if(date == user.exercises[i]){
+    //           user.exercises.splice(i,1);
+    //           user.save();
+    //           console.log('end of function');
+    //           break;
+    //         }
+    //       }
+    //       res.json(user);
+    //     }
   });
 };
