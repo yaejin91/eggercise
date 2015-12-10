@@ -115,27 +115,6 @@ describe('User', function() {
       });
     });
 
-    //Test for unlogging an exercise
-    fit('should unlog an exercise', function (done) {
-      agent
-      .post('/api/users/unlog/')
-      .set('Authorization', 'Bearer ' + auth.token)
-      .send({
-        exercises: user.exercises[user.exercises.length-1]
-      })
-      // .expect('Content-Type', /json/)
-      .end(function (error, res) {
-        if (error) {
-          done.fail(error);
-        } else {
-          // console.log(res.body)
-          var returnedUser = res.body;
-          expect(returnedUser.exercises.length).toBe(0);
-          done();
-        }
-      });
-    });
-
     //Test for logging an exercise
     //TODO: Possible negative case is user trying to log workout
     //before the date they joined the group. Test this case.
@@ -162,7 +141,25 @@ describe('User', function() {
       });
     });
 
-
+    //Test for unlogging an exercise
+    fit('should unlog an exercise', function (done) {
+      agent
+      .post('/api/users/unlog/')
+      .set('Authorization', 'Bearer ' + auth.token)
+      .send({
+        exercises: user.exercises[user.exercises.length-1]
+      })
+      .expect('Content-Type', /json/)
+      .end(function (error, res) {
+        if (error) {
+          done.fail(error);
+        } else {
+          var returnedUser = res.body;
+          expect(returnedUser.exercises.length).toBe(0);
+          done();
+        }
+      });
+    });
   });
 });
 

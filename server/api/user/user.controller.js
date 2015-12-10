@@ -104,32 +104,15 @@ exports.unlogWorkout = function (req, res) {
       return handleError(error, error);
     } else {
       var date = req.body.exercises;
-      console.log('date: ',req.body.exercises);
-      console.log('user.exercises[0]: ',user.exercises[0]);
+      var convertedDate = new Date(date).toString();
       for (var i = 0; i < user.exercises.length; i++) {
-        var convertedDate = user.exercises[i].toDateString().substr(4,12)
-        if(date == user.exercises[i]){
+        if(convertedDate == user.exercises[i]){
           user.exercises.splice(i,1);
           user.save();
-          console.log('end of function');
           break;
         }
       }
       res.json(user);
     }
-    // else {
-    //       var date = req.body.exercises;
-    //       console.log('date: ',req.body.exercises);
-    //       console.log('user.exercises[0]: ',user.exercises[0]);
-    //       for (var i = 0; i < user.exercises.length; i++) {
-    //         if(date == user.exercises[i]){
-    //           user.exercises.splice(i,1);
-    //           user.save();
-    //           console.log('end of function');
-    //           break;
-    //         }
-    //       }
-    //       res.json(user);
-    //     }
   });
 };
