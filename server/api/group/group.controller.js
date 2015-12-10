@@ -12,14 +12,15 @@ function handleError (res, err, status) {
 
 //Show all groups
 exports.showAllGroups = function (req, res) {
-  console.log('this is the req.user', req.user);
   var loggedUserId = req.user._id;
-  Group.find({ _id: loggedUserId}, function (error, foundGroups) {
-    console.log('This is the foundGroups: ', foundGroups);
+  console.log('this is the loggedUserId: ', loggedUserId);
+  User.findOne({ _id: loggedUserId})
+    .populate('_groups')
+    .exec(function (error, foundUser) {
     if (error) {
       return handleError(res, error, 500);
-    } else if (foundGroups) {
-      res.json(foundGroups);
+    } else if (foundUser) {
+      res.json(foundUser._groups);
     }
   });
 }
@@ -45,7 +46,7 @@ exports.create = function (req, res) {
           return handleError(res, error, 500);
         } else {
           var id = mongoose.Types.ObjectId(creator._id);
-          creator._groups.push(id);
+          creator._groups.push(data._id);
           creator.save();
           res.json(data);
         }

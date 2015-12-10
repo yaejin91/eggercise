@@ -29,7 +29,7 @@ angular.module('eggercise')
     })
   }
 
-  
+
     //delete a group
     vm.deleteGroup = function (id){
       GroupService.deleteGroup(id)
