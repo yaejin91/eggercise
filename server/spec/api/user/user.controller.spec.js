@@ -19,8 +19,8 @@ describe('User', function() {
     var user;
     beforeEach(function (done) {
       User.create({
-        name: 'test', 
-        email: 'test@test.com', 
+        name: 'test',
+        email: 'test@test.com',
         password: 'testing',
         exercises: '12-09-2015'
       }, function (error, newUser) {
@@ -96,7 +96,6 @@ describe('User', function() {
         if (error) {
           done.fail(error);
         } else {
-          var getUser = res.body;
           agent
           .post('/api/users/updateProfile')
           .set('Authorization', 'Bearer ' + auth.token)
@@ -150,7 +149,7 @@ function loginUser(auth, done) {
   agent
   .post('/auth/local/')
   .send({
-    email: 'test@test.com', 
+    email: 'test@test.com',
     password: 'testing'
   })
   .end(onResponse);
