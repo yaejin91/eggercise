@@ -17,30 +17,30 @@ var creator;
 
 describe('Group', function() {
 
-	beforeAll(function (done) {
-		User.create({
-			name: 'loginDummy',
-			password: 'dummypw',
-			email: 'dummy@test.com'
-		}, function (error, dummyUser) {
-			if(error) {
-				done.fail(error);
-			} else {
-				creator = dummyUser;
-				loginUser(auth, done);
-			}
-		});
-	});
+  beforeAll(function (done) {
+    User.create({
+      name: 'loginDummy',
+      password: 'dummypw',
+      email: 'dummy@test.com'
+    }, function (error, dummyUser) {
+      if(error) {
+        done.fail(error);
+      } else {
+        creator = dummyUser;
+        loginUser(auth, done);
+      }
+    });
+  });
 
-	afterAll(function (done) {
-		User.remove({_id: creator._id}, function (error, removedCreator) {
-			if (error) {
-				done.fail(error);
-			} else {
-				done();
-			}
-		});
-	});
+  afterAll(function (done) {
+    User.remove({_id: creator._id}, function (error, removedCreator) {
+      if (error) {
+        done.fail(error);
+      } else {
+        done();
+      }
+    });
+  });
 
   describe('without data', function() {
 
@@ -154,8 +154,8 @@ describe('Group', function() {
       });
     });
 
-    //view single page (negative)
-    it('should show a single group', function (done) {
+    //will not show a single page (negative)
+    it('should not show a single group', function (done) {
       var group_id = 'wehsdlkjflksdliur';
       agent
       .get('/api/groups/' + group_id)
@@ -171,8 +171,9 @@ describe('Group', function() {
       });
     });
 
-    //delete group
-    it('should delete the group', function (done) {
+
+    //delete a group (positive)
+    it('should delete the group (positive) ', function (done) {
       var creatorId = creator._id;
       agent
       .post('/api/groups/delete/' + group._id)
@@ -186,12 +187,96 @@ describe('Group', function() {
             if(err){
               done.fail.err;
             }else{
+              expect(deletedGroup).toBeDefined();
               done();
             }
           })
         }
       });
+    })
+
+    //delete a group (negative)
+    it('should not delete the group (negative)', function (done) {
+      var creatorId = creator._id;
+      var group_id = 'bull12345692owopk'
+      agent
+      .post('/api/groups/delete/' + group_id)
+      .set('Authorization', 'Bearer ' + auth.token)
+      .expect('Content-Type', /json/)
+      .end(function (error, res) {
+        console.log('res.error: ', res.error);
+        console.log('res.body: ', res.body);
+        if (res) {
+          expect(res.status).toBe(404);
+          expect(res.body.err).toBe('deletedGroup not found');
+          done();
+        } else {
+          done.fail(error);
+        }
+      });
     });
+
+    //update an group (positive)
+    it('should update an existing group(positive)', function (done){
+      var creatorId = creator._id;
+      agent
+      .post('/api/groups/update/' + group._id)
+      .send({
+        name:'update',
+        bet: 10,
+        start:'02-01-2016',
+        end: '02-31-2016',
+        _creator: creatorId
+      })
+      .set('Authorization', 'Bearer ' + auth.token)
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .end(function (error, res){
+        console.log('error: ', error);
+        console.log('res.body: ', res.body);
+        if(error){
+          done.fail(error);
+        }else {
+          Group.findOne({name: 'update', _creator: creatorId}, function (error, updatedGroup){
+            if(error){
+              done.fail(error);
+            }else{
+              var updatedGroup = res.body;
+              expect(updatedGroup).toBeDefined();
+              return done();
+            }
+          })
+        }
+      })
+    });
+
+    //update an group (negative) 
+    it('should not update an existing group(negative)', function (done){
+      var creatorId = creator._id;
+      var group_id = 'ball12345692owopk'
+      agent
+      .post('/api/groups/update/' + group_id)
+      .send({
+        name:'update',
+        bet: 10,
+        start:'02-01-2016',
+        end: '02-31-2016',
+        _creator: creatorId
+      })
+      .set('Authorization', 'Bearer ' + auth.token)
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .end(function (error, res){
+        if(res){
+          expect(res.status).toBe(404);
+          expect(res.body.err).toBe('updatedGroup not found');
+          done();
+        }else {
+          done.fail(error);
+        }
+      })
+    });
+
   });
 });
 
