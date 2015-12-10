@@ -142,8 +142,7 @@ describe('User', function() {
     });
 
     //Test for unlogging an exercise
-    fit('should unlog an exercise', function (done) {
-      console.log('hiccup?');
+    it('should unlog an exercise', function (done) {
       agent
       .post('/api/users/unlog/')
       .set('Authorization', 'Bearer ' + auth.token)
@@ -155,7 +154,6 @@ describe('User', function() {
         if (error) {
           done.fail(error);
         } else {
-          console.log('hiccup?');
           var returnedUser = res.body;
           expect(returnedUser.exercises.length).toBe(0);
           done();
