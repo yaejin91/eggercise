@@ -60,11 +60,11 @@ exports.showGroup = function (req, res) {
   	Group.findOne({_id: req.params.group_id}, function (err, group) {
       if (err) { return handleError(res, err, 500);
       } else if (group) {
-    		if(req.user._id + '' == group._creator || group._members.indexOf() > -1) {
-    			res.status(200).json(group);
-    		} else {
-    			res.status(401).json({err: 'not authorized'});
-    		}
+        if(req.user._id + '' == group._creator || group._members.indexOf() > -1) {
+          res.status(200).json(group);
+        } else {
+          res.status(401).json({err: 'not authorized'});
+        }
       } else {
         res.status(404).json({err: 'not found'});
       }
