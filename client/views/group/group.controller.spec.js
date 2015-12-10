@@ -12,9 +12,9 @@
       // No need to call the actual GroupService. It has its own spec.
       groupService = (function() {
         return {
-          showGroup: function() {
+          showAllGroups: function() {
             if(passPromise) {
-              return $q.when({   })
+              return $q.when([{ name: 'New Group', bet : 25 }])
             } else {
               return $q.reject('showAllGroups failed');
             }
@@ -68,6 +68,8 @@
       rootScope.$digest();
       // Test that the controller called the correct method on the service
       expect(groupService.showAllGroups).toHaveBeenCalled();
+      // Test that the data has the correct properties and values
+      expect(controller.groups).toBeDefined();
     });
 
     it('should delete a group', function() {
