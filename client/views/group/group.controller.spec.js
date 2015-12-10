@@ -27,15 +27,6 @@
             } else {
               return $q.reject('deleteGroup failed');
             }
-          },
-          editGroup: function (id){
-            if(passPromise){
-              return $1.when({
-                _id: '56662b84c6e3a5280b1209aa'
-              });
-            }else{
-              return $q.reject('editGroup failed');
-            }
           }
         };
       })();
