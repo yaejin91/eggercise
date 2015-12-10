@@ -196,7 +196,7 @@ describe('Group', function() {
     })
 
     //delete a group (negative)
-    it('should delete the group (negative)', function (done) {
+    it('should not delete the group (negative)', function (done) {
       var creatorId = creator._id;
       var group_id = 'bull12345692owopk'
       agent
@@ -251,7 +251,7 @@ describe('Group', function() {
     });
 
     //update an group (negative) 
-    it('should update an existing group(negative)', function (done){
+    it('should not update an existing group(negative)', function (done){
       var creatorId = creator._id;
       var group_id = 'ball12345692owopk'
       agent
