@@ -204,8 +204,8 @@ describe('Group', function() {
       .set('Authorization', 'Bearer ' + auth.token)
       .expect('Content-Type', /json/)
       .end(function (error, res) {
-        console.log('res.error: ', res.error);
-        console.log('res.body: ', res.body);
+        //console.log('res.error: ', res.error);
+        //console.log('res.body: ', res.body);
         if (res) {
           expect(res.status).toBe(404);
           expect(res.body.err).toBe('deletedGroup not found');
@@ -232,8 +232,8 @@ describe('Group', function() {
       .expect('Content-Type', /json/)
       .expect(200)
       .end(function (error, res){
-        console.log('error: ', error);
-        console.log('res.body: ', res.body);
+        // console.log('error: ', error);
+        // console.log('res.body: ', res.body);
         if(error){
           done.fail(error);
         }else {
