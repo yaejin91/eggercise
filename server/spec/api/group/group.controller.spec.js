@@ -72,6 +72,7 @@ describe('Group', function() {
         start:'12-01-2015',
         end:'12-31-2015',
         _creator:creator._id
+
       }, function (error, newGroup) {
         if (error) {
           console.log(error);
@@ -204,8 +205,6 @@ describe('Group', function() {
       .set('Authorization', 'Bearer ' + auth.token)
       .expect('Content-Type', /json/)
       .end(function (error, res) {
-        console.log('res.error: ', res.error);
-        console.log('res.body: ', res.body);
         if (res) {
           expect(res.status).toBe(404);
           expect(res.body.err).toBe('deletedGroup not found');
@@ -232,8 +231,6 @@ describe('Group', function() {
       .expect('Content-Type', /json/)
       .expect(200)
       .end(function (error, res){
-        console.log('error: ', error);
-        console.log('res.body: ', res.body);
         if(error){
           done.fail(error);
         }else {
@@ -276,6 +273,57 @@ describe('Group', function() {
         }
       })
     });
+
+    //show  members 
+    it('should return the members of a group', function (done) {
+      var group_id = group._id;
+      agent
+      .get('/api/groups/' + group_id + '/leaderboard')
+      .set('Authorization', 'Bearer ' + auth.token)
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .end(function (error, res) {
+        console.log('== line 286 ==res.body: ', res.body);
+        if(error) {
+          console.log('failing ');
+          done.fail(error);
+        } else {
+          var foundMembers = res.body.members;
+          console.log('foundMembers: ', foundMembers);
+          expect(foundMembers).toBeDefined();
+          expect(foundMembers.length).toBeDefined();
+          done();
+        }
+      });
+    });
+
+    // does not show  members 
+    it('should not return the members of a group', function (done) {
+      var group_id = '2498foiesfkjlsflaja';
+      agent
+      .get('/api/groups/' + group_id + '/leaderboard')
+      .set('Authorization', 'Bearer ' + auth.token)
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .end(function (error, res) {
+        if(res){
+          expect(res.status).toBe(404);
+          expect(res.body.err).toBe('group not found');
+          done();
+        }else {
+          done.fail(error);
+        }
+      })
+    });
+ 
+    
+    //returns the total # exercises of each member {name, id , exercises}
+    // it('should return total number of exercises logged by each member', function (done){
+
+
+    // })
+
+
 
   });
 });
