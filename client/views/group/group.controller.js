@@ -11,23 +11,21 @@ angular.module('eggercise')
     // vm.formData._creator = creatorId
 
     angular.extend(vm, {
-
       name: 'GroupCtrl'
-
     });
 
     //Show all exisiting groups in database
-  vm.showAllGroups = function () {
-    GroupService.showAllGroups()
-    .then(function (foundGroups){
-      for(var i = 0; i < foundGroups.length; i++){
-        vm.groups.push(foundGroups[i]);
-      }
-    })
-    .catch(function (err){
-      console.log('deleteGroup err:' + err);
-    })
-  }
+    vm.showAllGroups = function () {
+      GroupService.showAllGroups()
+      .then(function (foundGroups){
+        for(var i = 0; i < foundGroups.length; i++){
+          vm.groups.push(foundGroups[i]);
+        }
+      })
+      .catch(function (error){
+        console.log('showAllGroups err:' + error);
+      })
+    }
 
     //delete a group
     vm.deleteGroup = function (id){
