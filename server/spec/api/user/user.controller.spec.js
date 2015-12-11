@@ -115,14 +115,12 @@ describe('User', function() {
     });
 
     //Test for logging an exercise
-    //TODO: Possible negative case is user trying to log workout
-    //before the date they joined the group. Test this case.
     it('should log an exercise', function (done) {
-      var rawDate = '12-12-2015';
+      var newDate = new Date('12-12-2015').toString();
       agent
       .post('/api/users/log/')
       .send({
-        exercises: rawDate
+        date: newDate
       })
       .set('Authorization', 'Bearer ' + auth.token)
       .expect('Content-Type', /json/)
@@ -131,10 +129,9 @@ describe('User', function() {
         if(error) {
           done.fail(error);
         } else {
-          var convertedDate = new Date(rawDate);
           var returnedUser = res.body;
-          var returnedConverted = new Date(res.body.exercises[1]);
-          expect(returnedConverted+'').toBe(convertedDate+'');
+          var returnedConverted = new Date(res.body.exercises[1]).toString();
+          expect(returnedConverted).toBe(newDate);
           done();
         }
       });
@@ -146,7 +143,7 @@ describe('User', function() {
       .post('/api/users/unlog/')
       .set('Authorization', 'Bearer ' + auth.token)
       .send({
-        exercises: user.exercises[user.exercises.length-1]
+        date: user.exercises[user.exercises.length-1]
       })
       .expect('Content-Type', /json/)
       .end(function (error, res) {
