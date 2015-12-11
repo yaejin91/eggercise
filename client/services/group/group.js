@@ -66,6 +66,22 @@ angular.module('eggercise')
         return deferred.promise;
     };
 
+    //update group by group id
+    service.updateGroup = function (id){
+      var deferred = $q.defer();
+      console.log('id: ', id);
+      $http.post('/api/groups/update/' + id)
+        .success(function (updatedGroup){
+          console.log('updatedGroup: ', updatedGroup);
+          deferred.resolve(updatedGroup);
+        })
+        .error(function (error){
+          deferred.reject('Error: ',  error);
+          console.log('Error: ',  error);
+        });
+        return deferred.promise;
+    };
+
 
     return service;
   });

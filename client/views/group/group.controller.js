@@ -28,4 +28,20 @@ angular.module('eggercise')
       console.log('deleteGroup err:' + err);
     })
   }
+
+    //delete a group
+    vm.deleteGroup = function (id){
+      GroupService.deleteGroup(id)
+      .then(function (data){
+        for(var i = 0; i < vm.groups.length; i++){
+          if(vm.groups[i]._id + '' === data.group._id + ''){
+            vm.groups.splice(i,1);
+            break;
+          }
+        }
+      })
+      .catch(function (error){
+        console.log('deleteGroup error:' + error);
+      })
+    }
   }]);
