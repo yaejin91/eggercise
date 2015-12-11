@@ -17,10 +17,24 @@ angular.module('eggercise')
           vm.user = data;
           $location.path('/');
         })
-      .catch(function (err) {
-        vm.error = err;
-        $log.error('Error: ', err);
-      });
+        .catch(function (err) {
+          vm.error = err;
+          $log.error('Error: ', err);
+        })
+    },
+
+    //Unlog Workout
+    unlogWorkout: function() {
+      WorkoutService.unlogWorkout(vm.formData.date)
+        .then(function (data) {
+          vm.user = data;
+          $location.path('/');
+        })
+        .catch(function (err) {
+          vm.error = err;
+          $log.error('Error: ', err);
+        })
     }
+
    });
   }]);
