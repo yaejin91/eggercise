@@ -2,7 +2,7 @@
   <h1>My Groups</h1>
   <div class="row">
     <div class="col-xs-6">
-      <a href="https://google.com">
+      <a href="/log">
         <div class="jumbotron">
           <div class="row">
             <div class="col-md-6 text-center">
@@ -49,10 +49,12 @@
           <!-- Current user name display and edit (form field) -->
           <div ui-sortable ng-init="vm.showAllGroups()">
           <div ng-repeat="group in vm.groups">
-            <div ng-submit="vm.deleteGroup()">
-              <p> <a href="#">{{ group.name }}</a> - ${{ group.bet }}
-              <button class="btn btn-danger" ng-click="vm.deleteGroup(group._id)" aria-label="Delete"> Delete </button>
+            <div>
+              <p> <a href="/group/show?id={{group._id}}">{{ group.name }}</a> - ${{ group.bet }}
               </p>
+            </div>
+          </div>
+          </div>
         </div>
       </div>
     </div>

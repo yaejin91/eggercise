@@ -9,7 +9,7 @@ angular.module('eggercise')
       //Create a new group by calling the api route for create group
       $http.get('api/groups/')
         .success(function (returnedGroups) {
-          deferred.resolve(returnedGroups);
+            deferred.resolve(returnedGroups);
         })
         .error(function (error) {
           deferred.reject('Error: ',  error);
@@ -41,6 +41,7 @@ angular.module('eggercise')
       var deferred = $q.defer();
       $http.get('/api/groups/' + id)
         .success(function (showGroup) {
+          console.log(showGroup);
           deferred.resolve(showGroup);
         })
         .error(function (error) {
@@ -57,6 +58,22 @@ angular.module('eggercise')
         .success(function (deletedGroup){
           console.log('deletedGroup: ', deletedGroup);
           deferred.resolve(deletedGroup);
+        })
+        .error(function (error){
+          deferred.reject('Error: ',  error);
+          console.log('Error: ',  error);
+        });
+        return deferred.promise;
+    };
+
+    //update group by group id
+    service.updateGroup = function (id){
+      var deferred = $q.defer();
+      console.log('id: ', id);
+      $http.post('/api/groups/update/' + id)
+        .success(function (updatedGroup){
+          console.log('updatedGroup: ', updatedGroup);
+          deferred.resolve(updatedGroup);
         })
         .error(function (error){
           deferred.reject('Error: ',  error);

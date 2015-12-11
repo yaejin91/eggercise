@@ -3,12 +3,13 @@
 angular.module('eggercise')
   .config(function ($routeProvider) {
     $routeProvider
-      .when('/group/show', {
-        templateUrl: 'views/single_group/singlegroup.html',
-        controller: 'ShowGroupCtrl',
+      .when('/group/updateGroup', {
+        templateUrl: 'views/update_group/update.group.html',
+        controller: 'UpdateGroupCtrl',
         controllerAs: 'vm'
       })
       .otherwise({
         redirectTo: '/'
       });
+
   });
