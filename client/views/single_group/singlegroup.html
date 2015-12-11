@@ -1,0 +1,98 @@
+<div class="container">
+<div ng-init="vm.showGroup(vm.group_id)"></div>
+  <h1>{{ vm.group.name }}</h1>
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="col-xs-10">
+              {{vm.startdate}} to {{vm.enddate}} - ${{vm.group.bet}} Bet
+            </div>
+              <a href="#">
+                <div class="glyphicon glyphicon-pencil small-glyph">
+                </div>
+              </a>
+              <a href="#">
+                <div class="glyphicon glyphicon-remove small-glyph">
+                </div>
+              </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12">
+      {{vm.group.description}}
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-4">
+      <div class="jumbotron">
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <div>
+              {{days.elapsed}}
+            </div>
+          </div>
+          <div class="col-md-12 text-center">
+              Days Elapsed
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xs-4">
+      <div class="jumbotron">
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <div>
+              {{days.behind}}
+            </div>
+          </div>
+          <div class="col-md-12 text-center">
+              Days Behind
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xs-4">
+      <div class="jumbotron">
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <div>
+              {{owed}}
+            </div>
+          </div>
+          <div class="col-md-12 text-center">
+              Owed
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h3>Days Exercised</h3>
+  <hr>
+  <div class="row">
+    <div class="col-xs-10">
+      Members Here
+    </div>
+    <div class="col-xs-2">
+      Days Here
+    </div>
+  </div>
+
+  <h3>The Pot</h3>
+  <hr>
+  <div class="row">
+    <div class="col-xs-10">
+      Member
+    </div>
+    <div class="col-xs-2">
+      Money Calcs Here
+    </div>
+  </div>
+</div>
