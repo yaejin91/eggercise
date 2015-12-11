@@ -2,7 +2,7 @@
   'use strict';
   beforeEach(module('eggercise'));
 
-  fdescribe('ShowGroupCtrl', function() {
+  describe('ShowGroupCtrl', function() {
     var rootScope, controller, groupService, passPromise;
 
     beforeEach(inject (function ($rootScope, $controller, $q) {
