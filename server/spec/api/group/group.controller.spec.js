@@ -27,6 +27,8 @@ describe('Group', function() {
         done.fail(error);
       } else {
         creator = dummyUser;
+        console.log('------------------------------');
+        console.log('This is the creator: ', creator);
         loginUser(auth, done);
       }
     });
@@ -37,6 +39,8 @@ describe('Group', function() {
       if (error) {
         done.fail(error);
       } else {
+        console.log('------------------------------');
+        console.log('This is the removedCreator: ', removedCreator);
         done();
       }
     });
@@ -80,6 +84,8 @@ describe('Group', function() {
           done.fail(error);
         } else {
           group = newGroup;
+          console.log('------------------------------');
+          console.log('This is the newGroup: ', newGroup);
           done();
         }
       });
@@ -90,13 +96,16 @@ describe('Group', function() {
         if (error) {
           done.fail(error);
         } else {
+          console.log('------------------------------');
+          console.log('This is the removedGroup: ', removedGroup);
+          console.log('*Note*: this does not really return the removed group, but the status code.');
           done();
         }
       });
     });
 
     // View all groups (success)
-    it('should return all groups', function (done) {
+    it('should return all groups for logged in user', function (done) {
       agent
       .get('/api/groups')
       .set('Authorization', 'Bearer ' + auth.token)
@@ -106,6 +115,8 @@ describe('Group', function() {
         if(error) {
           done.fail(error);
         } else {
+          console.log('This is res.body: ', res.body);
+          expect(res.status).toBe(200);
           expect(res.body.length).toEqual(1);
           done();
         }

@@ -51,8 +51,8 @@ exports.create = function (req, res) {
         }
       });
     } else if (error) {
-        console.error(error.stack);
-        return handleError(res, error, 500);
+      console.error(error.stack);
+      return handleError(res, error, 500);
     }
   });
 }
