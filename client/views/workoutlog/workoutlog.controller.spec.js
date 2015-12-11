@@ -47,7 +47,7 @@
       expect(controller.formData).toBeDefined();
     });
 
-    fit('should log an exercise session', function() {
+    it('should log an exercise session', function() {
       //Test a successful call to the WorkoutService
       passPromise = true;
       // Explicitly call the controller actions we are testing
