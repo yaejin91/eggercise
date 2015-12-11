@@ -50,5 +50,14 @@
       expect(controller.user).toBeDefined();
     });
 
+    it('should not log an exercise session', function() {
+      passPromise = false;
+      controller.logWorkout();
+      rootScope.$digest();
+      expect(workoutService.logWorkout).toHaveBeenCalled();
+      expect(controller.error).toBeDefined();
+
+    });
+
   });
-});
+})();
