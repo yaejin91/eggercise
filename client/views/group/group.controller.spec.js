@@ -85,4 +85,4 @@
       expect(controller.error).toBeDefined();
     });
   });
-});
+})();
