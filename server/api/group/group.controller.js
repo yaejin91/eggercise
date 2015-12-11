@@ -79,7 +79,7 @@ exports.showGroup = function (req, res) {
 //Delete a group
 exports.delete = function (req, res){
   var group = new Group({_id: req.params.group_id});
-  group.remove( function (err, deletedGroup){
+  group.remove(function (err, deletedGroup){
     if(err){
       // res.status(400).json({err: 'deletedGroup not found'});
       return handleError(res, 'deletedGroup not found', 404);
@@ -109,3 +109,35 @@ exports.update = function (req, res){
     });
   });
 }
+
+
+//Show Leaderboard with members
+exports.showGroupLeaderboard = function (req, res){
+  var groupId = req.params.group_id;
+  console.log('group id: ', groupId);
+  Group.findOne({_id: groupId})
+  .populate('_members')
+  .exec(function (error, foundGroup) {
+      if(foundGroup){
+        console.log('foundGroup: ', foundGroup);
+        res.status(200).json({
+          members: foundGroup._members
+        });
+      }
+      else{
+        return handleError(res, 'group not found', 404);
+      }
+    })
+};
+
+
+
+
+//show total # of exercises of each member in that group
+// exports.exercisesCount = function (req, res) {
+
+// })
+
+
+
+
