@@ -27,8 +27,6 @@ describe('Group', function() {
         done.fail(error);
       } else {
         creator = dummyUser;
-        console.log('------------------------------');
-        console.log('This is the creator: ', creator);
         loginUser(auth, done);
       }
     });
@@ -39,8 +37,6 @@ describe('Group', function() {
       if (error) {
         done.fail(error);
       } else {
-        console.log('------------------------------');
-        console.log('This is the removedCreator: ', removedCreator);
         done();
       }
     });
@@ -67,6 +63,56 @@ describe('Group', function() {
     });
   });
 
+  describe('with data (for a different logged in user)', function() {
+    var group;
+
+    // Save a different user id to the creator id for the group
+    beforeEach(function (done) {
+      Group.create({
+        name: 'testGroup',
+        email: 'testGroup@test.com',
+        bet: 100,
+        start:'12-01-2015',
+        end:'12-31-2015',
+        _creator:'5669f29f583f0b9f462f944c'
+      }, function (error, newGroup) {
+        if (error) {
+          done.fail(error);
+        } else {
+          group = newGroup;
+          done();
+        }
+      });
+    });
+
+    afterEach(function (done) {
+      Group.remove({_id: group._id}, function (error, removedGroup) {
+        if (error) {
+          done.fail(error);
+        } else {
+          done();
+        }
+      });
+    });
+
+    // Error handling: no groups associated with logged in user
+    it('should return no groups for this user', function (done) {
+      agent
+      .get('/api/groups')
+      .set('Authorization', 'Bearer ' + auth.token)
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .end(function (error, res) {
+        if(error) {
+          done.fail(error);
+        } else {
+          expect(res.body.length).toEqual(0);
+          done();
+        }
+      });
+    });
+  });
+
   describe('with data', function() {
     var group;
 
@@ -80,12 +126,15 @@ describe('Group', function() {
         _creator:creator._id
       }, function (error, newGroup) {
         if (error) {
-          console.log(error);
           done.fail(error);
         } else {
           group = newGroup;
-          console.log('------------------------------');
-          console.log('This is the newGroup: ', newGroup);
+          creator._groups.push(group)
+          creator.save()
+          User.findOne({_id: creator._id})
+          .populate('_groups')
+          .exec(function (error, foundUser) {
+          })
           done();
         }
       });
@@ -96,9 +145,6 @@ describe('Group', function() {
         if (error) {
           done.fail(error);
         } else {
-          console.log('------------------------------');
-          console.log('This is the removedGroup: ', removedGroup);
-          console.log('*Note*: this does not really return the removed group, but the status code.');
           done();
         }
       });
@@ -115,31 +161,14 @@ describe('Group', function() {
         if(error) {
           done.fail(error);
         } else {
-          console.log('This is res.body: ', res.body);
           expect(res.status).toBe(200);
           expect(res.body.length).toEqual(1);
+          expect(res.body[0].name).toEqual('testGroup');
+          expect(creator._groups[0]).toEqual(group._id);
           done();
         }
       });
     });
-
-    // View all groups (error handling)
-    it('should handle an error when returning all groups', function (done) {
-      agent
-      .get('/api/groups')
-      .set('Authorization', 'Bearer ' + auth.token)
-      .expect('Content-Type', /json/)
-      .expect(200)
-      .end(function (error, res) {
-        if(error) {
-          done.fail(error);
-        } else {
-          expect(res.body.length).toEqual(1);
-          done();
-        }
-      });
-    });
-
 
     it('should create a new group', function (done) {
       var creatorId = creator._id;
@@ -167,7 +196,6 @@ describe('Group', function() {
         }
       });
     });
-
 
     //view single member page (positive)
     it('should show a single group', function (done) {
@@ -201,7 +229,6 @@ describe('Group', function() {
         }
       });
     });
-
 
     //delete a group (positive)
     it('should delete the group (positive) ', function (done) {
@@ -303,7 +330,6 @@ describe('Group', function() {
         }
       })
     });
-
   });
 });
 
@@ -319,7 +345,6 @@ function loginUser (auth, done) {
 
   function onResponse(error, res) {
     if(error) {
-      console.log(error);
       throw error;
     } else {
       auth.token = res.body.token;
