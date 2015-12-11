@@ -1,11 +1,11 @@
 'use strict';
 
 angular.module('eggercise')
-  .controller('WorkoutCtrl', WorkoutCtrl);
+  // .controller('WorkoutCtrl', WorkoutCtrl);
 
-  WorkoutCtrl.$inject = ['WorkoutService', '$routeParams', '$rootScope', '$log', '$location']
-  function WorkoutCtrl(WorkoutService, $routeParams, $rootScope, $log, $location){
-  // .controller('WorkoutCtrl', ['WorkoutService', '$routeParams', '$rootScope', '$log', '$location', function (WorkoutService, $routeParams, $rootScope, $log, $location) {
+  // WorkoutCtrl.$inject = ['WorkoutService', '$routeParams', '$rootScope', '$log', '$location']
+  // function WorkoutCtrl(WorkoutService, $routeParams, $rootScope, $log, $location){
+  .controller('WorkoutCtrl', ['WorkoutService', '$routeParams', '$rootScope', '$log', '$location', function (WorkoutService, $routeParams, $rootScope, $log, $location) {
 
     var vm = this;
     vm.user = {};
@@ -27,4 +27,4 @@ angular.module('eggercise')
     //   });
     // }
    });
-  };
+  }]);
