@@ -3,7 +3,23 @@
 
   describe('WorkoutService', function() {
     var service, $httpBackend, workoutData,handler, errorMessage;
-
+    var id = '5669e40077cc88a84bbb5c13';
+    var existingDate = '12-31-2015';
+    var newDate = '01-02-2016';
+    var existingUser = {
+      _id: id,
+      name: 'testlogging',
+      email: 'testlogging@test.com',
+      password: 'test',
+      exercises: [existingDate]
+    };
+    var updatedExerciseUser = {
+      _id: id,
+      name: 'testlogging',
+      email: 'testlogging@test.com',
+      password: 'test'
+    };
+    
     // Configure module that contains the controller being tested
     beforeEach(module('eggercise'));
 
@@ -30,97 +46,71 @@
 
     //Test for logWorkout()
     it('should let a user log workout', function () {      
-      var id = '5669e40077cc88a84bbb5c13';
-      var existingDate = '12-31-2015';
-      var newDate = '01-02-2016';
-      var existingUser = {
-        _id: id,
-        name: 'testlogging',
-        email: 'testlogging@test.com',
-        password: 'test',
-        exercises: [existingDate]
-      };
-
-      var updatedExerciseUser = {
-        _id: id,
-        name: 'testlogging',
-        email: 'testlogging@test.com',
-        password: 'test'
-      };
-
-      updatedExerciseUser.exercises = existingUser.exercises;
-      updatedExerciseUser.exercises.push(newDate);
-
       $httpBackend.whenPOST(/log/)
-        .respond (function (method, url, params) {
-          var userId = id;
-
-          if (userId === existingUser._id) {
-            return [200, updatedExerciseUser];
-          } else {
-            return[404, { message: 'Not Found'}];
-          }
-        });
+        .respond (respondToHttp);
 
       // setup the service to use the success and error handler functions we defined in the beforeEach block.
-      service.logWorkout(id).then(handler.success, handler.error);
+      service.logWorkout().then(handler.success, handler.error);
       $httpBackend.flush();
       
       // tests the results
-      // expect(handler.success).toHaveBeenCalled();
-      expect(updatedExerciseUser.exercises[1]).toEqual('01-02-2016');
+      expect(handler.success).toHaveBeenCalled();
       expect(handler.error).not.toHaveBeenCalled();
       expect(errorMessage).toBeUndefined();
     });
 
+    //Test for logWorkout() Fail
+    it('should NOT let a user log workout', function () {
+      id = 'fakeid';
+      $httpBackend.whenPOST(/log/)
+        .respond (respondToHttp);
+
+      service.logWorkout().then(handler.success, handler.error);
+      $httpBackend.flush();
+
+      //test the results
+      expect(handler.error).toHaveBeenCalled();
+      expect(handler.success).not.toHaveBeenCalled();
+      expect(errorMessage).toBeDefined();
+    });
+
     //Test for unlogWorkout()
-    //******THIS TEST CANNOT PASS WITHOUT THE CONTROLLER
-    // fit('should let a user unlog workout', function () {      
-    //   var id = '5669e40077cc88a84bbb5c13';
-    //   var existingDate1 = '12-31-2015';
-    //   var existingDate2 = '01-02-2016';
-    //   var existingDate3 = '01-06-2016';
-    //   var existingUser = {
-    //     _id: id,
-    //     name: 'testlogging',
-    //     email: 'testlogging@test.com',
-    //     password: 'test',
-    //     exercises: [existingDate1, existingDate2, existingDate3]
-    //   };
+    it('should let a user unlog workout', function () {      
+      $httpBackend.whenPOST(/unlog/)
+        .respond(respondToHttp);
 
-    //   var updatedExerciseUser = {
-    //     _id: id,
-    //     name: 'testlogging',
-    //     email: 'testlogging@test.com',
-    //     password: 'test'
-    //   };
-
-    //   updatedExerciseUser.exercises = existingUser.exercises;
-    //   updatedExerciseUser.exercises.splice(existingUser.exercises[1],1);
-
-    //   $httpBackend.whenPOST(/unlog/)
-    //     .respond (function (method, url, params) {
-    //       var userId = id;
-
-    //       if (userId === existingUser._id) {
-    //         return [200, updatedExerciseUser];
-    //       } else {
-    //         return[404, { message: 'Not Found'}];
-    //       }
-    //     });
-
-    //   // setup the service to use the success and error handler functions we defined in the beforeEach block.
-    //   service.unlogWorkout().then(handler.success, handler.error);
-    //   $httpBackend.flush();
+      service.unlogWorkout().then(handler.success, handler.error);
+      $httpBackend.flush();
       
-    //   // tests the results
-    //   // expect(handler.success).toHaveBeenCalled();
-    //   console.log(updatedExerciseUser);
-    //   expect(updatedExerciseUser.exercises[1]).toEqual(existingDate3);
-    //   expect(updatedExerciseUser.exercises[0]).toEqual(existingDate1);
-    //   expect(handler.error).not.toHaveBeenCalled();
-    //   expect(errorMessage).toBeUndefined();
-    // });
+      // tests the results
+      expect(handler.success).toHaveBeenCalled();
+      expect(handler.error).not.toHaveBeenCalled();
+      expect(errorMessage).toBeUndefined();
+    });
+
+    //Test for unlogWorkout() Fail
+    it('should NOT let a user unlog workout', function () {
+      id = 'fakeid';
+      $httpBackend.whenPOST(/unlog/)
+        .respond (respondToHttp);
+
+      service.unlogWorkout().then(handler.success, handler.error);
+      $httpBackend.flush();
+
+      //test the results
+      expect(handler.error).toHaveBeenCalled();
+      expect(handler.success).not.toHaveBeenCalled();
+      expect(errorMessage).toBeDefined();
+    });
+
+    function respondToHttp(method, url, params) {
+      var userId = id;
+      if (userId === existingUser._id) {
+        return [200, updatedExerciseUser];
+      } else {
+        return[404, { message: 'Not Found'}];
+      }
+    };
 
   });
 })();
