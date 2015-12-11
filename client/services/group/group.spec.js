@@ -54,6 +54,29 @@
       // $httpBackend.flush();
     })
 
+    //Test to showGroup()
+    it('should show one group', function () {
+      var id = '56662b84c6e3a5280b1209aa';
+      var existingGroup = {
+        _id : id,
+        name : 'Tiger Group',
+        email : 'tiger@mail.com',
+        bet : 500,
+        start : '2015-12-31T09:00:00Z',
+        end : '2016-1-31T09:00:00Z',
+        _creator : '565f912726c74d251d0a7b03'
+      };
+      var response = service.showGroup()
+        .then(function () {
+          console.log('successful');
+        })
+        .catch(function (err) {
+          console.log('Error: ', err);
+        });
+
+        expect(response).toBeTruthy();
+    })
+
 
     //Test for createGroup()
     it('should create a new group', function () {
