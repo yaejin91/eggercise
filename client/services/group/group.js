@@ -9,7 +9,7 @@ angular.module('eggercise')
       //Create a new group by calling the api route for create group
       $http.get('api/groups/')
         .success(function (returnedGroups) {
-          deferred.resolve(returnedGroups);
+            deferred.resolve(returnedGroups);
         })
         .error(function (error) {
           deferred.reject('Error: ',  error);

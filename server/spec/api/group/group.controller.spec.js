@@ -44,15 +44,67 @@ describe('Group', function() {
 
   describe('without data', function() {
 
+    // View all groups (when there is no data)
     it('should return no groups', function (done) {
       agent
       .get('/api/groups')
       .set('Authorization', 'Bearer ' + auth.token)
       .expect('Content-Type', /json/)
       .expect(200)
-      .end(function (err, res) {
-        if(err) {
-          done.fail(err);
+      .end(function (error, res) {
+        if (error) {
+          done.fail(error);
+        } else if (res) {
+          expect(res.status).toBe(200);
+          expect(res.body.length).toEqual(0);
+          done();
+        }
+      });
+    });
+  });
+
+  describe('with data (for a different logged in user)', function() {
+    var group;
+
+    // Save a different user id to the creator id for the group
+    beforeEach(function (done) {
+      Group.create({
+        name: 'testGroup',
+        email: 'testGroup@test.com',
+        bet: 100,
+        start:'12-01-2015',
+        end:'12-31-2015',
+        _creator:'5669f29f583f0b9f462f944c'
+      }, function (error, newGroup) {
+        if (error) {
+          done.fail(error);
+        } else {
+          group = newGroup;
+          done();
+        }
+      });
+    });
+
+    afterEach(function (done) {
+      Group.remove({_id: group._id}, function (error, removedGroup) {
+        if (error) {
+          done.fail(error);
+        } else {
+          done();
+        }
+      });
+    });
+
+    // Error handling: no groups associated with logged in user
+    it('should return no groups for this user', function (done) {
+      agent
+      .get('/api/groups')
+      .set('Authorization', 'Bearer ' + auth.token)
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .end(function (error, res) {
+        if(error) {
+          done.fail(error);
         } else {
           expect(res.body.length).toEqual(0);
           done();
@@ -74,10 +126,15 @@ describe('Group', function() {
         _creator:creator._id
       }, function (error, newGroup) {
         if (error) {
-          console.log(error);
           done.fail(error);
         } else {
           group = newGroup;
+          creator._groups.push(group)
+          creator.save()
+          User.findOne({_id: creator._id})
+          .populate('_groups')
+          .exec(function (error, foundUser) {
+          })
           done();
         }
       });
@@ -93,18 +150,21 @@ describe('Group', function() {
       });
     });
 
-
-    it('should return all groups', function (done) {
+    // View all groups (success)
+    it('should return all groups for logged in user', function (done) {
       agent
       .get('/api/groups')
       .set('Authorization', 'Bearer ' + auth.token)
       .expect('Content-Type', /json/)
       .expect(200)
-      .end(function (err, res) {
-        if(err) {
-          done.fail(err);
+      .end(function (error, res) {
+        if(error) {
+          done.fail(error);
         } else {
+          expect(res.status).toBe(200);
           expect(res.body.length).toEqual(1);
+          expect(res.body[0].name).toEqual('testGroup');
+          expect(creator._groups[0]).toEqual(group._id);
           done();
         }
       });
@@ -136,7 +196,6 @@ describe('Group', function() {
         }
       });
     });
-
 
     //view single member page (positive)
     it('should show a single group', function (done) {
@@ -171,7 +230,6 @@ describe('Group', function() {
       });
     });
 
-
     //delete a group (positive)
     it('should delete the group (positive) ', function (done) {
       var creatorId = creator._id;
@@ -204,8 +262,6 @@ describe('Group', function() {
       .set('Authorization', 'Bearer ' + auth.token)
       .expect('Content-Type', /json/)
       .end(function (error, res) {
-        //console.log('res.error: ', res.error);
-        //console.log('res.body: ', res.body);
         if (res) {
           expect(res.status).toBe(404);
           expect(res.body.err).toBe('deletedGroup not found');
@@ -232,8 +288,6 @@ describe('Group', function() {
       .expect('Content-Type', /json/)
       .expect(200)
       .end(function (error, res){
-        // console.log('error: ', error);
-        // console.log('res.body: ', res.body);
         if(error){
           done.fail(error);
         }else {
@@ -250,7 +304,7 @@ describe('Group', function() {
       })
     });
 
-    //update an group (negative) 
+    //update an group (negative)
     it('should not update an existing group(negative)', function (done){
       var creatorId = creator._id;
       var group_id = 'ball12345692owopk'
@@ -276,7 +330,6 @@ describe('Group', function() {
         }
       })
     });
-
   });
 });
 
@@ -292,7 +345,6 @@ function loginUser (auth, done) {
 
   function onResponse(error, res) {
     if(error) {
-      console.log(error);
       throw error;
     } else {
       auth.token = res.body.token;
