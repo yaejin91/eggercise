@@ -60,7 +60,7 @@
       expect(controller.user).toBeDefined();
     });
 
-    it('should not log an exercise session', function() {
+    it('should NOT log an exercise session', function() {
       passPromise = false;
       controller.logWorkout();
       rootScope.$digest();
@@ -75,6 +75,14 @@
       expect(workoutService.unlogWorkout).toHaveBeenCalled();
       console.log('controller.user', controller.user);
       expect(controller.user).toBeDefined();
+    });
+
+    it('should NOT unlog an exercise session', function() {
+      passPromise = false;
+      controller.unlogWorkout();
+      rootScope.$digest();
+      expect(workoutService.unlogWorkout).toHaveBeenCalled();
+      expect(controller.error).toBeDefined();
     });
 
   });
