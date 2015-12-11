@@ -86,4 +86,4 @@
       expect(controller.error).toBeDefined();
     });
   });
-});
+})();
