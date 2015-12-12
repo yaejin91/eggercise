@@ -6,9 +6,7 @@ angular.module('eggercise')
     var vm = this;
     vm.formData = {};
     vm.groups =[];
-
-    // var creatorId = $routeParams.creatorId;
-    // vm.formData._creator = creatorId
+    vm.group_id = $routeParams.id;
 
     angular.extend(vm, {
 
@@ -22,6 +20,7 @@ angular.module('eggercise')
       GroupService.updateGroup(id)
         .then(function (updatedGroup){
           vm.groups.push(updatedGroup);
+          $location.path('/group')
         })
         .catch(function(error) {
           vm.error = error;
