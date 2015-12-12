@@ -10,13 +10,25 @@ angular.module('eggercise')
 
     angular.extend(vm, {
 
+    //Show Workout
+    showWorkout: function () {
+      WorkoutService.showWorkout()
+        .then(function (data) {
+          vm.user = data;
+          console.log('vm.user in workoutlog controller: ', vm.user);
+          $location.path('/log');
+        })
+        .catch(function (err) {
+          vm.error = err;
+          $log.error('Error: ',err);
+        })
+    },
+
     //Log Workout
     logWorkout: function () {
       WorkoutService.logWorkout(vm.formData)
         .then(function (data) {
           vm.user = data;
-          console.log('vm.user is: ', vm.user);
-          console.log('vm.formData.date: ',vm.formData);
           $location.path('/log');
         })
         .catch(function (err) {
@@ -30,7 +42,7 @@ angular.module('eggercise')
       WorkoutService.unlogWorkout(vm.formData)
         .then(function (data) {
           vm.user = data;
-          $location.path('/');
+          $location.path('/log');
         })
         .catch(function (err) {
           vm.error = err;

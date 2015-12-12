@@ -113,6 +113,10 @@ describe('User', function() {
         }
       });
     });
+    //Test for showing user's workout dates
+    it('should show all exercise dates', function (done) {
+      
+    })
 
     //Test for logging an exercise
     it('should log an exercise', function (done) {

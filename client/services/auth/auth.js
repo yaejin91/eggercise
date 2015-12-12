@@ -10,6 +10,7 @@ angular.module('eggercise')
       $http.get('/api/users/me')
         .then(function (res) {
           _user = res.data;
+          console.log('_user in auth.js', _user);
         })
         .finally(function () {
           _ready.resolve();

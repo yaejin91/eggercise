@@ -1,5 +1,6 @@
 <div class="container">
-  <h1> Log Your Workout </h1>
+  <h1> {{vm.user.name}} </h1>
+  <h3> Log Your Workout </h3>
 </div>
 
 <form ng-submit="vm.logWorkout()">
@@ -8,4 +9,12 @@
   </button>
 </form>
 
-{{vm.formData}}
+<div>
+  <h4> Your Exercise Records: </h4>
+  <div ui-sortable ng-init="vm.showWorkout()">
+    <div ng-repeat="exercises in vm.user">
+      <p> {{vm.user.exercises}}
+      </p>
+    </div>
+  </div>
+</div>
