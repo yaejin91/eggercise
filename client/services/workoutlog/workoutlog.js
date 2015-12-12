@@ -4,9 +4,9 @@ angular.module('eggercise')
   .service('WorkoutService', function ($rootScope, $q, $http) {
     var service = {};
 
-    service.logWorkout = function (date) {
+    service.logWorkout = function (formData) {
       var deferred = $q.defer();
-      $http.post('/api/users/log/')
+      $http.post('/api/users/log/', formData)
         .success(function (updatedWorkout) {
           deferred.resolve(updatedWorkout);
         })
@@ -16,9 +16,9 @@ angular.module('eggercise')
       return deferred.promise;
     };
 
-    service.unlogWorkout = function (date) {
+    service.unlogWorkout = function (formData) {
       var deferred = $q.defer();
-      $http.post('/api/users/unlog/')
+      $http.post('/api/users/unlog/', formData)
       .success(function (updatedWorkout) {
         deferred.resolve(updatedWorkout);
       })
