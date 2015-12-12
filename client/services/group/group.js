@@ -56,7 +56,6 @@ angular.module('eggercise')
       console.log('id: ', id);
       $http.post('/api/groups/delete/' + id)
         .success(function (deletedGroup){
-          console.log('deletedGroup: ', deletedGroup);
           deferred.resolve(deletedGroup);
         })
         .error(function (error){
