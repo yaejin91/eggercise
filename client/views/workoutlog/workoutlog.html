@@ -1,4 +1,9 @@
 <div class="container">
   <h1> Log Your Workout </h1>
-  {{vm.user}}
 </div>
+
+<form ng-submit="vm.logWorkout()">
+  <input type="date" ng-model="vm.formData.date" placeholder="date">
+  <button type="submit"> Log Workout 
+  </button>
+</form>
