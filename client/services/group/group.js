@@ -66,10 +66,10 @@ angular.module('eggercise')
     };
 
     //update group by group id
-    service.updateGroup = function (id){
+    service.updateGroup = function (id, formData){
       var deferred = $q.defer();
       console.log('id: ', id);
-      $http.post('/api/groups/update/' + id)
+      $http.post('/api/groups/update/' + id, formData)
         .success(function (updatedGroup){
           console.log('updatedGroup: ', updatedGroup);
           deferred.resolve(updatedGroup);

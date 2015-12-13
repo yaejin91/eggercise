@@ -10,11 +10,11 @@
             </div>
 
               <!-- Update Group Button -->
-              <button class="btn btn-info">
-                <a href="/group/updateGroup?group_id={{vm.group._id}}">
+                <a id="update-button"  href="/group/updateGroup?group_id={{vm.group._id}}">
+                <button class="btn btn-info">
                 <div class="glyphicon glyphicon-pencil small-glyph"></div>
+                </button>
                 </a>
-              </button>
 
               <button ng-controller="DeleteGroupCtrl as delete" class="btn btn-danger" ng-click="delete.deleteGroup(vm.group._id)">
                 <div class="glyphicon glyphicon-remove small-glyph"></div>
