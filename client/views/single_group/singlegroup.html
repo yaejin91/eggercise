@@ -1,5 +1,5 @@
 <div class="container">
-<div ng-init="vm.showGroup(vm.group_id)"></div>
+<div ng-init="vm.showGroup(vm.group_id)">
   <h1>{{ vm.group.name }}</h1>
   <div class="row">
     <div class="col-xs-12">
@@ -32,8 +32,8 @@
       <div class="jumbotron">
         <div class="row">
           <div class="col-md-12 text-center">
-            <div>
-              {{days.elapsed}}
+            <div class="days">
+              {{vm.elapsedday}} / {{vm.totaldays}}
             </div>
           </div>
           <div class="col-md-12 text-center">
@@ -47,8 +47,8 @@
       <div class="jumbotron">
         <div class="row">
           <div class="col-md-12 text-center">
-            <div>
-              {{days.behind}}
+            <div class="days">
+              12
             </div>
           </div>
           <div class="col-md-12 text-center">
@@ -62,8 +62,8 @@
       <div class="jumbotron">
         <div class="row">
           <div class="col-md-12 text-center">
-            <div>
-              {{owed}}
+            <div class="days">
+              $50
             </div>
           </div>
           <div class="col-md-12 text-center">
@@ -78,7 +78,11 @@
   <hr>
   <div class="row">
     <div class="col-xs-10">
-      Members Here
+      <div ng-repeat="member in vm.group._members">
+        <div>
+          <p>{{member.name}}</p>
+        </div>
+      </div>
     </div>
     <div class="col-xs-2">
       Days Here
@@ -88,8 +92,12 @@
   <h3>The Pot</h3>
   <hr>
   <div class="row">
-    <div class="col-xs-10">
-      Member
+    <div class="col-xs-10" >
+      <div ng-repeat="member in vm.group._members">
+        <div>
+          <p>{{member.name}}</p>
+        </div>
+      </div>
     </div>
     <div class="col-xs-2">
       Money Calcs Here
