@@ -22,6 +22,7 @@ angular.module('eggercise')
               var edate = new Date(data.end);
               vm.enddate = ((edate.getMonth() + 1) + "/" + edate.getDate());
               vm.group = data;
+              console.log(vm.group);
               $location.path('/group/show');
             })
             .catch(function (err) {

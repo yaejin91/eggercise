@@ -59,7 +59,9 @@ exports.create = function (req, res) {
 //view single group
 exports.showGroup = function (req, res) {
   if (mongoose.Types.ObjectId.isValid(req.params.group_id)) {
-    Group.findOne({_id: req.params.group_id}, function (err, group) {
+    Group.findOne({_id: req.params.group_id})
+      .populate('_members')
+      .exec(function (err, group) {
       if (err) { return handleError(res, err, 500);
       } else if (group) {
         if(req.user._id + '' == group._creator || group._members.indexOf() > -1) {

@@ -1,5 +1,5 @@
 <div class="container">
-<div ng-init="vm.showGroup(vm.group_id)"></div>
+<div ng-init="vm.showGroup(vm.group_id)">
   <h1>{{ vm.group.name }}</h1>
   <div class="row">
     <div class="col-xs-12">
@@ -88,8 +88,12 @@
   <h3>The Pot</h3>
   <hr>
   <div class="row">
-    <div class="col-xs-10">
-      Member
+    <div class="col-xs-10" >
+      <div ng-repeat="group in vm.group">
+        <div>
+          {{group.name}}
+        </div>
+      </div>
     </div>
     <div class="col-xs-2">
       Money Calcs Here
