@@ -5,7 +5,6 @@ angular.module('eggercise')
 
     var vm = this;
 
-
     angular.extend(vm, {
       name: 'DeleteGroupCtrl'
     });
@@ -15,9 +14,7 @@ angular.module('eggercise')
     vm.deleteGroup = function (id){
       GroupService.deleteGroup(id)
       .then(function (data){
-        $location.path('/groups')
-        console.log('data: ', data);
-        
+        $location.path('/group')
       })
       .catch(function (error){
         vm.error = error;

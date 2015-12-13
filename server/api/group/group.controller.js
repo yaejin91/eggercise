@@ -96,13 +96,18 @@ exports.delete = function (req, res){
 exports.update = function (req, res){
   var creatorId = req.user._id;
   var groupId = {_id: req.params.group_id};
-  Group.update( groupId, {
+  console.log('groupId: ', groupId);
+  console.log('req.body : ', req.body);
+  Group.update( groupId , {$set: {
     name: req.body.name,
     bet: req.body.bet,
     start: req.body.start,
     end: req.body.end,
     _creator: creatorId
-  }, function (err, updatedGroup){
+  }}, function (err, updatedGroup){
+      console.log('req.body : ', req.body);
+      console.log('server err', err);
+      console.log('server updatedGroup', updatedGroup);
     if(err){
       return handleError(res, 'updatedGroup not found', 404);
     }
