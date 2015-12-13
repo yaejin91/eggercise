@@ -10,6 +10,8 @@ angular.module('eggercise')
       vm.totaldays = {};
       vm.elapsedday = {};
       vm.group_id = $routeParams.id;
+      vm.members = [];
+      vm.exercises = [];
 
       angular.extend(vm, {
 
@@ -33,9 +35,19 @@ angular.module('eggercise')
               var tdate = new Date();
               vm.totaldays = Date.daysBetween(sdate, edate);
               vm.elapsedday = Date.daysBetween(sdate, tdate);
-              console.log('total days: ', vm.totaldays);
-              console.log('elapsedday: ', vm.elapsedday);
               vm.group = data;
+
+              for (var i = 0; i < data._members.length; i++) {
+                vm.members.push(data._members[i]);
+                for (var j = 0; j < data._members[i].exercises.length; j++) {
+                  if (data._members[i].exercises[j] === 0) {
+                    j++;
+                  }
+                  vm.exercises.push(data._members[i].exercises[j]);
+                }
+              }
+              console.log('These are the group members: ', vm.members);
+              console.log('These are the group exercises: ', vm.exercises);
               console.log(vm.group);
               $location.path('/group/show');
             })
