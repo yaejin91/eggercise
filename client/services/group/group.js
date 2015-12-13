@@ -41,7 +41,6 @@ angular.module('eggercise')
       var deferred = $q.defer();
       $http.get('/api/groups/' + id)
         .success(function (showGroup) {
-          console.log(showGroup);
           deferred.resolve(showGroup);
         })
         .error(function (error) {
