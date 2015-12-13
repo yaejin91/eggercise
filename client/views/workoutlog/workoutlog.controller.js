@@ -12,10 +12,12 @@ angular.module('eggercise')
 
     //Log Workout
     logWorkout: function () {
-      WorkoutService.logWorkout(vm.formData.date)
+      WorkoutService.logWorkout(vm.formData)
         .then(function (data) {
           vm.user = data;
-          $location.path('/');
+          console.log('vm.user is: ', vm.user);
+          console.log('vm.formData.date: ',vm.formData);
+          $location.path('/log');
         })
         .catch(function (err) {
           vm.error = err;
@@ -25,7 +27,7 @@ angular.module('eggercise')
 
     //Unlog Workout
     unlogWorkout: function() {
-      WorkoutService.unlogWorkout(vm.formData.date)
+      WorkoutService.unlogWorkout(vm.formData)
         .then(function (data) {
           vm.user = data;
           $location.path('/');
