@@ -78,7 +78,11 @@
   <hr>
   <div class="row">
     <div class="col-xs-10">
-      Members Here
+      <div ng-repeat="member in vm.group._members">
+        <div>
+          <p>{{member.name}}</p>
+        </div>
+      </div>
     </div>
     <div class="col-xs-2">
       Days Here
@@ -89,9 +93,9 @@
   <hr>
   <div class="row">
     <div class="col-xs-10" >
-      <div ng-repeat="group in vm.group">
+      <div ng-repeat="member in vm.group._members">
         <div>
-          {{group.name}}
+          <p>{{member.name}}</p>
         </div>
       </div>
     </div>
