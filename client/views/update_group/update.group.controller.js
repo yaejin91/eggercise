@@ -19,16 +19,13 @@ angular.module('eggercise')
   
     //update group
     vm.updateGroup = function (id, formData) {
-      console.log('ctrl formData: ', vm.formData);
       GroupService.updateGroup(id, vm.formData)
         .then(function (updatedGroup){
           vm.formData = updatedGroup;
-          console.log('ctrl: updatedGroup: ', updatedGroup);
           $location.path('/group')
         })
         .catch(function(error) {
           vm.error = error;
-          console.log('updatedGroup Error: ',  error);
         });
     }
 
