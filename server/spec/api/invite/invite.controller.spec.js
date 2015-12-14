@@ -94,6 +94,7 @@ describe('Invite', function() {
       });
     });
 
+    //create an invitation(positive)
     it('should create a new invitation through an email address', function (done){
     agent
       .post('/api/invites/create')
@@ -119,8 +120,31 @@ describe('Invite', function() {
         }
       });
     });
+
+    //doesn't create an invitation(negative)
+    it('should not create a new invitation through an email address', function (done){
+    agent
+      .post('/api/invites/create')
+      .send({
+        email: 'inviteemail2@gmail.com'
+      })
+      .set('Authorization', 'Bearer ' + auth.token)
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .end(function (error, res) {
+        if(res){
+          expect(res.status).toBe(500);
+          expect(res.body.err).toBe('Did not create the invite');
+          done();
+        } else {
+          done.fail(error);
+        }
+      });
+    });
+
   });
 });
+
 
 function loginUser (auth, done) {
   agent
