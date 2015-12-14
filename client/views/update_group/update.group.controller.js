@@ -5,10 +5,10 @@ angular.module('eggercise')
 
     var vm = this;
     vm.formData = {};
-    vm.groups =[];
-
-    // var creatorId = $routeParams.creatorId;
-    // vm.formData._creator = creatorId
+    vm.group = {};
+    vm.groups = [];
+    vm.group_id = $routeParams.group_id;
+    console.log('$routeParams: ', $routeParams.group_id);
 
     angular.extend(vm, {
 
@@ -18,10 +18,13 @@ angular.module('eggercise')
 
   
     //update group
-    vm.updateGroup = function (id) {
-      GroupService.updateGroup(id)
+    vm.updateGroup = function (id, formData) {
+      console.log('ctrl formData: ', vm.formData);
+      GroupService.updateGroup(id, vm.formData)
         .then(function (updatedGroup){
-          vm.groups.push(updatedGroup);
+          vm.formData = updatedGroup;
+          console.log('ctrl: updatedGroup: ', updatedGroup);
+          $location.path('/group')
         })
         .catch(function(error) {
           vm.error = error;

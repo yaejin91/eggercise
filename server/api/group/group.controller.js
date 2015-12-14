@@ -34,7 +34,8 @@ exports.create = function (req, res) {
     bet: req.body.bet,
     start: req.body.start,
     end: req.body.end,
-    _creator: creatorId
+    _creator: creatorId,
+    _members: creatorId
   });
 
   group.save(function (error, data) {
@@ -59,7 +60,9 @@ exports.create = function (req, res) {
 //view single group
 exports.showGroup = function (req, res) {
   if (mongoose.Types.ObjectId.isValid(req.params.group_id)) {
-    Group.findOne({_id: req.params.group_id}, function (err, group) {
+    Group.findOne({_id: req.params.group_id})
+      .populate('_members')
+      .exec(function (err, group) {
       if (err) { return handleError(res, err, 500);
       } else if (group) {
         if(req.user._id + '' == group._creator || group._members.indexOf() > -1) {
@@ -94,13 +97,18 @@ exports.delete = function (req, res){
 exports.update = function (req, res){
   var creatorId = req.user._id;
   var groupId = {_id: req.params.group_id};
-  Group.update( groupId, {
+  console.log('groupId: ', groupId);
+  console.log('req.body : ', req.body);
+  Group.update( groupId , {$set: {
     name: req.body.name,
     bet: req.body.bet,
     start: req.body.start,
     end: req.body.end,
     _creator: creatorId
-  }, function (err, updatedGroup){
+  }}, function (err, updatedGroup){
+      console.log('req.body : ', req.body);
+      console.log('server err', err);
+      console.log('server updatedGroup', updatedGroup);
     if(err){
       return handleError(res, 'updatedGroup not found', 404);
     }

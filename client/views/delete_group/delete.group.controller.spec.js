@@ -49,7 +49,7 @@
       // Test that the controller called the correct method on the service
       expect(groupService.deleteGroup).toHaveBeenCalled();
       // Test to make sure the controller did what was expected in an error case
-      expect(locationService.path()).toBe('/groups');
+      expect(locationService.path()).toBe('/group');
     });
 
     it('should not delete a group', function() {
