@@ -71,7 +71,6 @@ describe('Invite', function() {
               done.fail(error);
             }else{
               invite = newInvite;
-              console.log('invite: ', invite);
               done();
             }
           }) 
@@ -97,7 +96,11 @@ describe('Invite', function() {
 
     it('should create a new invitation through an email address', function (done){
     agent
-      .post('/api/invites')
+      .post('/api/invites/create')
+      .send({
+        email: 'inviteemail@gmail.com',
+        _group: group._id
+      })
       .set('Authorization', 'Bearer ' + auth.token)
       .expect('Content-Type', /json/)
       .expect(200)
@@ -106,17 +109,16 @@ describe('Invite', function() {
           done.fail(error);
         } else {
           var returnedInvite = res.body;
-          console.log('returnedInvite: ', returnedInvite);
           expect(returnedInvite).toBeDefined();
-          expect(returnedInvite.email).toBeEqual('invitee@email.com');
-          expect(returnedInvite._group).toBeEqual(group._id);
-          done();
+          expect(returnedInvite.email).toBe('inviteemail@gmail.com');
+          expect(returnedInvite._group).toBe((group._id).toJSON());
+          Invite.findOne({ _id: returnedInvite._id })
+          .remove(function (error) {
+            done();            
+          })
         }
       });
     });
-  
-
-
   });
 });
 
