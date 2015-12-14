@@ -40,7 +40,7 @@
       expect(controller.formData).toBeDefined();
     });
 
-    fit('should update a group', function() {
+    it('should update a group', function() {
       // Test a successful call to the GroupService
       passPromise = true;
       // Setup the data for the form.
