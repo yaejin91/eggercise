@@ -274,7 +274,7 @@ describe('Group', function() {
     });
 
     //update an group (positive)
-    it('should update an existing group(positive)', function (done){
+    fit('should update an existing group(positive)', function (done){
       var creatorId = creator._id;
       agent
       .post('/api/groups/update/' + group._id)
@@ -296,8 +296,9 @@ describe('Group', function() {
             if(error){
               done.fail(error);
             }else{
-              var updatedGroup = res.body;
+              console.log('updatedGroup: ', updatedGroup);
               expect(updatedGroup).toBeDefined();
+              expect(updatedGroup.name).toEqual('update');
               return done();
             }
           })
