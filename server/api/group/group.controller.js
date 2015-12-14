@@ -34,7 +34,8 @@ exports.create = function (req, res) {
     bet: req.body.bet,
     start: req.body.start,
     end: req.body.end,
-    _creator: creatorId
+    _creator: creatorId,
+    _members: creatorId
   });
 
   group.save(function (error, data) {
