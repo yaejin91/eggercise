@@ -12,9 +12,8 @@
 <div>
   <h4> Your Exercise Records: </h4>
   <div ui-sortable ng-init="vm.showWorkout()">
-    <div ng-repeat="exercises in vm.user">
-      <p> {{vm.user.exercises}}
-      </p>
+    <div ng-repeat="exercise in vm.user.exercises track by $index">
+      <input type="checkbox">{{exercise}}
     </div>
   </div>
 </div>

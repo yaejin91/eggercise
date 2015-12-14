@@ -14,8 +14,10 @@ angular.module('eggercise')
     showWorkout: function () {
       WorkoutService.showWorkout()
         .then(function (data) {
+          for(var i=0; i<data.exercises.length; i++) {
+            data.exercises[i] = new Date(data.exercises[i]).toDateString();
+          }
           vm.user = data;
-          console.log('vm.user in workoutlog controller: ', vm.user);
           $location.path('/log');
         })
         .catch(function (err) {
