@@ -274,7 +274,7 @@ describe('Group', function() {
     });
 
     //update an group (positive)
-    fit('should update an existing group(positive)', function (done){
+    it('should update an existing group(positive)', function (done){
       var creatorId = creator._id;
       agent
       .post('/api/groups/update/' + group._id)
