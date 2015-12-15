@@ -20,7 +20,7 @@ exports.create = function (req, res) {
   });
   invite.save(function (error, savedInvite) {
     if (error) {
-      return handleError(res, error, 500);
+      return handleError(res, 'Did not create the invite', 500);
     } else {
       res.json(savedInvite);
     }
