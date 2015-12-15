@@ -8,7 +8,6 @@ angular.module('eggercise')
     vm.group = {};
     vm.groups = [];
     vm.group_id = $routeParams.group_id;
-    console.log('$routeParams: ', $routeParams.group_id);
 
     angular.extend(vm, {
 
@@ -16,7 +15,7 @@ angular.module('eggercise')
 
     });
 
-  
+
     //update group
     vm.updateGroup = function (id, formData) {
       GroupService.updateGroup(id, vm.formData)
@@ -29,5 +28,16 @@ angular.module('eggercise')
         });
     }
 
+    //invite member
+    vm.inviteMember = function (formData) {
+      GroupService.inviteMember(vm.formData)
+        .then(function (invite) {
+          vm.formData = invite;
+          $location.path('/group')
+        })
+        .catch(function (error) {
+          vm.error = error;
+        });
+    }
 
   }]);

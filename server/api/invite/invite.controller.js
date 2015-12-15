@@ -16,7 +16,8 @@ exports.create = function (req, res) {
   var groupId = req.body._group;
   var invite = new Invite ({
     email: req.body.email,
-    _group: groupId
+    _group: groupId,
+    status: false
   });
   invite.save(function (error, savedInvite) {
     if (error) {

@@ -1,21 +1,58 @@
 <!-- Modal for updating a new group-->
 <div class="container">
   <h2> Update your group's information </h2>
-  <h2> {{vm.groups.name}} </h2>
+  <h2> {{vm.group.name}} </h2>
   <div class="row">
     <div ng-controller="UpdateGroupCtrl as update" class="col-xs-12">
       <form role="form" ng-submit="update.updateGroup(update.group_id, update.formData)">
         <div class="row">
           <div class="input-group col-md-4">
-            <input ng-model="update.formData.name" type="text" placeholder="New Group's Name" class="form-control">
-            <input ng-model="update.formData.bet" type="number" placeholder="Buy-In Price" class="form-control">
-            <input ng-model="update.formData.start" type="date" placeholder="Start Date" class="form-control">
-            <input ng-model="update.formData.end" type="date" placehodler="End Date" class="form-control">
+            <div>
+              Group Name
+              <input ng-model="update.formData.name" type="text" placeholder="New Group's Name" class="form-control">
+            </div>
+            <div>
+              Group Description
+              <input ng-model="update.formData.description" type="text" placeholder="New Group's Description" class="form-control">
+            </div>
+            <div>
+              Buy-In
+              <input ng-model="update.formData.bet" type="number" placeholder="Buy-In Price" class="form-control">
+            </div>
+            <div>
+              Start Date
+              <input ng-model="update.formData.start" type="date" placeholder="Start Date" class="form-control">
+            </div>
+            <div>
+              End Date
+              <input ng-model="update.formData.end" type="date" placehodler="End Date" class="form-control">
+            </div>
             <input type="submit" class="btn btn-primary" value="Update">
             <a href="/group" class="btn btn-default">Cancel </a>
           </div>
         </div>
       </form>
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div>
+      <h2>Group Members</h2>
+      <hr>
+    <div ng-controller="InviteCtrl as invite" class="col-xs-12">
+      <form role="form" ng-submit="invite.createInvite(invite.formData)">
+        <div class="row">
+          <div class="input-group col-md-4">
+            <input ng-model="invite.formData.email" type="text" placeholder="enter an email to invite a member" class="form-control">
+            <!-- <input type="hidden" value="{{ $routeParams.group_id }}" -->
+            <span class="input-group-btn">
+              <input type="submit" class="btn btn-primary" value="Add">
+            </span>
+          </div>
+        </div>
+      </form>
+      <div id="sentInvite"></div>
     </div>
   </div>
 </div>

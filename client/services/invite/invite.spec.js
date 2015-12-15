@@ -3,6 +3,12 @@
 
   describe('InviteService', function() {
     var service, $httpBackend, handler, inviteData, errorMessage;
+    var id = '56705595cfa2396ab020bfd4';
+    var newInvite = {
+      _id: id,
+      email: 'testlogging@test.com',
+      _group: '566f8f6697c28b4e971c6a50'
+    };
 
     // Configure module that contains the controller being tested
     beforeEach(module('eggercise'));
@@ -29,9 +35,39 @@
       spyOn(handler, 'error').and.callThrough();
     }));
 
-   
     //Test for createInvite()
-    it('should create a new invitation', function () {
+    fit('should let a group creator create an invite', function () {
+      id = '5669e40077cc88a84bbb5c13';
+      $httpBackend.whenPOST(/create/)
+        .respond (respondToHttp);
+
+      // setup the service to use the success and error handler functions we defined in the beforeEach block.
+      service.createInvite().then(handler.success, handler.error);
+      $httpBackend.flush();
+
+      // tests the results
+      expect(handler.success).toHaveBeenCalled();
+      expect(handler.error).not.toHaveBeenCalled();
+      expect(errorMessage).toBeUndefined();
+    });
+
+    //Test for createInvite() Fail
+    fit('should NOT let a group creator create an invite', function () {
+      id = 'fakeid';
+      $httpBackend.whenPOST(/create/)
+        .respond (respondToHttp);
+
+      service.createInvite().then(handler.success, handler.error);
+      $httpBackend.flush();
+
+      //test the results
+      expect(handler.error).toHaveBeenCalled();
+      expect(handler.success).not.toHaveBeenCalled();
+      expect(errorMessage).toBeDefined();
+    });
+
+    //Test for createInvite()
+    fit('should return a successful promise for invitation', function () {
       var createInv = service.createInvite()
         .then(function (){
           console.log('successful');
@@ -41,7 +77,14 @@
         });
         expect(createInv).toBeTruthy();
     });
+
+    function respondToHttp(method, url, params) {
+      var inviteId = id;
+      if (inviteId === newInvite._id) {
+        return [200, newInvite];
+      } else {
+        return[404, { message: 'Not Found'}];
+      }
+    }
   });
-
-
-  })();
+})();
