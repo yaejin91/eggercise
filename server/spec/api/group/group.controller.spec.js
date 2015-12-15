@@ -129,6 +129,7 @@ describe('Group', function() {
         if (error) {
           done.fail(error);
         } else {
+          console.log(newGroup);
           group = newGroup;
           creator._groups.push(group)
           creator.save()
@@ -273,6 +274,8 @@ describe('Group', function() {
       });
     });
 
+
+
     //update an group (positive)
     it('should update an existing group(positive)', function (done){
       var creatorId = creator._id;
@@ -296,7 +299,6 @@ describe('Group', function() {
             if(error){
               done.fail(error);
             }else{
-              console.log('updatedGroup: ', updatedGroup);
               expect(updatedGroup).toBeDefined();
               expect(updatedGroup.name).toEqual('update');
               return done();

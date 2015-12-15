@@ -15,6 +15,16 @@ angular.module('eggercise')
 
     });
 
+    //get update group
+    vm.getGroup = function (id) {
+      GroupService.showGroup(id)
+        .then(function (data) {
+          vm.group = data;
+        })
+        .catch(function (error) {
+          vm.error = error;
+        });
+    }
 
     //update group
     vm.updateGroup = function (id, formData) {

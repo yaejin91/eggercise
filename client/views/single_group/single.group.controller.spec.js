@@ -43,20 +43,20 @@
       expect(controller.enddate).toBeDefined();
     });
 
-    it('should show one group', function() {
-      // Test a successful call to the GroupService
-      passPromise = true;
-      // Explicitly call the controller actions we are testing
-      controller.showGroup();
-      // Force the action to be executed and the promise to be resolved
-      rootScope.$digest();
-      // Test that the controller called the correct method on the service
-      expect(groupService.showGroup).toHaveBeenCalled();
-      // Test that the data has the correct properties and values
-      expect(controller.group).toBeDefined();
-      expect(controller.startdate).toBeDefined();
-      expect(controller.enddate).toBeDefined();
-    });
+    // it('should show one group', function() {
+    //   // Test a successful call to the GroupService
+    //   passPromise = true;
+    //   // Explicitly call the controller actions we are testing
+    //   controller.showGroup();
+    //   // Force the action to be executed and the promise to be resolved
+    //   rootScope.$digest();
+    //   // Test that the controller called the correct method on the service
+    //   expect(groupService.showGroup).toHaveBeenCalled();
+    //   // Test that the data has the correct properties and values
+    //   expect(controller.group).toBeDefined();
+    //   expect(controller.startdate).toBeDefined();
+    //   expect(controller.enddate).toBeDefined();
+    // });
 
   });
 })();
