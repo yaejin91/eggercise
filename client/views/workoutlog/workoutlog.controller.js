@@ -9,6 +9,7 @@ angular.module('eggercise')
     vm.id = $rootScope._id;
     vm.allDates = [];
     vm.numberOfDays = 0;
+    vm.checkBox = [];
 
     angular.extend(vm, {
 
@@ -16,9 +17,16 @@ angular.module('eggercise')
     showWorkout: function () {
       WorkoutService.showWorkout()
         .then(function (data) {
+          //multiplier for milliseconds to days conversion 
           const millisToDays = 1000*60*60*24;
+
+          //user's join date in unit 'days'
           var joinDate = Math.floor(new Date(data.joinDate)/millisToDays);
+
+          //current date in unit 'days'
           var todayDate = Math.floor(Date.now()/millisToDays);
+
+          //vm.numberOfDays is number of days between user's join date and current date
           vm.numberOfDays = todayDate - joinDate;
           vm.user = data;
           vm.user.convertedExercises = [];
@@ -26,6 +34,7 @@ angular.module('eggercise')
           for(var i=0; i<vm.user.exercises.length; i++) {
             //This is for cutting the exercise array elements (workout dates) in to a more readable format
             vm.user.exercises[i] = vm.user.exercises[i].substring(0,10);
+
             //This converts the user's exercise array into number of days (number of days since 1970 Jan 1st, integer)
             vm.user.convertedExercises[i] = Math.floor(new Date(vm.user.exercises[i]).getTime()/millisToDays);
           }
@@ -34,7 +43,7 @@ angular.module('eggercise')
           for(var j=vm.numberOfDays; j>=0; j--) {
             if(vm.numberOfDays !== j){
               vm.allDates.push({
-              //todayDate - j is for checking the dates from now to joinDate 
+                //todayDate - j is for checking the dates from now to joinDate 
                 date: (new Date((todayDate - j)*millisToDays)+'').substring(0,15),
                 checked: (vm.user.convertedExercises.indexOf(todayDate - j) !== -1)
               });
@@ -46,27 +55,47 @@ angular.module('eggercise')
           vm.error = err;
           $log.error('Error: ',err);
         })
-    },
+      },
 
-    //Log Workout
-    logWorkout: function () {
-      WorkoutService.logWorkout(vm.formData)
+    // //Log Workout
+    // logWorkout: function () {
+    //   WorkoutService.logWorkout(vm.formData)
+    //     .then(function (data) {
+    //       vm.user = data;
+    //       $location.path('/log');
+    //     })
+    //     .catch(function (err) {
+    //       vm.error = err;
+    //       $log.error('Error: ', err);
+    //     })
+    // },
+
+    // //Unlog Workout
+    // unlogWorkout: function() {
+    //   WorkoutService.unlogWorkout(vm.formData)
+    //     .then(function (data) {
+    //       vm.user = data;
+    //       $location.path('/unlog');
+    //     })
+    //     .catch(function (err) {
+    //       vm.error = err;
+    //       $log.error('Error: ', err);
+    //     })
+    // },
+
+    //Log Toggle
+    logToggle: function(index, dateObject) {
+      var logPath;
+
+      if(vm.allDates[index].checked == true) {
+        logPath = 'log';
+      } else {
+        logPath = 'unlog';
+      }
+
+      WorkoutService.logToggle(logPath, dateObject)
         .then(function (data) {
           vm.user = data;
-          $location.path('/log');
-        })
-        .catch(function (err) {
-          vm.error = err;
-          $log.error('Error: ', err);
-        })
-    },
-
-    //Unlog Workout
-    unlogWorkout: function() {
-      WorkoutService.unlogWorkout(vm.formData)
-        .then(function (data) {
-          vm.user = data;
-          $location.path('/log');
         })
         .catch(function (err) {
           vm.error = err;

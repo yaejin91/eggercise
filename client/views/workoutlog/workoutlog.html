@@ -3,18 +3,18 @@
   <h3> Log Your Workout </h3>
 </div>
 
-<form ng-submit="vm.logWorkout()">
+<!-- <form ng-submit="vm.logWorkout()">
   <input type="date" ng-model="vm.formData.date" placeholder="date">
   <button type="submit" class="btn btn-default"> Log Workout 
   </button>
-</form>
+</form> -->
 
 <div>
   <h4> Your Exercise Records: </h4>
   <div ui-sortable ng-init="vm.showWorkout()">
     <div ng-repeat="dateObject in vm.allDates track by $index">
-      <input ng-if="dateObject.checked" type="checkbox" checked>
-      <input ng-if="!dateObject.checked" type="checkbox">
+      <input ng-click="vm.logToggle($index, dateObject)" ng-if="dateObject.checked" type="checkbox" checked>
+      <input ng-click="vm.logToggle($index)" ng-if="!dateObject.checked" type="checkbox">
       <label>{{dateObject.date}}</label>
     </div>
   </div>
