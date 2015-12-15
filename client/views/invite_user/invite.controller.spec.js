@@ -12,9 +12,12 @@
       // No need to call the actual GroupService. It has its own spec.
       inviteService = (function() {
         return {
-          createInvite: function() {
+          createInvite: function(formData) {
             if(passPromise) {
-              return $q.when([{ email: 'newinvite@mail.com' }])
+              return $q.when([{
+                email: 'newinvite@mail.com',
+                _group: '564784feda231123fabc34'
+            }])
             } else {
               return $q.reject('createInvite failed');
             }
@@ -36,7 +39,7 @@
 
     it('should define vm', function() {
       expect(controller).toBeDefined();
-      expect(controller.invite).toBeDefined();
+      expect(controller.invites).toBeDefined();
       expect(controller.formData).toBeDefined();
     });
 
@@ -50,7 +53,7 @@
       // Test that the controller called the correct method on the service
       expect(inviteService.createInvite).toHaveBeenCalled();
       // Test that the data has the correct properties and values
-      expect(controller.invite).toBeDefined();
+      expect(controller.invites).toBeDefined();
     });
 
 
