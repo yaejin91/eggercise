@@ -8,7 +8,6 @@ angular.module('eggercise')
     vm.group = {};
     vm.groups = [];
     vm.group_id = $routeParams.group_id;
-    console.log('$routeParams: ', $routeParams.group_id);
 
     angular.extend(vm, {
 
@@ -16,21 +15,39 @@ angular.module('eggercise')
 
     });
 
-  
+    //get update group
+    vm.getGroup = function (id) {
+      GroupService.showGroup(id)
+        .then(function (data) {
+          vm.group = data;
+        })
+        .catch(function (error) {
+          vm.error = error;
+        });
+    }
+
     //update group
     vm.updateGroup = function (id, formData) {
-      console.log('ctrl formData: ', vm.formData);
       GroupService.updateGroup(id, vm.formData)
         .then(function (updatedGroup){
           vm.formData = updatedGroup;
-          console.log('ctrl: updatedGroup: ', updatedGroup);
           $location.path('/group')
         })
         .catch(function(error) {
           vm.error = error;
-          console.log('updatedGroup Error: ',  error);
         });
     }
 
+    //invite member
+    vm.inviteMember = function (formData) {
+      GroupService.inviteMember(vm.formData)
+        .then(function (invite) {
+          vm.formData = invite;
+          $location.path('/group')
+        })
+        .catch(function (error) {
+          vm.error = error;
+        });
+    }
 
   }]);

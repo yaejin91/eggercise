@@ -97,18 +97,14 @@ exports.delete = function (req, res){
 exports.update = function (req, res){
   var creatorId = req.user._id;
   var groupId = {_id: req.params.group_id};
-  console.log('groupId: ', groupId);
-  console.log('req.body : ', req.body);
   Group.update( groupId , {$set: {
     name: req.body.name,
+    description: req.body.description,
     bet: req.body.bet,
     start: req.body.start,
     end: req.body.end,
     _creator: creatorId
   }}, function (err, updatedGroup){
-      console.log('req.body : ', req.body);
-      console.log('server err', err);
-      console.log('server updatedGroup', updatedGroup);
     if(err){
       return handleError(res, 'updatedGroup not found', 404);
     }
@@ -122,20 +118,17 @@ exports.update = function (req, res){
 //Show Leaderboard with members
 exports.showGroupLeaderboard = function (req, res){
   var groupId = req.params.group_id;
-  console.log('group id: ', groupId);
   Group.findOne({_id: groupId})
   .populate('_members')
   .exec(function (error, foundGroup) {
-      if(foundGroup){
-        console.log('foundGroup: ', foundGroup);
-        res.status(200).json({
-          members: foundGroup._members
-        });
-      }
-      else{
-        return handleError(res, 'group not found', 404);
-      }
-    })
+    if(foundGroup){
+      res.status(200).json({
+        members: foundGroup._members
+      });
+    } else {
+      return handleError(res, 'group not found', 404);
+    }
+  })
 };
 
 

@@ -129,6 +129,7 @@ describe('Group', function() {
         if (error) {
           done.fail(error);
         } else {
+          console.log(newGroup);
           group = newGroup;
           creator._groups.push(group)
           creator.save()
@@ -273,8 +274,10 @@ describe('Group', function() {
       });
     });
 
+
+
     //update an group (positive)
-    fit('should update an existing group(positive)', function (done){
+    it('should update an existing group(positive)', function (done){
       var creatorId = creator._id;
       agent
       .post('/api/groups/update/' + group._id)
@@ -296,7 +299,6 @@ describe('Group', function() {
             if(error){
               done.fail(error);
             }else{
-              console.log('updatedGroup: ', updatedGroup);
               expect(updatedGroup).toBeDefined();
               expect(updatedGroup.name).toEqual('update');
               return done();
@@ -333,7 +335,7 @@ describe('Group', function() {
       })
     });
 
-    //show  members 
+    //show members
     it('should return the members of a group', function (done) {
       var group_id = group._id;
       agent
@@ -342,13 +344,10 @@ describe('Group', function() {
       .expect('Content-Type', /json/)
       .expect(200)
       .end(function (error, res) {
-        console.log('== line 286 ==res.body: ', res.body);
         if(error) {
-          console.log('failing ');
           done.fail(error);
         } else {
           var foundMembers = res.body.members;
-          console.log('foundMembers: ', foundMembers);
           expect(foundMembers).toBeDefined();
           expect(foundMembers.length).toBeDefined();
           done();
@@ -356,7 +355,7 @@ describe('Group', function() {
       });
     });
 
-    // does not show  members 
+    // does not show  members
     it('should not return the members of a group', function (done) {
       var group_id = '2498foiesfkjlsflaja';
       agent
@@ -374,8 +373,8 @@ describe('Group', function() {
         }
       })
     });
- 
-    
+
+
     //returns the total # exercises of each member {name, id , exercises}
     // it('should return total number of exercises logged by each member', function (done){
 
