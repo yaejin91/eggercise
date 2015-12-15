@@ -3,7 +3,7 @@
   beforeEach(module('eggercise'));
 
   describe('InviteCtrl', function() {
-    var rootScope, controller, InviteService, passPromise;
+    var rootScope, controller, inviteService, passPromise;
 
     beforeEach(inject (function ($rootScope, $controller, $q) {
       rootScope = $rootScope;
@@ -54,6 +54,8 @@
       expect(inviteService.createInvite).toHaveBeenCalled();
       // Test that the data has the correct properties and values
       expect(controller.invites).toBeDefined();
+
+
     });
 
 
