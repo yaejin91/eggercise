@@ -22,6 +22,12 @@ angular.module('eggercise')
           var sentInvite = document.getElementById('sentInvite');
           sentInvite.innerHTML = 'You have successfully sent an invite to: ' + vm.formData.email;
           sentInvite.style.display = 'block';
+
+          setTimeout(function (){
+            var sentInvite = document.getElementById('sentInvite');
+            sentInvite.style.display = 'none';
+            sentInvite.innerHTML = '';
+          }, 3000);
       })
       .catch(function (error){
         console.log('createInvites error:' + error);
