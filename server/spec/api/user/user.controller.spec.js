@@ -42,7 +42,7 @@ describe('User', function() {
       });
     });
     //Test for showing an existing user
-    it('should return an existing user', function (done) {
+    fit('should return an existing user', function (done) {
       agent
       .get('/api/users/me')
       .set('Authorization', 'Bearer ' + auth.token)
@@ -54,6 +54,7 @@ describe('User', function() {
         } else {
           var returnUser = res.body;
           expect(returnUser.name).toBe('test');
+          expect(returnedUser.created_at).toBeDefined();
           done();
         }
       });

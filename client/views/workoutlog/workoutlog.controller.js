@@ -7,6 +7,8 @@ angular.module('eggercise')
     vm.user = {};
     vm.formData = {};
     vm.id = $rootScope._id;
+    vm.allDates = [];
+    vm.numberOfDays = 0;
 
     angular.extend(vm, {
 
@@ -14,10 +16,30 @@ angular.module('eggercise')
     showWorkout: function () {
       WorkoutService.showWorkout()
         .then(function (data) {
-          for(var i=0; i<data.exercises.length; i++) {
-            data.exercises[i] = new Date(data.exercises[i]).toDateString();
-          }
+          const millisToDays = 1000*60*60*24;
+          var joinDate = Math.floor(new Date(data.joinDate)/millisToDays);
+          var todayDate = Math.floor(Date.now()/millisToDays);
+          vm.numberOfDays = todayDate - joinDate;
           vm.user = data;
+          vm.user.convertedExercises = [];
+
+          for(var i=0; i<vm.user.exercises.length; i++) {
+            //This is for cutting the exercise array elements (workout dates) in to a more readable format
+            vm.user.exercises[i] = vm.user.exercises[i].substring(0,10);
+            //This converts the user's exercise array into number of days (number of days since 1970 Jan 1st, integer)
+            vm.user.convertedExercises[i] = Math.floor(new Date(vm.user.exercises[i]).getTime()/millisToDays);
+          }
+
+          //Build the array vm.allDates to iterate through in the future
+          for(var j=vm.numberOfDays; j>=0; j--) {
+            if(vm.numberOfDays !== j){
+              vm.allDates.push({
+              //todayDate - j is for checking the dates from now to joinDate 
+                date: (new Date((todayDate - j)*millisToDays)+'').substring(0,15),
+                checked: (vm.user.convertedExercises.indexOf(todayDate - j) !== -1)
+              });
+            } 
+          }
           $location.path('/log');
         })
         .catch(function (err) {

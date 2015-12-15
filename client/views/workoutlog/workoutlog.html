@@ -12,8 +12,10 @@
 <div>
   <h4> Your Exercise Records: </h4>
   <div ui-sortable ng-init="vm.showWorkout()">
-    <div ng-repeat="exercise in vm.user.exercises track by $index">
-      <input type="checkbox">{{exercise}}
+    <div ng-repeat="dateObject in vm.allDates track by $index">
+      <input ng-if="dateObject.checked" type="checkbox" checked>
+      <input ng-if="!dateObject.checked" type="checkbox">
+      <label>{{dateObject.date}}</label>
     </div>
   </div>
 </div>
