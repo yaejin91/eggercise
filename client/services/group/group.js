@@ -52,7 +52,6 @@ angular.module('eggercise')
     //delete group by group id
     service.deleteGroup = function (id){
       var deferred = $q.defer();
-      console.log('id: ', id);
       $http.post('/api/groups/delete/' + id)
         .success(function (deletedGroup){
           deferred.resolve(deletedGroup);
