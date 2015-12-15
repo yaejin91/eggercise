@@ -1,4 +1,5 @@
 <!-- Modal for updating a new group-->
+<div ng-init="vm.getGroup(vm.group_id)"></div>
 <div class="container">
   <h2> Update your group's information </h2>
   <h2> {{vm.group.name}} </h2>
@@ -9,19 +10,19 @@
           <div class="input-group col-md-4">
             <div>
               Group Name
-              <input ng-model="update.formData.name" type="text" placeholder="New Group's Name" class="form-control">
+              <input ng-model="update.formData.name" type="text" placeholder="{{vm.group.name}}" class="form-control">
             </div>
             <div>
               Group Description
-              <input ng-model="update.formData.description" type="text" placeholder="New Group's Description" class="form-control">
+              <input ng-model="update.formData.description" type="text" placeholder="{{vm.group.description}}" class="form-control">
             </div>
             <div>
               Buy-In
-              <input ng-model="update.formData.bet" type="number" placeholder="Buy-In Price" class="form-control">
+              <input ng-model="update.formData.bet" type="number" placeholder="${{vm.group.bet}}" class="form-control">
             </div>
             <div>
               Start Date
-              <input ng-model="update.formData.start" type="date" placeholder="Start Date" class="form-control">
+              <input ng-model="update.formData.start" type="date" placeholder="{{vm.group.start}}" class="form-control">
             </div>
             <div>
               End Date
@@ -40,18 +41,18 @@
     <div>
       <h2>Group Members</h2>
       <hr>
-    </div>
-    <div ng-controller="UpdateGroupCtrl as update" class="col-xs-12">
-      <form role="form" ng-submit="update.inviteMember(update.formData)">
+    <div ng-controller="InviteCtrl as invite" class="col-xs-12">
+      <form role="form" ng-submit="invite.createInvite(invite.formData)">
         <div class="row">
           <div class="input-group col-md-4">
-            <input ng-model="update.formData.email" type="text" placeholder="enter an email to invite a member" class="form-control">
+            <input ng-model="invite.formData.email" type="text" placeholder="enter an email to invite a member" class="form-control">
             <span class="input-group-btn">
               <input type="submit" class="btn btn-primary" value="Add">
             </span>
           </div>
         </div>
       </form>
+      <div id="sentInvite"></div>
     </div>
   </div>
 </div>

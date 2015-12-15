@@ -10,12 +10,28 @@ var UserSchema = new Schema({
   passwordHash: { type: String, select: false },
   salt: { type: String, select: false },
   exercises: [Date],
-  _groups: [{type: mongoose.Schema.Types.ObjectId, ref:'Group', required: false }]
+  _groups: [{type: mongoose.Schema.Types.ObjectId, ref:'Group', required: false }],
+  joinDate: Date
+// }
+// , {
+//   toObject: {
+//     virtuals: true
+//   },
+//   toJSON: {
+//     virtuals: true
+//   }
 });
+
 
 /**
  * Virtuals
  */
+
+// UserSchema
+//   .virtual('joinDate')
+//   .get(function () {
+//     return this._id.getTimestamp();
+//   });
 
 UserSchema
   .virtual('password')
