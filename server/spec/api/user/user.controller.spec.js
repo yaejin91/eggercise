@@ -21,7 +21,8 @@ describe('User', function() {
         name: 'test',
         email: 'test@test.com',
         password: 'testing',
-        exercises: '12-09-2015'
+        exercises: '12-09-2015',
+        joinDate: '12-01-2015'
       }, function (error, newUser) {
         if (error) {
           done.fail(error);

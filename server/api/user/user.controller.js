@@ -37,7 +37,7 @@ exports.getMe = function (req, res) {
     if (err) { return handleError(res, err); }
     if (!user) { return res.json(401); }
     //This extracts user's create date from the objectId
-    // user.joinDate = user._id.getTimestamp();
+    user.joinDate = user._id.getTimestamp();
     res.status(200).json(user);
   });
 };

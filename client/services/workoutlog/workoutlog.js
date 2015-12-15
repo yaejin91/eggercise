@@ -6,6 +6,7 @@ angular.module('eggercise')
 
     service.showWorkout = function () {
       var deferred = $q.defer();
+      
       $http.get('/api/users/me')
       .success(function (showWorkout) {
         deferred.resolve(showWorkout);
@@ -16,42 +17,15 @@ angular.module('eggercise')
       return deferred.promise;
     };
     
-    // service.logWorkout = function (formData) {
-    //   var deferred = $q.defer();
-    //   $http.post('/api/users/log/', formData)
-    //     .success(function (updatedWorkout) {
-    //       deferred.resolve(updatedWorkout);
-    //     })
-    //     .catch(function (err) {
-    //       deferred.reject(err.data);
-    //     });
-    //   return deferred.promise;
-    // };
-
-    // service.unlogWorkout = function (formData) {
-    //   var deferred = $q.defer();
-    //   $http.post('/api/users/unlog/', formData)
-    //   .success(function (updatedWorkout) {
-    //     deferred.resolve(updatedWorkout);
-    //   })
-    //   .catch(function (err) {
-    //     deferred.reject(err.data);
-    //   });
-    //   return deferred.promise;
-    // };
-
-    service.logToggle = function (logPath, dateObject) {
+    service.logToggle = function (logPath, date) {
       var deferred = $q.defer();
-      var convertedDate = new Date(dateObject);
-      $http.post('/api/users/' + logPath, convertedDate)
+      var convertedDate = new Date(date);
+
+      $http.post('/api/users/' + logPath, {date: convertedDate})
       .success(function (updatedWorkout) {
-        console.log('dateObject: ',dateObject);
-        console.log('convertedDate: ',convertedDate);
         deferred.resolve(updatedWorkout);
       })
       .catch(function (err) {
-        console.log('dateObject: ',dateObject);
-        console.log('convertedDate: ',convertedDate);
         deferred.reject(err.data);
       });
       return deferred.promise;

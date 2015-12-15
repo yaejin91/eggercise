@@ -27,7 +27,7 @@ angular.module('eggercise')
           var todayDate = Math.floor(Date.now()/millisToDays);
 
           //vm.numberOfDays is number of days between user's join date and current date
-          vm.numberOfDays = todayDate - joinDate;
+          vm.numberOfDays = todayDate - joinDate + 1;
           vm.user = data;
           vm.user.convertedExercises = [];
 
@@ -41,13 +41,13 @@ angular.module('eggercise')
 
           //Build the array vm.allDates to iterate through in the future
           for(var j=vm.numberOfDays; j>=0; j--) {
-            if(vm.numberOfDays !== j){
+            // if(vm.numberOfDays !== j){
               vm.allDates.push({
                 //todayDate - j is for checking the dates from now to joinDate 
-                date: (new Date((todayDate - j)*millisToDays)+'').substring(0,15),
+                date: (new Date((todayDate - j + 1)*millisToDays)+'').substring(0,15),
                 checked: (vm.user.convertedExercises.indexOf(todayDate - j) !== -1)
               });
-            } 
+            // } 
           }
           $location.path('/log');
         })
@@ -57,34 +57,8 @@ angular.module('eggercise')
         })
       },
 
-    // //Log Workout
-    // logWorkout: function () {
-    //   WorkoutService.logWorkout(vm.formData)
-    //     .then(function (data) {
-    //       vm.user = data;
-    //       $location.path('/log');
-    //     })
-    //     .catch(function (err) {
-    //       vm.error = err;
-    //       $log.error('Error: ', err);
-    //     })
-    // },
-
-    // //Unlog Workout
-    // unlogWorkout: function() {
-    //   WorkoutService.unlogWorkout(vm.formData)
-    //     .then(function (data) {
-    //       vm.user = data;
-    //       $location.path('/unlog');
-    //     })
-    //     .catch(function (err) {
-    //       vm.error = err;
-    //       $log.error('Error: ', err);
-    //     })
-    // },
-
     //Log Toggle
-    logToggle: function(index, dateObject) {
+    logToggle: function(index, date) {
       var logPath;
 
       if(vm.allDates[index].checked == true) {
@@ -93,7 +67,7 @@ angular.module('eggercise')
         logPath = 'unlog';
       }
 
-      WorkoutService.logToggle(logPath, dateObject)
+      WorkoutService.logToggle(logPath, date)
         .then(function (data) {
           vm.user = data;
         })
