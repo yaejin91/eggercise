@@ -18,7 +18,7 @@ angular.module('eggercise')
       WorkoutService.showWorkout()
         .then(function (data) {
           //multiplier for milliseconds to days conversion 
-          const millisToDays = 1000*60*60*24;
+          var millisToDays = 1000*60*60*24;
 
           //user's join date in unit 'days'
           var joinDate = Math.floor(new Date(data.joinDate)/millisToDays);
