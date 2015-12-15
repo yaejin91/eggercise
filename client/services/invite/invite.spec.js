@@ -3,6 +3,7 @@
 
   describe('InviteService', function() {
     var service, $httpBackend, handler, inviteData, errorMessage;
+
     var id = '56705595cfa2396ab020bfd4';
     var newInvite = {
       _id: id,
@@ -29,15 +30,15 @@
           errorMessage = err;
         }
       };
-
       // Use the Jasmine spyOn method to setup a callback using our handler mock object
       spyOn(handler, 'success').and.callThrough();
       spyOn(handler, 'error').and.callThrough();
+
     }));
 
     //Test for createInvite()
-    fit('should let a group creator create an invite', function () {
-      id = '5669e40077cc88a84bbb5c13';
+    it('should let a group creator create an invite', function () {
+
       $httpBackend.whenPOST(/create/)
         .respond (respondToHttp);
 
@@ -52,8 +53,8 @@
     });
 
     //Test for createInvite() Fail
-    fit('should NOT let a group creator create an invite', function () {
-      id = 'fakeid';
+    it('should NOT let a group creator create an invite', function () {
+      id = 'wrongId';
       $httpBackend.whenPOST(/create/)
         .respond (respondToHttp);
 
@@ -67,7 +68,7 @@
     });
 
     //Test for createInvite()
-    fit('should return a successful promise for invitation', function () {
+    it('should return a successful promise for invitation', function () {
       var createInv = service.createInvite()
         .then(function (){
           console.log('successful');
@@ -86,5 +87,6 @@
         return[404, { message: 'Not Found'}];
       }
     }
+
   });
 })();
