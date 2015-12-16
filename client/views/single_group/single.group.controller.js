@@ -17,6 +17,7 @@ angular.module('eggercise')
       vm.youOwe;
       vm.daysBehind;
       vm.pot;
+      vm.othersDaysBehind;
 
       angular.extend(vm, {
 
@@ -80,17 +81,17 @@ angular.module('eggercise')
                 if(data._members[i].validExercises.length > data.leader.workouts) {
                   data.leader.email = data._members[i].email;
                   data.leader.workouts = data._members[i].validExercises.length;
+                  // data.leader.workouts = 20;
                   vm.daysBehind = data.leader.workouts - user.exercises.length;
-                  vm.pot = vm.daysBehind*vm.group.bet
-                  vm.youOwe = Math.abs(vm.pot);
+                  vm.youOwe = Math.abs(vm.daysBehind*vm.group.bet);
                 }
               }
               vm.group = data;
 
-              if(vm.daysBehind > 0) {
-                vm.pot = 'Pays ' + vm.youOwe;
-              }else {
+              if(vm.daysBehind < 0) {
                 vm.pot = 'Wins ' + vm.youOwe;
+              }else {
+                vm.pot = 'Pays ' + vm.youOwe;
               }  
             })
             .catch(function (err) {
