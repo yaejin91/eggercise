@@ -33,7 +33,7 @@ exports.acceptInvite = function(req, res) {
   var inviteId = req.params.invite_id;
   Invite.findById({ _id: inviteId})
     .exec(function (error, invite) {
-      if (error) { 
+      if (error) {
         return handleError(res, error);
       } else {
         User.findOne({ email: invite.email}, function (error, user) {
