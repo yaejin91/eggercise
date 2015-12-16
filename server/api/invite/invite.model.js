@@ -10,7 +10,8 @@ var InviteSchema = new Schema({
   _group: { type: mongoose.Schema.Types.ObjectId, ref:'Group', required: true },
   status: { type: Boolean, required: false },
   created_at: Date,
-  updated_at: Date
+  updated_at: Date,
+  sent_at: Date
 });
 
 module.exports = mongoose.model('Invite', InviteSchema);

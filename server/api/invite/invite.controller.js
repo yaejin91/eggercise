@@ -29,8 +29,15 @@ exports.create = function (req, res) {
     if (error) {
       return handleError(res, 'Did not create the invite', 500);
     } else {
-      EmailService.send(emailTo, subject, emailText);
-      res.json(savedInvite);
+      EmailService.send(emailTo, subject, emailText, function(err, json) {
+        if (err) {
+          console.log(err);
+        }
+        savedInvite.sent_at = Date.now();
+        savedInvite.save();
+        console.log(json);
+        res.json(json);
+      });
     }
   });
 }
