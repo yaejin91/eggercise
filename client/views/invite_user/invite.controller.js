@@ -22,14 +22,14 @@ angular.module('eggercise')
 
         $location.path('/group/updateGroup/');
 
-        setTimeout(notifiction, 1000);
+        setTimeout(notification, 1000);
       })
       .catch(function (error){
         console.log('createInvites error:' + error);
       })
 
 
-      function notifiction () {
+      function notification () {
         var sentInvite = document.getElementById('sentInvite');
         sentInvite.innerHTML = 'You have successfully sent an invite to: ' + vm.formData.email;
         sentInvite.style.display = 'block';
