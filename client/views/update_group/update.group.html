@@ -51,17 +51,18 @@
         </div>
       </div>
     </div>
-    <div ng-controller="UpdateGroupCtrl as update" class="col-xs-12">
-      <form role="form" ng-submit="update.inviteMember(update.formData)">
+    <div ng-controller="InviteCtrl as invite" class="col-xs-12">
+      <form role="form" ng-submit="invite.createInvite(invite.formData)">
         <div class="row">
           <div class="input-group col-md-4">
-            <input ng-model="update.formData.email" type="text" placeholder="enter an email to invite a member" class="form-control">
+            <input ng-model="invite.formData.email" type="text" placeholder="enter an email to invite a member" class="form-control">
             <span class="input-group-btn">
               <input type="submit" class="btn btn-primary" value="Add">
             </span>
           </div>
         </div>
       </form>
+      <div id="sentInvite"></div>
     </div>
   </div>
 </div>

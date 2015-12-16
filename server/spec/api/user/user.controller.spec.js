@@ -21,7 +21,8 @@ describe('User', function() {
         name: 'test',
         email: 'test@test.com',
         password: 'testing',
-        exercises: '12-09-2015'
+        exercises: '12-09-2015',
+        joinDate: '12-01-2015'
       }, function (error, newUser) {
         if (error) {
           done.fail(error);
@@ -42,7 +43,7 @@ describe('User', function() {
       });
     });
     //Test for showing an existing user
-    it('should return an existing user', function (done) {
+    fit('should return an existing user', function (done) {
       agent
       .get('/api/users/me')
       .set('Authorization', 'Bearer ' + auth.token)
@@ -54,6 +55,7 @@ describe('User', function() {
         } else {
           var returnUser = res.body;
           expect(returnUser.name).toBe('test');
+          expect(returnedUser.created_at).toBeDefined();
           done();
         }
       });
@@ -113,6 +115,10 @@ describe('User', function() {
         }
       });
     });
+    //Test for showing user's workout dates
+    it('should show all exercise dates', function (done) {
+      
+    })
 
     //Test for logging an exercise
     it('should log an exercise', function (done) {

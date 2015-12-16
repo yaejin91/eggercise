@@ -17,11 +17,20 @@ body {
 }
 
 #update-button{
-    text-decoration: none;
+  text-decoration: none;
 }
 
 .days {
   font-weight: bold;
   font-size: 300%;
+}
 
+#sentInvite {
+  background-color: #dff0d8 ;
+  border-color: #d6e9c6 ;
+  color: #3c763d ;
+  font-weight: bold;
+  display: none;
+  width: 80%;
+  margin: 2px;
 }

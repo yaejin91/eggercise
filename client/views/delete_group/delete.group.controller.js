@@ -18,7 +18,6 @@ angular.module('eggercise')
       })
       .catch(function (error){
         vm.error = error;
-        console.log('deleteGroup error:' + error);
       })
     }
   }]);
