@@ -16,5 +16,17 @@ angular.module('eggercise')
         });
       return deferred.promise;
     }
+
+    service.acceptInvite = function (id) {
+      var deferred = $q.defer();
+      $http.get('/api/invites/accept/' + id)
+        .success(function (showGroup) {
+          deferred.resolve(showGroup);
+        })
+        .error(function (error) {
+          deferred.reject('Error: ', error);
+        });
+      return deferred.promise;
+    }
     return service;
   });

@@ -54,6 +54,8 @@
       expect(inviteService.createInvite).toHaveBeenCalled();
       // Test that the data has the correct properties and values
       expect(controller.invites).toBeDefined();
+      expect(controller.invites.length).toBe(1);
+
 
 
     });
