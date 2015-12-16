@@ -13,7 +13,7 @@ angular.module('eggercise')
 
     angular.extend(vm, {
 
-    //Show Workout
+    //Show dates that you worked out and ones you didn't (from your join date)
     showWorkout: function () {
       WorkoutService.showWorkout()
         .then(function (data) {
