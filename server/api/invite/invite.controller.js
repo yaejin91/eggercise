@@ -27,3 +27,28 @@ exports.create = function (req, res) {
     }
   });
 }
+
+//Invitee accepts invitation
+exports.acceptInvite = function(req, res) {
+  var inviteId = req.params.invite_id;
+  Invite.findById({ _id: inviteId})
+    .exec(function (error, invite) {
+      if (error) { 
+        return handleError(res, error);
+      } else {
+        console.log('invite.email: ',invite.email);
+        User.findOne({ email: invite.email}, function (error, user) {
+          if (error) {
+            return handleError(res, error);
+          } else {
+            console.log('user.email: ',user.email);
+            console.log('user: ', user);
+            user._groups.push(invite._group);
+            user.save();
+            res.status(200).json(user);
+            console.log('invite: ',invite);
+          }
+        });
+      }
+    });
+}

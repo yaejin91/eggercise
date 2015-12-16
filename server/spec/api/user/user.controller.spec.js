@@ -43,7 +43,7 @@ describe('User', function() {
       });
     });
     //Test for showing an existing user
-    fit('should return an existing user', function (done) {
+    it('should return an existing user', function (done) {
       agent
       .get('/api/users/me')
       .set('Authorization', 'Bearer ' + auth.token)
