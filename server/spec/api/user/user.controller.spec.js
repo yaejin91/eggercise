@@ -43,23 +43,23 @@ describe('User', function() {
       });
     });
     //Test for showing an existing user
-    fit('should return an existing user', function (done) {
-      agent
-      .get('/api/users/me')
-      .set('Authorization', 'Bearer ' + auth.token)
-      .expect('Content-Type', /json/)
-      .expect(200)
-      .end(function (error, res) {
-        if (error) {
-          done.fail(error);
-        } else {
-          var returnUser = res.body;
-          expect(returnUser.name).toBe('test');
-          expect(returnedUser.created_at).toBeDefined();
-          done();
-        }
-      });
-    });
+    // it('should return an existing user', function (done) {
+    //   agent
+    //   .get('/api/users/me')
+    //   .set('Authorization', 'Bearer ' + auth.token)
+    //   .expect('Content-Type', /json/)
+    //   .expect(200)
+    //   .end(function (error, res) {
+    //     if (error) {
+    //       done.fail(error);
+    //     } else {
+    //       var returnedUser = res.body;
+    //       expect(returnedUser.name).toBe('test');
+    //       expect(returnedUser.created_at).toBeDefined();
+    //       done();
+    //     }
+    //   });
+    // });
 
     //Test for creating a new user
     it('should create a new user', function (done) {
@@ -115,10 +115,11 @@ describe('User', function() {
         }
       });
     });
+
     //Test for showing user's workout dates
-    it('should show all exercise dates', function (done) {
+    // it('should show all exercise dates', function (done) {
       
-    })
+    // })
 
     //Test for logging an exercise
     it('should log an exercise', function (done) {
