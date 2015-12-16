@@ -50,9 +50,13 @@ angular.module('eggercise', [
     $rootScope.Auth = Auth;
 
     $rootScope.$on('$routeChangeStart', function (event, next) {
-      Auth.isReadyLogged().catch(function () {
-        if (next.authenticate) {
-          $location.path('/');
+    $rootScope.$on('$stateChangeStart', function (event, toState, toParams)
+      Auth.isReadyLogged(function (loggedIn) {
+        if (toState.authenticate && !loggedIn) {
+          $rootScope.returnToState = toState.url;
+          $rootScope.returntoStateParams = to Params.Id;
+          $location.path
+      )}
         }
       });
     });
