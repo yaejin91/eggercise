@@ -46,31 +46,29 @@
       </div>
     </div>
 
-    <div ng-click="vm.moneyOwed(vm.group_id)">
-      <button>Press me</button>
-    </div>
-
+   <div ng-init="vm.moneyOwed(vm.group_id)"> 
     <div class="col-xs-4">
       <div class="jumbotron">
         <div class="row">
           <div class="col-md-12 text-center">
             <div class="days">
-              need calcs
+              {{vm.daysBehind}}
             </div>
           </div>
           <div class="col-md-12 text-center">
-              Days Behind (From the leader)
+              Days Behind
           </div>
         </div>
       </div>
     </div>
+  </div>
 
     <div class="col-xs-4">
       <div class="jumbotron">
         <div class="row">
           <div class="col-md-12 text-center">
             <div class="days">
-              need calcs
+              ${{vm.youOwe}}
             </div>
           </div>
           <div class="col-md-12 text-center">
@@ -105,7 +103,7 @@
       </div>
     </div>
     <div class="col-xs-2">
-      Money Calcs Here
+      {{vm.pot}}
     </div>
   </div>
 </div>

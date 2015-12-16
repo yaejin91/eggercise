@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('eggercise')
-  .controller('ShowGroupCtrl', ['$location', '$log', '$routeParams', 'GroupService', function ($location, $log, $routeParams, GroupService) {
+  .controller('ShowGroupCtrl', ['$location', '$log', '$routeParams', 'GroupService', 'Auth', function ($location, $log, $routeParams, GroupService, Auth) {
     var vm = this;
 
       vm.group = {};
@@ -14,6 +14,9 @@ angular.module('eggercise')
       vm.exercises = [];
       vm.sdate_ms;
       vm.edate_ms;
+      vm.youOwe;
+      vm.daysBehind;
+      vm.pot;
 
       angular.extend(vm, {
 
@@ -57,9 +60,11 @@ angular.module('eggercise')
         },
 
         moneyOwed: function (id) {
+          var user = Auth.getUser();
           GroupService.showGroup(id)
             .then(function (data) {
-              data.leader = {email: 'leader@test.com', length: -1};
+              data.you = user;
+              data.leader = {email: 'leader@test.com', workouts: -1};
               for (var i = 0; i < data._members.length; i++) {
                 data._members[i].validExercises = [];
                 for(var j = 0; j < data._members[i].exercises.length; j++) {
@@ -70,23 +75,27 @@ angular.module('eggercise')
                     data._members[i].validExercises.push(data._members[i].exercises[j]);
                   }
                 } 
-                if(data._members[i].validExercises.length > data.leader.length) {
+                //if user has the most workout, his/her email is set as the group's leader's email
+                //the leader's number of workouts is also in this object
+                if(data._members[i].validExercises.length > data.leader.workouts) {
                   data.leader.email = data._members[i].email;
-                  data.leader.length = data._members[i].validExercises.length;
+                  data.leader.workouts = data._members[i].validExercises.length;
+                  vm.daysBehind = data.leader.workouts - user.exercises.length;
+                  vm.youOwe = Math.abs(vm.daysBehind*vm.group.bet);
                 }
               }
-              
               vm.group = data;
-              console.log(vm.group);
-
-              //validExercises contains workout logs of ALL members, not just one user
-              //How to let members each have their own separate validExercises array?
+              if(vm.daysBehind > 0) {
+                vm.pot = 'Pays ' + vm.youOwe;
+              }
+              else {
+                vm.pot = 'Wins ' + vm.youOwe;
+              }
             })
             .catch(function (err) {
               vm.error = err;
               $log.error('Error: ', err);
             });
         }
-
       });
   }]);
