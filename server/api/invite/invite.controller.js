@@ -41,16 +41,13 @@ exports.create = function (req, res) {
 
     if (savedInvite) {
       EmailService.send(emailTo, subject, emailText, function(err, json) {
-        // if (err) {
-        //   console.log(err);
-        // } else {
-        //   savedInvite.sent_at = Date.now();
-        //   savedInvite.save();
         console.log(json);
           // res.json(json);
           // return handleSuccess (res, 'Successfully sent!', 200);
         // }
         if (json) {
+          savedInvite.sent_at = Date.now();
+          savedInvite.save();
           res.json(savedInvite);
         } else {
           return err;
