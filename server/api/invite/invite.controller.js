@@ -11,9 +11,13 @@ function handleError (res, err, status) {
   return res.status(status).json({err: err});
 }
 
+function handleSuccess(res, message, status) {
+  return res.status(status).json({message: message});
+}
+
 function generateInvitation (id) {
   var emailBody = "You've been invited, please join by clicking on the link below to accept your invitation."
-  var emailLink = "http://eggercise.com/invites/accept/" + id;
+  var emailLink = "http://localhost:3000/invites/accept/" + id;
   return emailBody + ' ' + emailLink;
 }
 
@@ -38,11 +42,13 @@ exports.create = function (req, res) {
       EmailService.send(emailTo, subject, emailText, function(err, json) {
         if (err) {
           console.log(err);
+        } else {
+          savedInvite.sent_at = Date.now();
+          savedInvite.save();
+          console.log(json);
+          res.json(json);
+          return handleSuccess (res, 'Successfully sent!', 200);
         }
-        savedInvite.sent_at = Date.now();
-        savedInvite.save();
-        console.log(json);
-        res.json(json);
       });
     }
   });
