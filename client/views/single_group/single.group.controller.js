@@ -85,6 +85,9 @@ angular.module('eggercise')
                   vm.daysBehind = data.leader.workouts - user.exercises.length;
                   vm.youOwe = Math.abs(vm.daysBehind*vm.group.bet);
                 }
+
+                vm.othersDaysBehind = data.leader.workouts - data._members[i].validExercises.length;
+                console.log(vm.othersDaysBehind);
               }
               vm.group = data;
 
