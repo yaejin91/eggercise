@@ -44,7 +44,7 @@ describe('Invite', function() {
       }
     });
   });
-    
+
   describe('with data', function() {
 
     beforeEach(function (done) {
@@ -73,7 +73,7 @@ describe('Invite', function() {
               invite = newInvite;
               done();
             }
-          }) 
+          })
         }
       });
     });
@@ -115,7 +115,7 @@ describe('Invite', function() {
           expect(returnedInvite._group).toBe((group._id).toJSON());
           Invite.findOne({ _id: returnedInvite._id })
           .remove(function (error) {
-            done();            
+            done();
           })
         }
       });
