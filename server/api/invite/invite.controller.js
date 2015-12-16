@@ -26,38 +26,50 @@ exports.create = function (req, res) {
   var creatorId = req.user._id;
   var groupId = req.body._group;
 
-  var invite = new Invite ({
-    email: req.body.email,
-    _group: groupId,
-    status: false
-  });
-  invite.save(function (error, savedInvite) {
-    var subject = "You've been invited to join eggercise!"
-    var emailText = generateInvitation(savedInvite._group);
-    var emailTo = savedInvite.email;
+  var groupCreator = req.user;
+  console.log('This is the groupCreator: ', groupCreator);
 
-    console.log('This is the error: ', error);
-    console.log('This is the savedInvite: ', savedInvite);
+  // for (var i = 0; i < groupCreator._groups.length; i++) {
+  //   console.log('this is groupCreator._groups[i]: ', groupCreator._groups[i]);
 
-    if (savedInvite) {
-      EmailService.send(emailTo, subject, emailText, function(err, json) {
-        console.log(json);
-        if (json) {
-          savedInvite.sent_at = Date.now();
-          savedInvite.save();
-            if (savedInvite.sent_at !== null) {
-              res.json(savedInvite);
+  //   if (groupCreator._groups[i] === groupId) {
+      var invite = new Invite ({
+        email: req.body.email,
+        _group: groupId,
+        status: false
+      });
+      invite.save(function (error, savedInvite) {
+
+        console.log('This is the error: ', error);
+        console.log('This is the savedInvite: ', savedInvite);
+
+        if (savedInvite) {
+          var subject = "You've been invited to join eggercise!"
+          var emailText = generateInvitation(savedInvite._group);
+          var emailTo = savedInvite.email;
+
+          EmailService.send(emailTo, subject, emailText, function(err, json) {
+            console.log(json);
+            if (json) {
+              savedInvite.sent_at = Date.now();
+              savedInvite.save(function (error, sentInvite) {
+                if (error) {
+                  console.log('The invitation did not save successfully.');
+                } else {
+                  res.json(sentInvite);
+                }
+              });
             } else {
-              console.log('The invitation did not save successfully.');
+              console.log('Error for failed send: ', err);
+              res.json(err);
             }
+          })
         } else {
-          return err;
+          return handleError(res, 'Did not create the invite', 422);
         }
-      })
-    } else {
-      return handleError(res, 'Did not create the invite', 500);
-    }
-  });
+      });
+  //   }
+  // }
 }
 
 //Invitee accepts invitation

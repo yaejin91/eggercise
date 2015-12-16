@@ -49,7 +49,7 @@ describe('Invite', function() {
 
   describe('with data', function() {
 
-    beforeEach(function (done) {
+    beforeAll(function (done) {
       Group.create({
         name: 'testGroup',
         bet: 100,
@@ -92,7 +92,7 @@ describe('Invite', function() {
       });
     });
 
-    afterEach(function (done) {
+    afterAll(function (done) {
       console.log('afterEach');
       Group.remove({_id: group._id}, function (error, removedGroup) {
         if (error) {
@@ -111,7 +111,7 @@ describe('Invite', function() {
     });
 
     //create an invitation(positive)
-    fit('should create a new invitation through an email address', function (done){
+    it('should create a new invitation through an email address', function (done){
     agent
       .post('/api/invites/create')
       .send({
@@ -125,12 +125,13 @@ describe('Invite', function() {
         if(error){
           done.fail(error);
         } else {
-          var returnedResponse = res.body;
-          console.log('This is the returnedResponse: ', returnedResponse);
-          expect(returnedResponse).toBeDefined();
-          expect(returnedResponse.email).toBe('inviteemail@gmail.com');
-          expect(returnedResponse._group).toBe((group._id).toJSON());
-          Invite.findOne({ _id: returnedResponse._id })
+          var returnedInvite = res.body;
+          console.log('This is the returnedInvite: ', returnedInvite);
+          expect(returnedInvite).toBeDefined();
+          expect(returnedInvite.email).toBe('inviteemail@gmail.com');
+          expect(returnedInvite._group).toBe((group._id).toJSON());
+          expect(returnedInvite.sent_at).toBeDefined();
+          Invite.findOne({ _id: returnedInvite._id })
           .remove(function (error) {
             done();
           })
@@ -139,25 +140,51 @@ describe('Invite', function() {
     });
 
     //doesn't create an invitation(negative)
-    it('should not create a new invitation through an email address', function (done){
+    fit('should not create a new invitation through an email address', function (done){
     agent
       .post('/api/invites/create')
       .send({
-        email: 'inviteemail2@gmail.com'
+        _group: group._id
       })
       .set('Authorization', 'Bearer ' + auth.token)
       .expect('Content-Type', /json/)
-      .expect(200)
+      .expect(422)
       .end(function (error, res) {
-        if(res){
-          expect(res.status).toBe(500);
-          expect(res.body.err).toBe('Did not create the invite');
-          done();
-        } else {
+        if (error) {
           done.fail(error);
+        } else {
+          done();
         }
       });
     });
+
+    //doesn't create an invitation(negative)
+    // DO NOT know how to mock a service with a calback.
+    // Come back to this later
+    // it('should not send a new invitation', function (done){
+    //   spyOn(EmailService, 'send').and.respond(function() {
+
+    //   });
+
+    // agent
+    //   .post('/api/invites/create')
+    //   .send({
+    //     email: 'invitee2@mail.com',
+    //     _group: group._id
+    //   })
+    //   .set('Authorization', 'Bearer ' + auth.token)
+    //   .expect('Content-Type', /json/)
+    //   .expect(422)
+    //   .end(function (error, res) {
+    //     if (error) {
+    //       done.fail(error);
+    //     } else {
+    //       console.log('this is the res in the if: ', res.body);
+    //       expect(res.body.err).toBe('Did not create the invite');
+    //       done();
+    //     }
+    //   });
+    // });
 
     //Test for returning an existing invitation successfully
     it('should have invitee accept invitation', function (done) {
