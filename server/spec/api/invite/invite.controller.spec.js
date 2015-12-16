@@ -17,6 +17,7 @@ var auth = {};
 var creator;
 var group;
 var invite;
+var invitedUser;
 
 describe('Invite', function() {
 
@@ -36,6 +37,7 @@ describe('Invite', function() {
   });
 
   afterAll(function (done) {
+    console.log('afterAll');
     User.remove({_id: creator._id}, function (error, removedCreator) {
       if (error) {
         done.fail(error);
@@ -59,10 +61,11 @@ describe('Invite', function() {
       }, function (error, newGroup) {
         if (error) {
           console.log(error);
+          done.fail(error);
         } else {
           group = newGroup;
-          creator._groups.push(group)
-          creator.save()
+          creator._groups.push(group);
+          creator.save();
           Invite.create({
             email: 'invitee@email.com',
             _group: group._id
@@ -71,7 +74,18 @@ describe('Invite', function() {
               done.fail(error);
             }else{
               invite = newInvite;
-              done();
+              User.create({
+                name:'invitedUser',
+                password: 'invited',
+                email:'invitee@email.com'
+              }, function (error, newMember) {
+                if (error) {
+                  done.fail(error);
+                } else {
+                  invitedUser = newMember;
+                  done();
+                }
+              })
             }
           })
         }
@@ -79,9 +93,11 @@ describe('Invite', function() {
     });
 
     afterEach(function (done) {
+      console.log('afterEach');
       Group.remove({_id: group._id}, function (error, removedGroup) {
         if (error) {
           console.log(error);
+          done.fail(error);
         } else {
           Invite.remove({_id: invite._id, _group: group._id}, function (error, removedInvite){
             if(error){
@@ -138,6 +154,22 @@ describe('Invite', function() {
           done();
         } else {
           done.fail(error);
+        }
+      });
+    });
+
+    //Test for returning an existing invitation successfully
+    it('should have invitee accept invitation', function (done) {
+      agent
+      .get('/api/invites/accept/'+invite._id)
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .end(function (error, res) {
+        if(error){
+          done.fail(error);
+        } else {
+          expect(res.body.email).toBe(invitedUser.email);
+          done();
         }
       });
     });
