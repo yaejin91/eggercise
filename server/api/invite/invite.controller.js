@@ -16,8 +16,8 @@ function handleSuccess(res, message, status) {
 }
 
 function generateInvitation (id) {
-  var emailBody = "You've been invited, please join by clicking on the link below to accept your invitation."
-  var emailLink = "http://localhost:3000/invites/accept/" + id;
+  var emailBody = "You've been invited, please join by clicking on the link to accept your invitation."
+  var emailLink = "http://eggercise.com/invites/accept/" + id;
   return emailBody + ' ' + emailLink;
 }
 
@@ -26,30 +26,36 @@ exports.create = function (req, res) {
   var creatorId = req.user._id;
   var groupId = req.body._group;
 
+  var groupCreator = req.user;
+
   var invite = new Invite ({
     email: req.body.email,
     _group: groupId,
     status: false
   });
   invite.save(function (error, savedInvite) {
-    var subject = "You've been invited to join eggercise!"
-    var emailText = generateInvitation(savedInvite._group);
-    var emailTo = savedInvite.email;
+    if (savedInvite) {
+      var subject = "You've been invited to join eggercise!"
+      var emailText = generateInvitation(savedInvite._group);
+      var emailTo = savedInvite.email;
 
-    if (error) {
-      return handleError(res, 'Did not create the invite', 500);
-    } else {
       EmailService.send(emailTo, subject, emailText, function(err, json) {
-        if (err) {
-          console.log(err);
-        } else {
+        if (json) {
           savedInvite.sent_at = Date.now();
-          savedInvite.save();
-          console.log(json);
-          res.json(json);
-          return handleSuccess (res, 'Successfully sent!', 200);
+          savedInvite.save(function (error, sentInvite) {
+            if (error) {
+              console.log('The invitation did not save successfully.');
+            } else {
+              res.json(sentInvite);
+            }
+          });
+        } else {
+          console.log('Error for failed send: ', err);
+          res.json(err);
         }
-      });
+      })
+    } else {
+      return handleError(res, 'Did not create the invite', 422);
     }
   });
 }
