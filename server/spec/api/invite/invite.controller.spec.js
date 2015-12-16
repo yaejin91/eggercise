@@ -37,7 +37,6 @@ describe('Invite', function() {
   });
 
   afterAll(function (done) {
-    console.log('afterAll');
     User.remove({_id: creator._id}, function (error, removedCreator) {
       if (error) {
         done.fail(error);
@@ -49,7 +48,7 @@ describe('Invite', function() {
 
   describe('with data', function() {
 
-    beforeAll(function (done) {
+    beforeEach(function (done) {
       Group.create({
         name: 'testGroup',
         bet: 100,
@@ -92,8 +91,7 @@ describe('Invite', function() {
       });
     });
 
-    afterAll(function (done) {
-      console.log('afterEach');
+    afterEach(function (done) {
       Group.remove({_id: group._id}, function (error, removedGroup) {
         if (error) {
           console.log(error);
@@ -111,7 +109,7 @@ describe('Invite', function() {
     });
 
     //create an invitation(positive)
-    it('should create a new invitation through an email address', function (done){
+    fit('should create a new invitation through an email address', function (done){
     agent
       .post('/api/invites/create')
       .send({
@@ -126,7 +124,6 @@ describe('Invite', function() {
           done.fail(error);
         } else {
           var returnedInvite = res.body;
-          console.log('This is the returnedInvite: ', returnedInvite);
           expect(returnedInvite).toBeDefined();
           expect(returnedInvite.email).toBe('inviteemail@gmail.com');
           expect(returnedInvite._group).toBe((group._id).toJSON());
@@ -140,7 +137,7 @@ describe('Invite', function() {
     });
 
     //doesn't create an invitation(negative)
-    fit('should not create a new invitation through an email address', function (done){
+    it('should not create a new invitation through an email address', function (done){
     agent
       .post('/api/invites/create')
       .send({
@@ -159,8 +156,8 @@ describe('Invite', function() {
     });
 
     //doesn't create an invitation(negative)
-    // DO NOT know how to mock a service with a calback.
-    // Come back to this later
+    // DO NOT know how to mock a service with a callback.
+    // Will come back to this later
     // it('should not send a new invitation', function (done){
     //   spyOn(EmailService, 'send').and.respond(function() {
 
