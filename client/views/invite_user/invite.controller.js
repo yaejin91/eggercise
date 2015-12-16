@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('eggercise')
-  .controller('InviteCtrl', ['$location', '$log', '$routeParams', 'InviteService', function ($location, $log, $routeParams,InviteService) {
+  .controller('InviteCtrl', ['$location', '$log', '$routeParams', function ($location, $log, $routeParams) {
 
     var vm = this;
     vm.formData = {};
@@ -41,4 +41,5 @@ angular.module('eggercise')
         }, 3000);
       }
     }
+
   }]);
