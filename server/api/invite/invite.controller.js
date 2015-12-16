@@ -36,20 +36,28 @@ exports.create = function (req, res) {
     var emailText = generateInvitation(savedInvite._group);
     var emailTo = savedInvite.email;
 
-    if (error) {
-      return handleError(res, 'Did not create the invite', 500);
-    } else {
+    console.log('This is the error: ', error);
+    console.log('This is the savedInvite: ', savedInvite);
+
+    if (savedInvite) {
       EmailService.send(emailTo, subject, emailText, function(err, json) {
-        if (err) {
-          console.log(err);
+        // if (err) {
+        //   console.log(err);
+        // } else {
+        //   savedInvite.sent_at = Date.now();
+        //   savedInvite.save();
+        console.log(json);
+          // res.json(json);
+          // return handleSuccess (res, 'Successfully sent!', 200);
+        // }
+        if (json) {
+          res.json(savedInvite);
         } else {
-          savedInvite.sent_at = Date.now();
-          savedInvite.save();
-          console.log(json);
-          res.json(json);
-          return handleSuccess (res, 'Successfully sent!', 200);
+          return err;
         }
-      });
+      })
+    } else {
+      return handleError(res, 'Did not create the invite', 500);
     }
   });
 }

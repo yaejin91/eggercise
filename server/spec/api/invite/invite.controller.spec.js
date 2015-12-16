@@ -111,7 +111,7 @@ describe('Invite', function() {
     });
 
     //create an invitation(positive)
-    it('should create a new invitation through an email address', function (done){
+    fit('should create a new invitation through an email address', function (done){
     agent
       .post('/api/invites/create')
       .send({
@@ -125,11 +125,12 @@ describe('Invite', function() {
         if(error){
           done.fail(error);
         } else {
-          var returnedInvite = res.body;
-          expect(returnedInvite).toBeDefined();
-          expect(returnedInvite.email).toBe('inviteemail@gmail.com');
-          expect(returnedInvite._group).toBe((group._id).toJSON());
-          Invite.findOne({ _id: returnedInvite._id })
+          var returnedResponse = res.body;
+          console.log('This is the returnedResponse: ', returnedResponse);
+          expect(returnedResponse).toBeDefined();
+          expect(returnedResponse.email).toBe('inviteemail@gmail.com');
+          expect(returnedResponse._group).toBe((group._id).toJSON());
+          Invite.findOne({ _id: returnedResponse._id })
           .remove(function (error) {
             done();
           })
@@ -173,7 +174,6 @@ describe('Invite', function() {
         }
       });
     });
-
   });
 });
 
