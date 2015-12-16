@@ -36,17 +36,27 @@ exports.acceptInvite = function(req, res) {
       if (error) { 
         return handleError(res, error);
       } else {
-        console.log('invite.email: ',invite.email);
         User.findOne({ email: invite.email}, function (error, user) {
           if (error) {
             return handleError(res, error);
           } else {
-            console.log('user.email: ',user.email);
-            console.log('user: ', user);
             user._groups.push(invite._group);
-            user.save();
-            res.status(200).json(user);
-            console.log('invite: ',invite);
+            user.save(function (error, savedUser) {
+              if (error) {
+                return handleError(res, error);
+              } else {
+                Group.findById( {_id: invite._group}, function (error, group) {
+                  group._members.push(user._id);
+                  group.save(function (error, savedGroup) {
+                    if (error) {
+                      return handleError(res, error);
+                    } else {
+                      res.status(200).json(group);
+                    }
+                  });
+                })
+              }
+            });
           }
         });
       }

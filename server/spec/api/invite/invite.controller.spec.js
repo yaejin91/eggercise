@@ -159,22 +159,16 @@ describe('Invite', function() {
     });
 
     //Test for returning an existing invitation successfully
-    fit('should have invitee accept invitation', function (done) {
-      // console.log('test is running?');
-      console.log('invitedUser on Test: ',invitedUser);
-      console.log('invite: ',invite);
+    it('should have invitee accept invitation', function (done) {
       agent
       .get('/api/invites/accept/'+invite._id)
       .expect('Content-Type', /json/)
       .expect(200)
       .end(function (error, res) {
         if(error){
-          console.log('error: ',error);
           done.fail(error);
         } else {
-          console.log('res.body.email: ',res.body.email);
           expect(res.body.email).toBe(invitedUser.email);
-          console.log('done with test');
           done();
         }
       });
