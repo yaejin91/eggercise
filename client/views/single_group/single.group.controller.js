@@ -81,16 +81,17 @@ angular.module('eggercise')
                   data.leader.email = data._members[i].email;
                   data.leader.workouts = data._members[i].validExercises.length;
                   vm.daysBehind = data.leader.workouts - user.exercises.length;
-                  vm.youOwe = Math.abs(vm.daysBehind*vm.group.bet);
+                  vm.pot = vm.daysBehind*vm.group.bet
+                  vm.youOwe = Math.abs(vm.pot);
                 }
               }
               vm.group = data;
+
               if(vm.daysBehind > 0) {
                 vm.pot = 'Pays ' + vm.youOwe;
-              }
-              else {
+              }else {
                 vm.pot = 'Wins ' + vm.youOwe;
-              }
+              }  
             })
             .catch(function (err) {
               vm.error = err;
