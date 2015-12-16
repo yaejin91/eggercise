@@ -6,25 +6,28 @@ var request = require('supertest'),
 describe('Email service', function() {
 
   it('should send an email to the invitee', function (done) {
-    expect(EmailService.send('mariprojects@gmail.com', 'You are awesome', 'You are awesomer')).toBe({ message: 'success'});
-    done();
+   EmailService.send('dechenxx@gmail.com', 'You are awesome', 'You are awesomer', function (err, json){
+      if(err){
+        done.fail(err);
+      }else{
+        expect(json).toBeDefined();
+        expect(json.message).toBeDefined();
+        expect(json.message).toBe('success');
+        done();
+      }
+    });
   })
 
-  function checkResult () {
+  it('should not send an email to the invitee', function (done) {
+   EmailService.send(null, 'subject here', 'You are awesomer', function (err, json){
+      if(err){
+        console.log('err: ', err);
+        expect(err).toBe('Email must be provided')
+        done();
+      }else{
+        done.fail(err);
+      }
+    });
+  })
 
-  }
-
-  // it('should not send an email to the invitee', function (done) {
-  //   request(app)
-  //   .send({
-  //     email: 'test@test2.com',
-  //     password: 'wrong'
-  //   })
-  //   .expect('Content-Type', /json/)
-  //   .expect(404)
-  //   .end(function(err, res){
-  //     expect(err).toBeDefined();
-  //     done();
-  //   });
-  // });
 });
