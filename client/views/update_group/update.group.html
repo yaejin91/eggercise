@@ -41,9 +41,13 @@
     <div>
       <h2>Group Members</h2>
       <hr>
-      <div ng-repeat="members in vm.group._members">
-        <div>
-          <p>{{members.name}}</p>
+      <div class="col-md-12">
+        <div ng-repeat="members in vm.group._members">
+          <div class="col-md-10">
+            <div>
+              <p>{{members.name}}</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>

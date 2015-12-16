@@ -46,9 +46,6 @@ angular.module('eggercise')
                   vm.exercises.push(data._members[i].exercises[j]);
                 }
               }
-              console.log('These are the group members: ', vm.members);
-              console.log('These are the group exercises: ', vm.exercises);
-              console.log(vm.group);
               $location.path('/group/show');
             })
             .catch(function (err) {
