@@ -67,7 +67,7 @@ exports.acceptInvite = function(req, res) {
     .exec(function (error, invite) {
       if (error) {
         return handleError(res, error);
-      } else {
+      } else if (invite != null) {
         User.findOne({ email: invite.email}, function (error, user) {
           if (error) {
             return handleError(res, error);
@@ -91,6 +91,8 @@ exports.acceptInvite = function(req, res) {
             });
           }
         });
+      } else {
+        res.status(401).json({message: 'invite not found'});
       }
     });
 }
