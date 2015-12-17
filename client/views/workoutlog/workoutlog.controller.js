@@ -41,13 +41,11 @@ angular.module('eggercise')
 
           //Build the array vm.allDates to iterate through in the future
           for(var j=vm.numberOfDays; j>=0; j--) {
-            // if(vm.numberOfDays !== j){
               vm.allDates.push({
                 //todayDate - j is for checking the dates from now to joinDate 
-                date: (new Date((todayDate - j+1)*millisToDays)+'').substring(0,15),
+                date: (new Date((todayDate - j + 1)*millisToDays)+'').substring(0,15),
                 checked: (vm.user.convertedExercises.indexOf(todayDate - j) !== -1)
               });
-            // } 
           }
           $location.path('/log');
         })
