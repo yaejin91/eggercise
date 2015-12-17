@@ -59,11 +59,12 @@ exports.create = function (req, res) {
 
 //view single group
 exports.showGroup = function (req, res) {
-  var loggedUserId =  req.user._id;
-  console.log('--------------------------');
-  console.log('This is loggedUserId: ', loggedUserId);
-  console.log('--------------------------');
-  console.log('This is req.params.group_id: ', req.params.group_id);
+  // cast the user id to a string data type
+  var loggedUserId =  req.user._id.toString();
+  var groupCreatorId;
+
+  console.log('This is the loggedUserId: ', loggedUserId);
+  console.log('This is the typeof loggedUserId: ', typeof loggedUserId);
 
   Group.findOne({_id: req.params.group_id})
     .populate('_members')
@@ -71,7 +72,13 @@ exports.showGroup = function (req, res) {
     var groupMemberIds = [];
     console.log('This is the group: ', group);
     console.log('--------------------------');
+
     console.log('This is group._creator: ', group._creator);
+    console.log('--------------------------');
+
+    groupCreatorId = group._creator.toString();
+    console.log('This is groupCreatorId: ', groupCreatorId);
+  console.log('This is the typeof groupCreatorId: ', typeof groupCreatorId);
     console.log('--------------------------');
 
     if (err) { return handleError(res, err, 500);
@@ -82,26 +89,22 @@ exports.showGroup = function (req, res) {
         console.log('This is ' + i + '_id: ', group._members[i]._id);
         var stringGroupMemberId = group._members[i]._id.toString();
         groupMemberIds.push(stringGroupMemberId);
+        console.log('This is the typeof groupMemberIds[i]: ', typeof groupMemberIds[i]);
       }
 
       console.log('this is the array groupMemberIds: ', groupMemberIds);
       console.log('--------------------------');
-      console.log('This is the loggedUserId: ', loggedUserId);
 
       for (var j = 0; j < groupMemberIds.length; j++) {
-        console.log('--------------------------');
         console.log('This is the groupMemberIds.length: ', groupMemberIds.length);
         console.log('This is is j: ', j);
         console.log('This is the loggedUserId: ', loggedUserId);
         console.log('This is the typeof loggedUserId: ', typeof loggedUserId);
 
-        var stringLoggedUserId = loggedUserId.toString();
-        console.log('This is the loggedUserId toString: ', stringLoggedUserId);
-
         console.log('This is groupMemberIds[j]: ', groupMemberIds[j]);
         console.log('This is typeof groupMemberIds[j]: ', typeof groupMemberIds[j]);
 
-        if (groupMemberIds[j].toString() === loggedUserId.toString()) {
+        if (groupMemberIds[j] === loggedUserId) {
           console.log('This test passed!');
         }
         console.log('--------------------------');
