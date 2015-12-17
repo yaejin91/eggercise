@@ -31,6 +31,7 @@ exports.create = function (req, res) {
   var creatorId = req.user._id;
   var group = new Group ({
     name: req.body.name,
+    description: req.body.description,
     bet: req.body.bet,
     start: req.body.start,
     end: req.body.end,

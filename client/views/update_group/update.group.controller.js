@@ -44,7 +44,6 @@ angular.module('eggercise')
           vm.group = data;
           vm.formData.start = new Date(vm.group.start);
           vm.formData.end = new Date(vm.group.end);
-          console.log('vm.formData.start: ', vm.formData.start);
 
         })
         .catch(function (error) {
