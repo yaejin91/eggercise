@@ -31,14 +31,17 @@ angular.module('eggercise')
           for(var i = 0; i < data._groups.length; i++) {
             var convertedStartDate = Math.floor(new Date(data._groups[i].start)/millisToDays);
             if (convertedStartDate < vm.firstStartDate) {
+              //if the start date of a group is the oldest, make vm.firstStartDate equal that.
               vm.firstStartDate = convertedStartDate;
             }
           }
           var logStartDate = vm.firstStartDate;
+          //if user's date of joining the website is earlier than any of his/her groups' start dates,
+          //set logStartDate to equal joinDate
           if (joinDate < vm.firstStartDate) {
             logStartDate = joinDate;
           }
-          //vm.numberOfDays is number of days between user's join date and current date
+          //vm.numberOfDays is number of days between user's groups' earliest log date and current date
           vm.numberOfDays = todayDate - logStartDate;
           vm.user = data;
           vm.user.convertedExercises = [];

@@ -9,7 +9,6 @@ angular.module('eggercise')
       
       $http.get('/api/users/me')
       .success(function (user) {
-        console.log('user on client service: ',user);
         deferred.resolve(user);
       })
       .error(function (error) {
