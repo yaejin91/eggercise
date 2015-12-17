@@ -17,7 +17,7 @@ function handleSuccess(res, message, status) {
 
 function generateInvitation (id) {
   var emailBody = "You've been invited, please join by clicking on the link to accept your invitation."
-  var emailLink = "http://eggercise.com/invites/accept/" + id;
+  var emailLink = "http://www.eggercise.com/invites/accept/" + id;
   return emailBody + ' ' + emailLink;
 }
 
@@ -36,8 +36,10 @@ exports.create = function (req, res) {
   invite.save(function (error, savedInvite) {
     if (savedInvite) {
       var subject = "You've been invited to join eggercise!"
-      var emailText = generateInvitation(savedInvite._group);
+      var emailText = generateInvitation(savedInvite._id);
       var emailTo = savedInvite.email;
+
+      console.log('This is the emailText: ', emailText);
 
       EmailService.send(emailTo, subject, emailText, function(err, json) {
         if (json) {
