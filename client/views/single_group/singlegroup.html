@@ -51,12 +51,18 @@
       <div class="jumbotron">
         <div class="row">
           <div class="col-md-12 text-center">
-            <div class="days">
-              {{vm.daysBehind}}
+            <div class="days" ng-if="vm.daysAhead">
+              {{vm.daysAhead}}
+              <div class="col-md-12 text-center">
+                  Days Ahead
+              </div>
             </div>
-          </div>
-          <div class="col-md-12 text-center">
-              Days Behind
+            <div class="days" ng-if="vm.daysBehind">
+              {{vm.daysBehind}}
+              <div class="col-md-12 text-center">
+                  Days Behind
+              </div>
+            </div>
           </div>
         </div>
       </div>

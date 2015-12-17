@@ -15,6 +15,7 @@ angular.module('eggercise')
       vm.sdate_ms;
       vm.edate_ms;
       vm.youOwe;
+      vm.days;
       vm.daysBehind;
       vm.pot;
       vm.othersDaysBehind;
@@ -81,21 +82,22 @@ angular.module('eggercise')
                 if(data._members[i].validExercises.length > data.leader.workouts) {
                   data.leader.email = data._members[i].email;
                   data.leader.workouts = data._members[i].validExercises.length;
-                  // data.leader.workouts = 20;
-                  vm.daysBehind = data.leader.workouts - user.exercises.length;
-                  vm.youOwe = Math.abs(vm.daysBehind*vm.group.bet);
+                  data.leader.workouts = 3;
+                  vm.days = data.leader.workouts - user.exercises.length;
+                  vm.youOwe = Math.abs(vm.days*vm.group.bet);
                 }
-
-                vm.othersDaysBehind = data.leader.workouts - data._members[i].validExercises.length;
-                console.log(vm.othersDaysBehind);
+                //Comparing current user to the leader of the group through e-mail
+                if(data.you.email == data.leader.email) {
+                  vm.daysAhead = Math.abs(vm.days);
+                  console.log('daysAhead: ',vm.daysAhead);
+                  vm.pot = 'Wins ' + vm.youOwe;
+                } else {
+                  vm.daysBehind = Math.abs(vm.days);
+                  console.log('daysBehind: ',vm.daysBehind);
+                  vm.pot = 'Pays ' + vm.youOwe;
+                }
               }
               vm.group = data;
-
-              if(vm.daysBehind < 0) {
-                vm.pot = 'Wins ' + vm.youOwe;
-              }else {
-                vm.pot = 'Pays ' + vm.youOwe;
-              }  
             })
             .catch(function (err) {
               vm.error = err;
