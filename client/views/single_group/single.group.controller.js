@@ -52,7 +52,6 @@ angular.module('eggercise')
                   vm.exercises.push(data._members[i].exercises[j]);
                 }
               }
-              $location.path('/group/show');
             })
             .catch(function (err) {
               vm.error = err;
@@ -75,7 +74,7 @@ angular.module('eggercise')
                   if((logInMilli > vm.sdate_ms) && (logInMilli < vm.edate_ms)) {
                     data._members[i].validExercises.push(data._members[i].exercises[j]);
                   }
-                } 
+                }
                 //if user has the most workout, his/her email is set as the group's leader's email
                 //the leader's number of workouts is also in this object
                 if(data._members[i].validExercises.length > data.leader.workouts) {
@@ -87,7 +86,6 @@ angular.module('eggercise')
                 }
 
                 vm.othersDaysBehind = data.leader.workouts - data._members[i].validExercises.length;
-                console.log(vm.othersDaysBehind);
               }
               vm.group = data;
 
@@ -95,7 +93,7 @@ angular.module('eggercise')
                 vm.pot = 'Wins ' + vm.youOwe;
               }else {
                 vm.pot = 'Pays ' + vm.youOwe;
-              }  
+              }
             })
             .catch(function (err) {
               vm.error = err;

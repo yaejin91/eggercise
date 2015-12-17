@@ -2,7 +2,6 @@
 
 angular.module('eggercise')
   .controller('GroupCtrl', ['$location', '$log', '$routeParams', 'GroupService', function ($location, $log, $routeParams,GroupService) {
-
     var vm = this;
     vm.formData = {};
     vm.groups =[];

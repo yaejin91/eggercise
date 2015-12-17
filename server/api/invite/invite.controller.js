@@ -94,7 +94,7 @@ exports.acceptInvite = function(req, res) {
           }
         });
       } else {
-        res.status(401).json({message: 'invite not found'});
+        res.status(404).json({message: 'invite not found'});
       }
     });
 }

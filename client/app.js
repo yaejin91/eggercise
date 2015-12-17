@@ -32,29 +32,41 @@ angular.module('eggercise', [
       },
 
       responseError: function (response) {
+        console.log('response.status: ', response.status);
         if (response.status === 401) {
+          console.log('responseError going to login');
           $location.path('/login');
           $cookieStore.remove('token');
           return $q.reject(response);
         }
         else {
+          $location.path('/');
           return $q.reject(response);
         }
       }
 
     };
   })
-
   .run(function ($rootScope, $location, Auth) {
 
     $rootScope.Auth = Auth;
 
-    $rootScope.$on('$routeChangeStart', function (event, next) {
-      Auth.isReadyLogged().catch(function () {
-        if (next.authenticate) {
-          $location.path('/');
-        }
-      });
-    });
+    $rootScope.$on('$locationChangeStart', function (event, next, current) {
+      var requestedPath = $location.url();
+      var publicPages = ['/', '/login', '/signup'];
+      var restrictedPage = publicPages.indexOf(requestedPath) === -1;
 
+      if (restrictedPage) {
+        Auth.isReadyLogged()
+        .then(function() {
+          $rootScope.unauthorized = false;
+        })
+        .catch(function () {
+          $rootScope.unauthorized = true;
+          event.preventDefault();
+          $rootScope.returnToPath = $location.url();
+          $location.path('/login');
+        });
+      }
+    });
   });

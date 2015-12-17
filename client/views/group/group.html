@@ -50,7 +50,7 @@
           <div ui-sortable ng-init="vm.showAllGroups()">
           <div ng-repeat="group in vm.groups">
             <div>
-              <p> <a href="/group/show?id={{group._id}}">{{ group.name }}</a> - ${{ group.bet }}
+              <p> <a href="/group/show/{{group._id}}">{{ group.name }}</a> - ${{ group.bet }}
               </p>
             </div>
           </div>
