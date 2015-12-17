@@ -8,8 +8,8 @@ angular.module('eggercise')
       var deferred = $q.defer();
       
       $http.get('/api/users/me')
-      .success(function (showWorkout) {
-        deferred.resolve(showWorkout);
+      .success(function (user) {
+        deferred.resolve(user);
       })
       .error(function (error) {
         deferred.reject(err.data);
