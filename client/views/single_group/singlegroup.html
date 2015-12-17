@@ -51,12 +51,18 @@
       <div class="jumbotron">
         <div class="row">
           <div class="col-md-12 text-center">
-            <div class="days">
+            <div class="days" ng-if="vm.daysAhead">
+              {{vm.daysAhead}}
+            </div>
+            <div class="col-md-12 text-center" ng-if="vm.daysAhead">
+                Days Ahead
+            </div>
+            <div class="days" ng-if="vm.daysBehind">
               {{vm.daysBehind}}
             </div>
-          </div>
-          <div class="col-md-12 text-center">
-              Days Behind
+            <div class="col-md-12 text-center" ng-if="vm.daysBehind">
+                Days Behind
+            </div>
           </div>
         </div>
       </div>
@@ -81,6 +87,7 @@
 
   <h3>Days Exercised</h3>
   <hr>
+  <!-- <div class="row" ng-repeat="member in vm.members | orderBy: 'member.exercises.length' : true"> -->
   <div class="row" ng-repeat="member in vm.members | orderBy: 'member.exercises.length' : true">
     <div class="col-xs-10" >
       <div>

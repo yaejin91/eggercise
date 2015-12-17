@@ -15,6 +15,7 @@ angular.module('eggercise')
       vm.sdate_ms;
       vm.edate_ms;
       vm.youOwe;
+      vm.days;
       vm.daysBehind;
       vm.pot;
       vm.othersDaysBehind;
@@ -65,7 +66,7 @@ angular.module('eggercise')
           GroupService.showGroup(id)
             .then(function (data) {
               data.you = user;
-              data.leader = {email: 'leader@test.com', workouts: -1};
+              data.leader = {email: 'leader@test.com', exercises: -1};
               for (var i = 0; i < data._members.length; i++) {
                 data._members[i].validExercises = [];
                 for(var j = 0; j < data._members[i].exercises.length; j++) {
@@ -76,26 +77,24 @@ angular.module('eggercise')
                     data._members[i].validExercises.push(data._members[i].exercises[j]);
                   }
                 } 
-                //if user has the most workout, his/her email is set as the group's leader's email
-                //the leader's number of workouts is also in this object
-                if(data._members[i].validExercises.length > data.leader.workouts) {
+                //if user has the most exercises, his/her email is set as the group's leader's email
+                //the leader's number of exercises is also in this object
+                if(data._members[i].validExercises.length > data.leader.exercises) {
                   data.leader.email = data._members[i].email;
-                  data.leader.workouts = data._members[i].validExercises.length;
-                  // data.leader.workouts = 20;
-                  vm.daysBehind = data.leader.workouts - user.exercises.length;
-                  vm.youOwe = Math.abs(vm.daysBehind*vm.group.bet);
+                  data.leader.exercises = data._members[i].validExercises.length;
+                  vm.days = data.leader.exercises - user.exercises.length;
+                  vm.youOwe = Math.abs(vm.days*vm.group.bet);
                 }
-
-                vm.othersDaysBehind = data.leader.workouts - data._members[i].validExercises.length;
-                console.log(vm.othersDaysBehind);
+                //Comparing current user to the leader of the group through e-mail
+                if(data.you.email == data.leader.email) {
+                  vm.daysAhead = Math.abs(vm.days);
+                  vm.pot = 'Wins ' + vm.youOwe;
+                } else {
+                  vm.daysBehind = Math.abs(vm.days);
+                  vm.pot = 'Pays ' + vm.youOwe;
+                }
               }
               vm.group = data;
-
-              if(vm.daysBehind < 0) {
-                vm.pot = 'Wins ' + vm.youOwe;
-              }else {
-                vm.pot = 'Pays ' + vm.youOwe;
-              }  
             })
             .catch(function (err) {
               vm.error = err;
