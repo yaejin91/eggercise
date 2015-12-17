@@ -97,20 +97,27 @@ exports.delete = function (req, res){
 exports.update = function (req, res){
   var creatorId = req.user._id;
   var groupId = {_id: req.params.group_id};
-  Group.update( groupId , {$set: {
+  var options = {new: true};
+
+  var formInputs = {
     name: req.body.name,
     description: req.body.description,
     bet: req.body.bet,
     start: req.body.start,
     end: req.body.end,
     _creator: creatorId
-  }}, function (err, updatedGroup){
-    if(err){
-      return handleError(res, 'updatedGroup not found', 404);
+  }
+
+  var update = {};
+  for( var key in formInputs){
+    if(formInputs[key]) {
+      update[key] = formInputs[key];
     }
-    res.status(200).json({
-      group: updatedGroup
-    });
+  }
+
+  Group.findByIdAndUpdate(groupId, update, options, function (err, updatedGroup) {
+    if (err) { return handleError(res, err);}
+    res.status(200).json(updatedGroup);
   });
 }
 
