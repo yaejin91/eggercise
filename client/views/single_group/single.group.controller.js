@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('eggercise')
-  .controller('ShowGroupCtrl', ['$location', '$log', '$routeParams', 'GroupService', function ($location, $log, $routeParams, GroupService) {
+  .controller('ShowGroupCtrl', ['$location', '$log', '$routeParams', 'GroupService', 'Auth', function ($location, $log, $routeParams, GroupService, Auth) {
     var vm = this;
 
       vm.group = {};
@@ -12,6 +12,12 @@ angular.module('eggercise')
       vm.group_id = $routeParams.id;
       vm.members = [];
       vm.exercises = [];
+      vm.sdate_ms;
+      vm.edate_ms;
+      vm.youOwe;
+      vm.daysBehind;
+      vm.pot;
+      vm.othersDaysBehind;
 
       angular.extend(vm, {
 
@@ -27,9 +33,9 @@ angular.module('eggercise')
               vm.enddate = ((edate.getMonth() + 1) + "/" + edate.getDate());
               Date.daysBetween = function (sdate, edate) {
                 var one_day = 1000 * 60 * 60 * 24;
-                var sdate_ms = sdate.getTime();
-                var edate_ms = edate.getTime();
-                var difference_ms = edate_ms - sdate_ms;
+                vm.sdate_ms = sdate.getTime();
+                vm.edate_ms = edate.getTime();
+                var difference_ms = vm.edate_ms - vm.sdate_ms;
                 return Math.round(difference_ms/one_day);
               }
               var tdate = new Date();
@@ -52,7 +58,49 @@ angular.module('eggercise')
               vm.error = err;
               $log.error('Error: ', err);
             });
-        }
+        },
 
+        moneyOwed: function (id) {
+          var user = Auth.getUser();
+          GroupService.showGroup(id)
+            .then(function (data) {
+              data.you = user;
+              data.leader = {email: 'leader@test.com', workouts: -1};
+              for (var i = 0; i < data._members.length; i++) {
+                data._members[i].validExercises = [];
+                for(var j = 0; j < data._members[i].exercises.length; j++) {
+                  //each member's separate log entries changed into milliseconds unit
+                  var logInMilli = new Date(data._members[i].exercises[j]).getTime();
+                  //if log is in between start and end date of the group, push to array
+                  if((logInMilli > vm.sdate_ms) && (logInMilli < vm.edate_ms)) {
+                    data._members[i].validExercises.push(data._members[i].exercises[j]);
+                  }
+                } 
+                //if user has the most workout, his/her email is set as the group's leader's email
+                //the leader's number of workouts is also in this object
+                if(data._members[i].validExercises.length > data.leader.workouts) {
+                  data.leader.email = data._members[i].email;
+                  data.leader.workouts = data._members[i].validExercises.length;
+                  // data.leader.workouts = 20;
+                  vm.daysBehind = data.leader.workouts - user.exercises.length;
+                  vm.youOwe = Math.abs(vm.daysBehind*vm.group.bet);
+                }
+
+                vm.othersDaysBehind = data.leader.workouts - data._members[i].validExercises.length;
+                console.log(vm.othersDaysBehind);
+              }
+              vm.group = data;
+
+              if(vm.daysBehind < 0) {
+                vm.pot = 'Wins ' + vm.youOwe;
+              }else {
+                vm.pot = 'Pays ' + vm.youOwe;
+              }  
+            })
+            .catch(function (err) {
+              vm.error = err;
+              $log.error('Error: ', err);
+            });
+        }
       });
   }]);

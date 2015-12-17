@@ -37,7 +37,6 @@ describe('Invite', function() {
   });
 
   afterAll(function (done) {
-    console.log('afterAll');
     User.remove({_id: creator._id}, function (error, removedCreator) {
       if (error) {
         done.fail(error);
@@ -46,7 +45,7 @@ describe('Invite', function() {
       }
     });
   });
-    
+
   describe('with data', function() {
 
     beforeEach(function (done) {
@@ -87,13 +86,12 @@ describe('Invite', function() {
                 }
               })
             }
-          }) 
+          })
         }
       });
     });
 
     afterEach(function (done) {
-      console.log('afterEach');
       Group.remove({_id: group._id}, function (error, removedGroup) {
         if (error) {
           console.log(error);
@@ -111,7 +109,7 @@ describe('Invite', function() {
     });
 
     //create an invitation(positive)
-    it('should create a new invitation through an email address', function (done){
+    fit('should create a new invitation through an email address', function (done){
     agent
       .post('/api/invites/create')
       .send({
@@ -129,9 +127,10 @@ describe('Invite', function() {
           expect(returnedInvite).toBeDefined();
           expect(returnedInvite.email).toBe('inviteemail@gmail.com');
           expect(returnedInvite._group).toBe((group._id).toJSON());
+          expect(returnedInvite.sent_at).toBeDefined();
           Invite.findOne({ _id: returnedInvite._id })
           .remove(function (error) {
-            done();            
+            done();
           })
         }
       });
@@ -142,21 +141,47 @@ describe('Invite', function() {
     agent
       .post('/api/invites/create')
       .send({
-        email: 'inviteemail2@gmail.com'
+        _group: group._id
       })
       .set('Authorization', 'Bearer ' + auth.token)
       .expect('Content-Type', /json/)
-      .expect(200)
+      .expect(422)
       .end(function (error, res) {
-        if(res){
-          expect(res.status).toBe(500);
-          expect(res.body.err).toBe('Did not create the invite');
-          done();
-        } else {
+        if (error) {
           done.fail(error);
+        } else {
+          done();
         }
       });
     });
+
+    //doesn't create an invitation(negative)
+    // DO NOT know how to mock a service with a callback.
+    // Will come back to this later
+    // it('should not send a new invitation', function (done){
+    //   spyOn(EmailService, 'send').and.respond(function() {
+
+    //   });
+
+    // agent
+    //   .post('/api/invites/create')
+    //   .send({
+    //     email: 'invitee2@mail.com',
+    //     _group: group._id
+    //   })
+    //   .set('Authorization', 'Bearer ' + auth.token)
+    //   .expect('Content-Type', /json/)
+    //   .expect(422)
+    //   .end(function (error, res) {
+    //     if (error) {
+    //       done.fail(error);
+    //     } else {
+    //       console.log('this is the res in the if: ', res.body);
+    //       expect(res.body.err).toBe('Did not create the invite');
+    //       done();
+    //     }
+    //   });
+    // });
 
     //Test for returning an existing invitation successfully
     it('should have invitee accept invitation', function (done) {
@@ -173,7 +198,6 @@ describe('Invite', function() {
         }
       });
     });
-
   });
 });
 

@@ -13,7 +13,7 @@ angular.module('eggercise')
 
     angular.extend(vm, {
 
-    //Show Workout
+    //Show dates that you worked out and ones you didn't (from your join date)
     showWorkout: function () {
       WorkoutService.showWorkout()
         .then(function (data) {
@@ -21,7 +21,7 @@ angular.module('eggercise')
           var millisToDays = 1000*60*60*24;
 
           //user's join date in unit 'days'
-          var joinDate = Math.floor(new Date(data.joinDate)/millisToDays);
+          var joinDate = Math.floor(new Date(data.joinDate)/millisToDays)+1;
 
           //current date in unit 'days'
           var todayDate = Math.floor(Date.now()/millisToDays);
@@ -44,7 +44,7 @@ angular.module('eggercise')
             // if(vm.numberOfDays !== j){
               vm.allDates.push({
                 //todayDate - j is for checking the dates from now to joinDate 
-                date: (new Date((todayDate - j + 1)*millisToDays)+'').substring(0,15),
+                date: (new Date((todayDate - j+1)*millisToDays)+'').substring(0,15),
                 checked: (vm.user.convertedExercises.indexOf(todayDate - j) !== -1)
               });
             // } 
