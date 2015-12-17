@@ -66,88 +66,69 @@ exports.showGroup = function (req, res) {
   console.log('This is the loggedUserId: ', loggedUserId);
   console.log('This is the typeof loggedUserId: ', typeof loggedUserId);
 
-  Group.findOne({_id: req.params.group_id})
-    .populate('_members')
-    .exec(function (err, group) {
-    var groupMemberIds = [];
-    console.log('This is the group: ', group);
-    console.log('--------------------------');
-
-    console.log('This is group._creator: ', group._creator);
-    console.log('--------------------------');
-
-    groupCreatorId = group._creator.toString();
-    console.log('This is groupCreatorId: ', groupCreatorId);
-  console.log('This is the typeof groupCreatorId: ', typeof groupCreatorId);
-    console.log('--------------------------');
-
-    if (err) { return handleError(res, err, 500);
-    } else if (group) {
-
-      for (var i = 0; i < group._members.length; i++) {
-        console.log('This is ' + i + ': ', group._members[i]);
-        console.log('This is ' + i + '_id: ', group._members[i]._id);
-        var stringGroupMemberId = group._members[i]._id.toString();
-        groupMemberIds.push(stringGroupMemberId);
-        console.log('This is the typeof groupMemberIds[i]: ', typeof groupMemberIds[i]);
-      }
-
-      console.log('this is the array groupMemberIds: ', groupMemberIds);
+  if (mongoose.Types.ObjectId.isValid(req.params.group_id)) {
+    Group.findOne({_id: req.params.group_id})
+      .populate('_members')
+      .exec(function (err, group) {
+      var groupMemberIds = [];
+      console.log('This is the group: ', group);
       console.log('--------------------------');
 
-      for (var j = 0; j < groupMemberIds.length; j++) {
-        console.log('This is the groupMemberIds.length: ', groupMemberIds.length);
-        console.log('This is is j: ', j);
-        console.log('This is the loggedUserId: ', loggedUserId);
-        console.log('This is the typeof loggedUserId: ', typeof loggedUserId);
+      console.log('This is group._creator: ', group._creator);
+      console.log('--------------------------');
 
-        console.log('This is groupMemberIds[j]: ', groupMemberIds[j]);
-        console.log('This is typeof groupMemberIds[j]: ', typeof groupMemberIds[j]);
+      groupCreatorId = group._creator.toString();
+      console.log('This is groupCreatorId: ', groupCreatorId);
+    console.log('This is the typeof groupCreatorId: ', typeof groupCreatorId);
+      console.log('--------------------------');
 
-        if (groupMemberIds[j] === loggedUserId) {
-          console.log('This test passed!');
+      if (err) { return handleError(res, err, 500);
+      } else if (group) {
+
+        for (var i = 0; i < group._members.length; i++) {
+          console.log('This is ' + i + ': ', group._members[i]);
+          console.log('This is ' + i + '_id: ', group._members[i]._id);
+          // cast the group member id to a string data type
+          var stringGroupMemberId = group._members[i]._id.toString();
+          groupMemberIds.push(stringGroupMemberId);
+          console.log('This is the typeof groupMemberIds[i]: ', typeof groupMemberIds[i]);
         }
+
+        console.log('this is the array groupMemberIds: ', groupMemberIds);
         console.log('--------------------------');
+
+        for (var j = 0; j < groupMemberIds.length; j++) {
+          console.log('This is the groupMemberIds.length: ', groupMemberIds.length);
+          console.log('This is is j: ', j);
+          console.log('This is the loggedUserId: ', loggedUserId);
+          console.log('This is the typeof loggedUserId: ', typeof loggedUserId);
+
+          console.log('This is groupMemberIds[j]: ', groupMemberIds[j]);
+          console.log('This is typeof groupMemberIds[j]: ', typeof groupMemberIds[j]);
+
+          if (groupMemberIds[j] === loggedUserId) {
+            console.log('This test passed!');
+          }
+          console.log('--------------------------');
+        }
       }
-    }
-  })
+
+      for (var k = 0; k < groupMemberIds.length; k++) {
+        if(loggedUserId == groupCreatorId || groupMemberIds[k] > -1) {
+          res.status(200).json(group);
+        } else {
+          res.status(401).json({err: 'not authorized'});
+        }
+      }
+      // } else {
+      //   res.status(404).json({err: 'not found'});
+      // }
+  // } else {
+  //   res.status(404).json({err: 'not found'});
+  // }
+    });
+  }
 }
-
-  // if (mongoose.Types.ObjectId.isValid(req.params.group_id)) {
-  //   Group.findOne({_id: req.params.group_id})
-  //     .populate('_members')
-  //     .exec(function (err, group) {
-  //     console.log('This is the group: ', group);
-  //     console.log('--------------------------');
-  //     console.log('This is req.user._id: ', req.user._id);
-  //     console.log('--------------------------');
-  //     console.log('This is group._creator: ', group._creator);
-  //     console.log('--------------------------');
-  //     if (err) { return handleError(res, err, 500);
-  //     } else if (group) {
-  //       for (var i = 0; i < group._members.length; i++) {
-  //         console.log('This is ' + i + ': ', group._members[i]);
-  //         console.log('This is ' + i + '_id: ', group._members[i]._id);
-  //         console.log('This is group._members.[i].indexOf(req.user._id): ', group._members[i].indexOf(req.user._id));
-  //         console.log('--------------------------');
-  //       }
-
-
-
-
-//         if(req.user._id + '' == group._creator || group._members.indexOf() > -1) {
-//           res.status(200).json(group);
-//         } else {
-//           res.status(401).json({err: 'not authorized'});
-//         }
-//       } else {
-//         res.status(404).json({err: 'not found'});
-//       }
-//     });
-//   } else {
-//     res.status(404).json({err: 'not found'});
-//   }
-// }
 
 //Delete a group
 exports.delete = function (req, res){
