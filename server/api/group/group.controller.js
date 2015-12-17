@@ -59,25 +59,72 @@ exports.create = function (req, res) {
 
 //view single group
 exports.showGroup = function (req, res) {
-  if (mongoose.Types.ObjectId.isValid(req.params.group_id)) {
-    Group.findOne({_id: req.params.group_id})
-      .populate('_members')
-      .exec(function (err, group) {
-      if (err) { return handleError(res, err, 500);
-      } else if (group) {
-        if(req.user._id + '' == group._creator || group._members.indexOf() > -1) {
-          res.status(200).json(group);
-        } else {
-          res.status(401).json({err: 'not authorized'});
-        }
-      } else {
-        res.status(404).json({err: 'not found'});
+  console.log('--------------------------');
+  var loggedUserId = req.user._id;
+  console.log('This is loggedUserId: ', loggedUserId);
+  console.log('--------------------------');
+  console.log('This is req.params.group_id: ', req.params.group_id);
+  Group.findOne({_id: req.params.group_id})
+    .populate('_members')
+    .exec(function (err, group) {
+    var groupMemberIds = [];
+    console.log('This is the group: ', group);
+    console.log('--------------------------');
+    console.log('This is group._creator: ', group._creator);
+    console.log('--------------------------');
+    if (err) { return handleError(res, err, 500);
+    } else if (group) {
+      for (var i = 0; i < group._members.length; i++) {
+        console.log('This is ' + i + ': ', group._members[i]);
+        console.log('This is ' + i + '_id: ', group._members[i]._id);
+        groupMemberIds.push(group._members[i]._id);
       }
-    });
-  } else {
-    res.status(404).json({err: 'not found'});
-  }
+      console.log('this is the array groupMemberIds: ', groupMemberIds);
+      console.log('--------------------------');
+      for (var j = 0; i < groupMemberIds.length; j++) {
+        if (groupMemberIds[i] == loggedUserId) {
+          console.log('This test passed!');
+        }
+      }
+    }
+  })
 }
+
+  // if (mongoose.Types.ObjectId.isValid(req.params.group_id)) {
+  //   Group.findOne({_id: req.params.group_id})
+  //     .populate('_members')
+  //     .exec(function (err, group) {
+  //     console.log('This is the group: ', group);
+  //     console.log('--------------------------');
+  //     console.log('This is req.user._id: ', req.user._id);
+  //     console.log('--------------------------');
+  //     console.log('This is group._creator: ', group._creator);
+  //     console.log('--------------------------');
+  //     if (err) { return handleError(res, err, 500);
+  //     } else if (group) {
+  //       for (var i = 0; i < group._members.length; i++) {
+  //         console.log('This is ' + i + ': ', group._members[i]);
+  //         console.log('This is ' + i + '_id: ', group._members[i]._id);
+  //         console.log('This is group._members.[i].indexOf(req.user._id): ', group._members[i].indexOf(req.user._id));
+  //         console.log('--------------------------');
+  //       }
+
+
+
+
+//         if(req.user._id + '' == group._creator || group._members.indexOf(req.user._id) > -1) {
+//           res.status(200).json(group);
+//         } else {
+//           res.status(401).json({err: 'not authorized'});
+//         }
+//       } else {
+//         res.status(404).json({err: 'not found'});
+//       }
+//     });
+//   } else {
+//     res.status(404).json({err: 'not found'});
+//   }
+// }
 
 //Delete a group
 exports.delete = function (req, res){
