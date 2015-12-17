@@ -62,71 +62,33 @@ exports.showGroup = function (req, res) {
   // cast the user id to a string data type
   var loggedUserId =  req.user._id.toString();
   var groupCreatorId;
+  var groupMemberIds = [];
 
   function runStatus(group) {
     res.status(200).json(group);
   }
 
-  console.log('This is the loggedUserId: ', loggedUserId);
-  console.log('This is the typeof loggedUserId: ', typeof loggedUserId);
-
   if (mongoose.Types.ObjectId.isValid(req.params.group_id)) {
     Group.findOne({_id: req.params.group_id})
       .populate('_members')
       .exec(function (err, group) {
-      var groupMemberIds = [];
-      console.log('This is the group: ', group);
-      console.log('--------------------------');
-
-      console.log('This is group._creator: ', group._creator);
-      console.log('--------------------------');
-
       groupCreatorId = group._creator.toString();
-      console.log('This is groupCreatorId: ', groupCreatorId);
-    console.log('This is the typeof groupCreatorId: ', typeof groupCreatorId);
-      console.log('--------------------------');
 
       if (err) { return handleError(res, err, 500);
       } else if (group) {
-
+        // store the member group ids in an array
         for (var i = 0; i < group._members.length; i++) {
-          console.log('This is ' + i + ': ', group._members[i]);
-          console.log('This is ' + i + '_id: ', group._members[i]._id);
           // cast the group member id to a string data type
           var stringGroupMemberId = group._members[i]._id.toString();
           groupMemberIds.push(stringGroupMemberId);
-          console.log('This is the typeof groupMemberIds[i]: ', typeof groupMemberIds[i]);
         }
-
-        console.log('this is the array groupMemberIds: ', groupMemberIds);
-        console.log('--------------------------');
-
+        // check if the logged in user is part of the group
         for (var j = 0; j < groupMemberIds.length; j++) {
-          console.log('This is the groupMemberIds.length: ', groupMemberIds.length);
-          console.log('This is is j: ', j);
-          console.log('This is the loggedUserId: ', loggedUserId);
-          console.log('This is the typeof loggedUserId: ', typeof loggedUserId);
-
-          console.log('This is groupMemberIds[j]: ', groupMemberIds[j]);
-          console.log('This is typeof groupMemberIds[j]: ', typeof groupMemberIds[j]);
-
           if (loggedUserId === groupMemberIds[j]) {
-            console.log('This test passed!');
-            console.log('Running runStatus function');
             runStatus(group);
           }
-          console.log('--------------------------');
         }
       }
-        // else {
-        //   res.status(401).json({err: 'not authorized'});
-        // }
-      // } else {
-      //   res.status(404).json({err: 'not found'});
-      // }
-  // } else {
-  //   res.status(404).json({err: 'not found'});
-  // }
     });
   }
 }
