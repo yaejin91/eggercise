@@ -36,8 +36,10 @@ exports.create = function (req, res) {
   invite.save(function (error, savedInvite) {
     if (savedInvite) {
       var subject = "You've been invited to join eggercise!"
-      var emailText = generateInvitation(savedInvite._group);
+      var emailText = generateInvitation(savedInvite._id);
       var emailTo = savedInvite.email;
+
+      console.log('This is the emailText: ', emailText);
 
       EmailService.send(emailTo, subject, emailText, function(err, json) {
         if (json) {
