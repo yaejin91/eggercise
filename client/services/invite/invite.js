@@ -12,7 +12,7 @@ angular.module('eggercise')
           deferred.resolve(returnedInvite);
         })
         .error(function (error) {
-          deferred.reject('Error: ',  error);
+          deferred.reject(error);
         });
       return deferred.promise;
     }
@@ -24,7 +24,7 @@ angular.module('eggercise')
           deferred.resolve(showGroup);
         })
         .error(function (error) {
-          deferred.reject('Error: ', error);
+          deferred.reject(error);
         });
       return deferred.promise;
     }

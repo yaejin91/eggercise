@@ -3,7 +3,7 @@
 angular.module('eggercise')
   .config(function ($routeProvider) {
     $routeProvider
-      .when('/group/show', {
+      .when('/group/show/:id', {
         templateUrl: 'views/single_group/singlegroup.html',
         controller: 'ShowGroupCtrl',
         controllerAs: 'vm'

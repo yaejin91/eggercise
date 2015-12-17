@@ -11,7 +11,7 @@ exports.send = function (emailTo, subject, emailText, callback) {
         subject:  subject,
         text:     emailText
       }, callback);
-    }else{ 
+    }else{
         callback('Email must be provided', null);
     }
 }

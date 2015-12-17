@@ -9,6 +9,28 @@ angular.module('eggercise')
     vm.groups = [];
     vm.group_id = $routeParams.group_id;
 
+
+    vm.startDatePickerIsOpen = false;
+    vm.endDatePickerIsOpen = false;
+      
+    vm.valuationDatePickerOpen = function ($event, whichDate) {
+      if ($event) {
+          console.log('$event: ', $event);
+          $event.preventDefault();
+          $event.stopPropagation(); // This is the magic
+      }
+      if(whichDate === 'start'){
+        this.startDatePickerIsOpen = true;
+      }else if(whichDate === 'end'){
+        this.endDatePickerIsOpen = true;
+      }
+
+      };
+
+
+
+
+
     angular.extend(vm, {
 
       name: 'UpdateGroupCtrl'
@@ -20,6 +42,9 @@ angular.module('eggercise')
       GroupService.showGroup(id)
         .then(function (data) {
           vm.group = data;
+          vm.formData.start = new Date(vm.group.start);
+          vm.formData.end = new Date(vm.group.end);
+
         })
         .catch(function (error) {
           vm.error = error;

@@ -31,6 +31,7 @@ exports.create = function (req, res) {
   var creatorId = req.user._id;
   var group = new Group ({
     name: req.body.name,
+    description: req.body.description,
     bet: req.body.bet,
     start: req.body.start,
     end: req.body.end,
@@ -59,23 +60,37 @@ exports.create = function (req, res) {
 
 //view single group
 exports.showGroup = function (req, res) {
+  // cast the user id to a string data type
+  var loggedUserId =  req.user._id.toString();
+  var groupCreatorId;
+  var groupMemberIds = [];
+
+  function runStatus(group) {
+    res.status(200).json(group);
+  }
+
   if (mongoose.Types.ObjectId.isValid(req.params.group_id)) {
     Group.findOne({_id: req.params.group_id})
       .populate('_members')
       .exec(function (err, group) {
+      groupCreatorId = group._creator.toString();
+
       if (err) { return handleError(res, err, 500);
       } else if (group) {
-        if(req.user._id + '' == group._creator || group._members.indexOf() > -1) {
-          res.status(200).json(group);
-        } else {
-          res.status(401).json({err: 'not authorized'});
+        // store the member group ids in an array
+        for (var i = 0; i < group._members.length; i++) {
+          // cast the group member id to a string data type
+          var stringGroupMemberId = group._members[i]._id.toString();
+          groupMemberIds.push(stringGroupMemberId);
         }
-      } else {
-        res.status(404).json({err: 'not found'});
+        // check if the logged in user is part of the group
+        for (var j = 0; j < groupMemberIds.length; j++) {
+          if (loggedUserId === groupMemberIds[j]) {
+            runStatus(group);
+          }
+        }
       }
     });
-  } else {
-    res.status(404).json({err: 'not found'});
   }
 }
 
@@ -97,20 +112,27 @@ exports.delete = function (req, res){
 exports.update = function (req, res){
   var creatorId = req.user._id;
   var groupId = {_id: req.params.group_id};
-  Group.update( groupId , {$set: {
+  var options = {new: true};
+
+  var formInputs = {
     name: req.body.name,
     description: req.body.description,
     bet: req.body.bet,
     start: req.body.start,
     end: req.body.end,
     _creator: creatorId
-  }}, function (err, updatedGroup){
-    if(err){
-      return handleError(res, 'updatedGroup not found', 404);
+  }
+
+  var update = {};
+  for( var key in formInputs){
+    if(formInputs[key]) {
+      update[key] = formInputs[key];
     }
-    res.status(200).json({
-      group: updatedGroup
-    });
+  }
+
+  Group.findByIdAndUpdate(groupId, update, options, function (err, updatedGroup) {
+    if (err) { return handleError(res, err);}
+    res.status(200).json(updatedGroup);
   });
 }
 

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('eggercise')
-  .controller('LoginCtrl', function ($location, Auth) {
+  .controller('LoginCtrl', ['$scope', '$location', 'Auth', function ($scope, $location, Auth) {
 
     var vm = this;
 
@@ -20,7 +20,12 @@ angular.module('eggercise')
       login: function () {
         Auth.login(vm.user)
           .then(function () {
-            $location.path('/');
+            if ($scope.returnToPath) {
+              $location.path($scope.returnToPath);
+              $scope.returnToPath = null;
+            } else {
+              $location.path('/');
+            }
           })
           .catch(function (err) {
             vm.error = err;
@@ -29,4 +34,4 @@ angular.module('eggercise')
 
     });
 
-  });
+  }]);
