@@ -63,6 +63,10 @@ exports.showGroup = function (req, res) {
   var loggedUserId =  req.user._id.toString();
   var groupCreatorId;
 
+  function runStatus(group) {
+    res.status(200).json(group);
+  }
+
   console.log('This is the loggedUserId: ', loggedUserId);
   console.log('This is the typeof loggedUserId: ', typeof loggedUserId);
 
@@ -106,20 +110,17 @@ exports.showGroup = function (req, res) {
           console.log('This is groupMemberIds[j]: ', groupMemberIds[j]);
           console.log('This is typeof groupMemberIds[j]: ', typeof groupMemberIds[j]);
 
-          if (groupMemberIds[j] === loggedUserId) {
+          if (loggedUserId === groupMemberIds[j]) {
             console.log('This test passed!');
+            console.log('Running runStatus function');
+            runStatus(group);
           }
           console.log('--------------------------');
         }
       }
-
-      for (var k = 0; k < groupMemberIds.length; k++) {
-        if(loggedUserId == groupCreatorId || groupMemberIds[k] > -1) {
-          res.status(200).json(group);
-        } else {
-          res.status(401).json({err: 'not authorized'});
-        }
-      }
+        // else {
+        //   res.status(401).json({err: 'not authorized'});
+        // }
       // } else {
       //   res.status(404).json({err: 'not found'});
       // }
