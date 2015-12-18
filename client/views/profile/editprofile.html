@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" ng-init="vm.getUser()">
   <div>
     <h1>Update Profile</h1>
   </div>
@@ -9,11 +9,11 @@
           <div class="input-group col-md-4">
             <div>
               Name
-              <input type="name" ng-model="vm.formData.name" placeholder="name" class="form-control">
+              <input type="name" ng-model="vm.formData.name" placeholder="{{vm.loggedUser.name}}" class="form-control">
             </div>
             <div>
               Email
-              <input type="email" ng-model="vm.formData.email" placeholder="email" class="form-control">
+              <input type="email" ng-model="vm.formData.email" placeholder="{{vm.loggedUser.email}}" class="form-control">
             </div>
             <div>
               Password
