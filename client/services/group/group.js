@@ -2,7 +2,6 @@
 
 angular.module('eggercise')
   .service('GroupService', function ($rootScope, $q, $http) {
-    console.log('in groupservice');
     var service = {};
 
     service.showAllGroups = function () {
@@ -39,7 +38,6 @@ angular.module('eggercise')
 
     //show group by group id
     service.showGroup = function (id) {
-      console.log('reached showGroup');
       var deferred = $q.defer();
       $http.get('/api/groups/' + id)
         .success(function (showGroup) {
