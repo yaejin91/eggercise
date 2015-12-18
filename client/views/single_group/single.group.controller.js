@@ -18,7 +18,7 @@ angular.module('eggercise')
       vm.days;
       vm.daysBehind;
       vm.pot;
-      vm.othersDaysBehind;
+      console.log(vm);
 
       angular.extend(vm, {
 
@@ -53,6 +53,7 @@ angular.module('eggercise')
                   vm.exercises.push(data._members[i].exercises[j]);
                 }
               }
+              vm.moneyOwed(id);
             })
             .catch(function (err) {
               vm.error = err;
@@ -62,10 +63,14 @@ angular.module('eggercise')
 
         moneyOwed: function (id) {
           var user = Auth.getUser();
+          var daysDifference;
+          var runnerUp;
+
           GroupService.showGroup(id)
             .then(function (data) {
               data.you = user;
               data.leader = {email: 'leader@test.com', exercises: -1};
+
               for (var i = 0; i < data._members.length; i++) {
                 data._members[i].validExercises = [];
                 for(var j = 0; j < data._members[i].exercises.length; j++) {
@@ -81,18 +86,21 @@ angular.module('eggercise')
                 if(data._members[i].validExercises.length > data.leader.exercises) {
                   data.leader.email = data._members[i].email;
                   data.leader.exercises = data._members[i].validExercises.length;
-                  vm.days = data.leader.exercises - user.exercises.length;
-                  vm.youOwe = Math.abs(vm.days*vm.group.bet);
-                }
-                //Comparing current user to the leader of the group through e-mail
-                if(data.you.email == data.leader.email) {
-                  vm.daysAhead = Math.abs(vm.days);
-                  vm.pot = 'Wins ' + vm.youOwe;
-                } else {
-                  vm.daysBehind = Math.abs(vm.days);
-                  vm.pot = 'Pays ' + vm.youOwe;
                 }
               }
+              daysDifference = data.leader.exercises - user.exercises.length + 1;
+              vm.youOwe = Math.abs(daysDifference*vm.group.bet);
+
+              //Comparing current user to the leader of the group through e-mail
+              if(data.you.email == data.leader.email) {
+                vm.daysAhead = Math.abs(daysDifference);
+                vm.pot = 'Wins ' + vm.youOwe;
+              } else {
+                daysDifference = data.leader.exercises - user.exercises.length + 1;
+                vm.daysBehind = Math.abs(daysDifference);
+                vm.pot = 'Pays ' + vm.youOwe;
+              }
+
               vm.group = data;
             })
             .catch(function (err) {
