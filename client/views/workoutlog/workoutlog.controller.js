@@ -23,7 +23,7 @@ angular.module('eggercise')
           var millisToDays = 1000*60*60*24;
 
           //user's join date in unit 'days'
-          var joinDate = Math.floor(new Date(data.joinDate)/millisToDays)+1;
+          var joinDate = Math.floor(new Date(data.joinDate)/millisToDays);
 
           //current date in unit 'days'
           var todayDate = Math.floor(Date.now()/millisToDays);
@@ -55,13 +55,15 @@ angular.module('eggercise')
           }
 
           //Build the array vm.allDates to iterate through in the future
-          for(var j=vm.numberOfDays; j>=0; j--) {
-              vm.allDates.push({
-                //todayDate - j is for checking the dates from now to logStartDate 
-                date: (new Date((todayDate - j + 1)*millisToDays)+'').substring(0,15),
-                checked: (vm.user.convertedExercises.indexOf(todayDate - j) !== -1)
-              });
-          }
+          // if(vm.numberOfDays !==j){
+            for(var j=vm.numberOfDays; j>=0; j--) {
+                vm.allDates.push({
+                  //todayDate - j is for checking the dates from now to logStartDate 
+                  date: (new Date((todayDate - j)*millisToDays)+'').substring(0,15),
+                  checked: (vm.user.convertedExercises.indexOf(todayDate - j) !== -1)
+                });
+            }  
+          // }
           vm.allDates.reverse();
           $location.path('/log');
         })

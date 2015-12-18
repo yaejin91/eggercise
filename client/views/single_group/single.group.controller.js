@@ -122,7 +122,7 @@ angular.module('eggercise')
               //Comparing current user to the leader of the group
               if(data.you.email == data.leader.email) {
                 daysDifference = data.leader.exercises - data.runnerUp.exercises;
-                vm.daysAhead = Math.abs(daysDifference);
+                vm.daysAhead = Math.abs(daysDifference + 1);
                 vm.youOwe = winnersPot;
               } else {
                 daysDifference = data.leader.exercises - user.exercises.length;
