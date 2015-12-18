@@ -46,7 +46,7 @@
       </div>
     </div>
 
-   <div ng-init="vm.moneyOwed(vm.group_id)"> 
+   <!-- <div ng-init="vm.moneyOwed(vm.group_id)">  -->
     <div class="col-xs-4">
       <div class="jumbotron">
         <div class="row">
@@ -67,7 +67,7 @@
         </div>
       </div>
     </div>
-  </div>
+  <!-- </div> -->
 
     <div class="col-xs-4">
       <div class="jumbotron">
@@ -102,15 +102,18 @@
   <h3>The Pot</h3>
   <hr>
   <div class="row">
-    <div class="col-xs-10" >
+    <div>
       <div ng-repeat="member in vm.group._members">
         <div>
-          <p>{{member.name}}</p>
+          <div class="col-xs-10">{{member.name}}</div>
+          <div class="col-xs-2" ng-if="member.daysAhead">
+            Wins ${{member.memberOwes}}
+          </div>
+          <div class="col-xs-2" ng-if="member.daysBehind">
+            Pays ${{member.memberOwes}}
+          </div>
         </div>
       </div>
-    </div>
-    <div class="col-xs-2">
-      {{vm.pot}}
     </div>
   </div>
 </div>

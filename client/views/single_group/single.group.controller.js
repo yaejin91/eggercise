@@ -17,8 +17,8 @@ angular.module('eggercise')
       vm.youOwe;
       vm.days;
       vm.daysBehind;
+      vm.daysAhead;
       vm.pot;
-      vm.othersDaysBehind;
 
       angular.extend(vm, {
 
@@ -53,6 +53,9 @@ angular.module('eggercise')
                   vm.exercises.push(data._members[i].exercises[j]);
                 }
               }
+
+              vm.moneyOwed(id);
+
             })
             .catch(function (err) {
               vm.error = err;
@@ -62,10 +65,14 @@ angular.module('eggercise')
 
         moneyOwed: function (id) {
           var user = Auth.getUser();
+          var daysDifference;
+
           GroupService.showGroup(id)
             .then(function (data) {
               data.you = user;
               data.leader = {email: 'leader@test.com', exercises: -1};
+              data.runnerUp = {email: 'runnerUp@test.com', exercises: -2};
+
               for (var i = 0; i < data._members.length; i++) {
                 data._members[i].validExercises = [];
                 for(var j = 0; j < data._members[i].exercises.length; j++) {
@@ -79,21 +86,52 @@ angular.module('eggercise')
                 //if user has the most exercises, his/her email is set as the group's leader's email
                 //the leader's number of exercises is also in this object
                 if(data._members[i].validExercises.length > data.leader.exercises) {
+                  //put old leader in runnerup
+                  data.runnerUp.email = data.leader.email;
+                  data.runnerUp.exercises = data.leader.exercises;
+
+                  //assign new leader
                   data.leader.email = data._members[i].email;
                   data.leader.exercises = data._members[i].validExercises.length;
-                  vm.days = data.leader.exercises - user.exercises.length;
-                  vm.youOwe = Math.abs(vm.days*vm.group.bet);
+                } else if(data._members[i].validExercises.length > data.runnerUp.exercises) {
+                  data.runnerUp.email = data._members[i].email;
+                  data.runnerUp.exercises = data._members[i].validExercises.length;                  
                 }
-                //Comparing current user to the leader of the group through e-mail
-                if(data.you.email == data.leader.email) {
-                  vm.daysAhead = Math.abs(vm.days);
-                  vm.pot = 'Wins ' + vm.youOwe;
+
+              }
+
+              var winnersPot = 0;
+              var winnersIndex = 0;
+
+              for (var i = 0; i < data._members.length; i++) {
+                //Comparing each user to the leader of the group
+                if(data._members[i].email == data.leader.email) {
+                  data._members[i].daysDifference = data.leader.exercises - data.runnerUp.exercises;
+                  data._members[i].daysAhead = Math.abs(data._members[i].daysDifference);
+                  winnersIndex = i;
                 } else {
-                  vm.daysBehind = Math.abs(vm.days);
-                  vm.pot = 'Pays ' + vm.youOwe;
+                  data._members[i].daysDifference = data.leader.exercises - data._members[i].exercises.length;
+                  data._members[i].daysBehind = Math.abs(data._members[i].daysDifference);
+                  data._members[i].memberOwes = Math.abs(data._members[i].daysDifference*vm.group.bet);
+                  winnersPot = winnersPot + data._members[i].memberOwes;
                 }
               }
+              
+              data._members[winnersIndex].memberOwes = winnersPot;
+
+              //Comparing current user to the leader of the group
+              if(data.you.email == data.leader.email) {
+                daysDifference = data.leader.exercises - data.runnerUp.exercises;
+                vm.daysAhead = Math.abs(daysDifference + 1);
+                vm.youOwe = winnersPot;
+              } else {
+                daysDifference = data.leader.exercises - user.exercises.length;
+                vm.daysBehind = Math.abs(daysDifference);
+                vm.youOwe = Math.abs(daysDifference*vm.group.bet);
+              }
+
               vm.group = data;
+
             })
             .catch(function (err) {
               vm.error = err;
