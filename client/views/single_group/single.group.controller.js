@@ -104,7 +104,6 @@ angular.module('eggercise')
               var winnersIndex = 0;
 
               for (var i = 0; i < data._members.length; i++) {
-                console.log('winner email: ', data.leader.email);
                 //Comparing each user to the leader of the group
                 if(data._members[i].email == data.leader.email) {
                   data._members[i].daysDifference = data.leader.exercises - data.runnerUp.exercises;
