@@ -12,7 +12,7 @@ angular.module('eggercise')
       /**
        * User credentials
        */
-      user: { email: 'test@test.com', password: 'test' },
+      user: { name: 'Testing User', email: 'test2@test.com', password: 'test' },
 
       /**
        * Signup
@@ -20,10 +20,11 @@ angular.module('eggercise')
       signup: function () {
         Auth.signup(vm.user)
           .then(function () {
-            $location.path('/');
+            $location.path('/group');
           })
           .catch(function (err) {
             vm.error = err;
+            $location.path('/signup');
           });
       }
 
