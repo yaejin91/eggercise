@@ -29,7 +29,7 @@ angular.module('eggercise')
           var todayDate = Math.floor(Date.now()/millisToDays);
 
           for(var i = 0; i < data._groups.length; i++) {
-            var convertedStartDate = Math.floor(new Date(data._groups[i].start)/millisToDays) + 1;
+            var convertedStartDate = Math.floor(new Date(data._groups[i].start)/millisToDays);
             if (convertedStartDate < vm.firstStartDate) {
               //if the start date of a group is the oldest, make vm.firstStartDate equal that.
               vm.firstStartDate = convertedStartDate;
@@ -38,7 +38,7 @@ angular.module('eggercise')
           var logStartDate = vm.firstStartDate;
           //if user's date of joining the website is earlier than any of his/her groups' start dates,
           //set logStartDate to equal joinDate
-          if (joinDate < vm.firstStartDate) {
+          if (joinDate < vm.firstStartDate + 1) {
             logStartDate = joinDate;
           }
           //vm.numberOfDays is number of days between user's groups' earliest log date and current date
@@ -59,7 +59,7 @@ angular.module('eggercise')
             for(var j=vm.numberOfDays; j>=0; j--) {
                 vm.allDates.push({
                   //todayDate - j is for checking the dates from now to logStartDate 
-                  date: (new Date((todayDate - j)*millisToDays)+'').substring(0,15),
+                  date: (new Date((todayDate - j + 1)*millisToDays)+'').substring(0,15),
                   checked: (vm.user.convertedExercises.indexOf(todayDate - j) !== -1)
                 });
             }  
@@ -77,7 +77,7 @@ angular.module('eggercise')
     logToggle: function(index, date) {
       var logPath;
 
-      if(vm.allDates[index].checked == true) {
+      if(vm.allDates[index].checked === true) {
         logPath = 'log';
       } else {
         logPath = 'unlog';

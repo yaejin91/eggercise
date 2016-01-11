@@ -70,8 +70,8 @@ angular.module('eggercise')
           GroupService.showGroup(id)
             .then(function (data) {
               data.you = user;
-              data.leader = {email: 'leader@test.com', exercises: -1};
-              data.runnerUp = {email: 'runnerUp@test.com', exercises: -2};
+              data.leader = {email: 'leader@test.com', exercises: 0};
+              data.runnerUp = {email: 'runnerUp@test.com', exercises: 0};
 
               for (var i = 0; i < data._members.length; i++) {
                 data._members[i].validExercises = [];
@@ -92,7 +92,7 @@ angular.module('eggercise')
 
                   //assign new leader
                   data.leader.email = data._members[i].email;
-                  data.leader.exercises = data._members[i].validExercises.length;
+                  data.leader.exercises = data._members[i].validExercises.length - 1;
                 } else if(data._members[i].validExercises.length > data.runnerUp.exercises) {
                   data.runnerUp.email = data._members[i].email;
                   data.runnerUp.exercises = data._members[i].validExercises.length;                  
@@ -122,7 +122,7 @@ angular.module('eggercise')
               //Comparing current user to the leader of the group
               if(data.you.email == data.leader.email) {
                 daysDifference = data.leader.exercises - data.runnerUp.exercises;
-                vm.daysAhead = Math.abs(daysDifference + 1);
+                vm.daysAhead = Math.abs(daysDifference);
                 vm.youOwe = winnersPot;
               } else {
                 daysDifference = data.leader.exercises - user.exercises.length;
