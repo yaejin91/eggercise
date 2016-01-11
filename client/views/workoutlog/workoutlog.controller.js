@@ -29,7 +29,7 @@ angular.module('eggercise')
           var todayDate = Math.floor(Date.now()/millisToDays);
 
           for(var i = 0; i < data._groups.length; i++) {
-            var convertedStartDate = Math.floor(new Date(data._groups[i].start)/millisToDays);
+            var convertedStartDate = Math.floor(new Date(data._groups[i].start)/millisToDays) + 1;
             if (convertedStartDate < vm.firstStartDate) {
               //if the start date of a group is the oldest, make vm.firstStartDate equal that.
               vm.firstStartDate = convertedStartDate;
