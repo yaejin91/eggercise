@@ -5,10 +5,10 @@ angular.module('eggercise')
     var vm = this;
     vm.formData = {};
     vm.groups =[];
+    vm.formData._creator = creatorId;
 
-    // var creatorId = $routeParams.creatorId;
+    var creatorId = $routeParams.creatorId;
     // vm.formData._creator = creatorId
-
     angular.extend(vm, {
       name: 'GroupCtrl'
     });
