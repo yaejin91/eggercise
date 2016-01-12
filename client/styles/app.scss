@@ -2,6 +2,15 @@ body {
   font-family: sans-serif;
 }
 
+@media screen and (max-width: 380px) {
+  .reponsive-font-size {
+    font-size: medium;
+  }
+  /*.glyph-title-font-size{
+    font-size: 123%;
+  }*/
+}
+
 .large-glyph {
   font-size: 500%;
 }
