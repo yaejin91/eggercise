@@ -78,8 +78,9 @@ angular.module('eggercise')
                 for(var j = 0; j < data._members[i].exercises.length; j++) {
                   //each member's separate log entries changed into milliseconds unit
                   var logInMilli = new Date(data._members[i].exercises[j]).getTime();
+
                   //if log is in between start and end date of the group, push to array
-                  if((logInMilli > vm.sdate_ms) && (logInMilli < vm.edate_ms)) {
+                  if((logInMilli >= vm.sdate_ms) && (logInMilli <= vm.edate_ms)) {
                     data._members[i].validExercises.push(data._members[i].exercises[j]);
                   }
                 }
@@ -92,10 +93,10 @@ angular.module('eggercise')
 
                   //assign new leader
                   data.leader.email = data._members[i].email;
-                  data.leader.exercises = data._members[i].validExercises.length+1;
+                  data.leader.exercises = data._members[i].validExercises.length;
                 } else if(data._members[i].validExercises.length > data.runnerUp.exercises) {
                   data.runnerUp.email = data._members[i].email;
-                  data.runnerUp.exercises = data._members[i].validExercises.length+1;                  
+                  data.runnerUp.exercises = data._members[i].validExercises.length;                  
                 }
 
               }
