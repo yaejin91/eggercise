@@ -92,10 +92,10 @@ angular.module('eggercise')
 
                   //assign new leader
                   data.leader.email = data._members[i].email;
-                  data.leader.exercises = data._members[i].validExercises.length - 1;
+                  data.leader.exercises = data._members[i].validExercises.length+1;
                 } else if(data._members[i].validExercises.length > data.runnerUp.exercises) {
                   data.runnerUp.email = data._members[i].email;
-                  data.runnerUp.exercises = data._members[i].validExercises.length;                  
+                  data.runnerUp.exercises = data._members[i].validExercises.length+1;                  
                 }
 
               }
