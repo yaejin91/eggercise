@@ -1,7 +1,7 @@
 'use strict';
 
 var _ = require('lodash'),
-  mongoose = require('mongoose');
+mongoose = require('mongoose');
 
 var authService = require('../../auth/auth.service');
 var User = require('./user.model');
