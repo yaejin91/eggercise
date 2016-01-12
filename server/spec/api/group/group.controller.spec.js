@@ -375,13 +375,6 @@ describe('Group', function() {
     });
 
 
-    //returns the total # exercises of each member {name, id , exercises}
-    // it('should return total number of exercises logged by each member', function (done){
-
-
-    // })
-
-
   });
 });
 

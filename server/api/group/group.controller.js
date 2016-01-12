@@ -99,7 +99,6 @@ exports.delete = function (req, res){
   var group = new Group({_id: req.params.group_id});
   group.remove(function (err, deletedGroup){
     if(err){
-      // res.status(400).json({err: 'deletedGroup not found'});
       return handleError(res, 'deletedGroup not found', 404);
     }
     res.status(200).json({

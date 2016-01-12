@@ -6,8 +6,9 @@ var _ = require('lodash'),
 var authService = require('../../auth/auth.service');
 var User = require('./user.model');
 
-function handleError (res, err) {
-  return res.status(500).send(err);
+function handleError (res, err, status) {
+  // return res.status(status).send(err);
+  return res.status(status).json({err: err});
 }
 
 /**
@@ -119,3 +120,28 @@ exports.unlogWorkout = function (req, res) {
     }
   });
 };
+
+
+
+/**
+ * Show each members logs when clicked on a member.
+ *
+ * @param req
+ * @param res
+ */
+exports.showLogs = function (req, res) {
+  var userId = req.user._id;
+  User.findOne({_id: userId})
+    .populate('_exercises')
+    .exec(function (error, foundUser){
+      if(error){
+        return handleError(res, 'member exercises not found', 404);
+      }else{
+        res.json(foundUser._exercises);
+      }
+    });
+}
+
+
+
+
