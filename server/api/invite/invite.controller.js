@@ -74,24 +74,47 @@ exports.acceptInvite = function(req, res) {
           if (error) {
             return handleError(res, error);
           } else {
-            user._groups.push(invite._group);
-            user.save(function (error, savedUser) {
-              if (error) {
-                return handleError(res, error);
-              } else {
-                Group.findById( {_id: invite._group}, function (error, group) {
-                  group._members.push(user._id);
-                  group.save(function (error, savedGroup) {
-                    if (error) {
-                      return handleError(res, error);
-                    } else {
-                      res.status(200).json(group);
-                    }
-                  });
-                })
-              }
-            });
+            if (user._groups.indexOf(invite._group) !== -1){
+              return handleError(res, error);
+            } else {
+              user._groups.push(invite._group);
+              user.save(function (error, savedUser) {
+                if (error) {
+                  return handleError(res, error);
+                } else {
+                  Group.findById( {_id: invite._group}, function (error, group) {
+                    group._members.push(user._id);
+                    group.save(function (error, savedGroup) {
+                      if (error) {
+                        return handleError(res, error);
+                      } else {
+                        res.status(200).json(group);
+                      }
+                    });
+                  })
+                }
+              });
+            }
           }
+          // else {
+          //   user._groups.push(invite._group);
+          //   user.save(function (error, savedUser) {
+          //     if (error) {
+          //       return handleError(res, error);
+          //     } else {
+          //       Group.findById( {_id: invite._group}, function (error, group) {
+          //         group._members.push(user._id);
+          //         group.save(function (error, savedGroup) {
+          //           if (error) {
+          //             return handleError(res, error);
+          //           } else {
+          //             res.status(200).json(group);
+          //           }
+          //         });
+          //       })
+          //     }
+          //   });
+          // }
         });
       } else {
         res.status(404).json({message: 'invite not found'});

@@ -16,13 +16,12 @@ angular.module('eggercise')
       vm.formData._group = $routeParams.group_id;
       InviteService.createInvite(vm.formData)
       .then(function (foundInvites){
-        for(var i = 0; i < foundInvites.length; i++){
-          vm.invites.push(foundInvites[i]);
-        }
-
+        vm.invites.push(foundInvites);
         $location.path('/group/updateGroup/');
 
         setTimeout(notification, 1000);
+        console.log("vm.invites: ",vm.invites);
+        console.log(foundInvites);
       })
       .catch(function (error){
         console.log('createInvites error:' + error);
