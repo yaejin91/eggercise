@@ -15,7 +15,6 @@ angular.module('eggercise')
       vm.sdate_ms;
       vm.edate_ms;
       vm.youOwe;
-      vm.days;
       vm.daysBehind;
       vm.daysAhead;
       vm.pot;
@@ -41,7 +40,11 @@ angular.module('eggercise')
               }
               var tdate = new Date();
               vm.totaldays = Date.daysBetween(sdate, edate);
-              vm.elapsedday = Date.daysBetween(sdate, tdate);
+              if(tdate < sdate) {
+                vm.elapsedday = 0;
+              } else {
+                vm.elapsedday = Date.daysBetween(sdate, tdate);
+              }
               vm.group = data;
 
               for (var i = 0; i < data._members.length; i++) {
@@ -126,9 +129,9 @@ angular.module('eggercise')
                 vm.daysAhead = Math.abs(daysDifference);
                 vm.youOwe = winnersPot;
               } else {
-                daysDifference = data.leader.exercises - user.exercises.length;
-                vm.daysBehind = Math.abs(daysDifference);
-                vm.youOwe = Math.abs(daysDifference*vm.group.bet);
+                  daysDifference = data.leader.exercises - user.exercises.length;
+                  vm.daysBehind = Math.abs(daysDifference);
+                  vm.youOwe = Math.abs(daysDifference*vm.group.bet);
               }
 
               vm.group = data;
