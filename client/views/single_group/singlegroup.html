@@ -9,16 +9,19 @@
               {{vm.startdate}} to {{vm.enddate}} - ${{vm.group.bet}} Bet
             </div>
 
-              <!-- Update Group Button -->
+            <!-- if check to see if user logged in is creator of the group -->
+            <div ng-if="vm.group._creator === vm.authUserId ">
+            <!-- Update Group Button -->
                 <a id="update-button" href="/group/updateGroup?group_id={{vm.group._id}}">
                 <button class="btn btn-info">
                 <div class="glyphicon glyphicon-pencil small-glyph"></div>
                 </button>
                 </a>
-
+              <!-- Delete Group Button -->
               <button ng-controller="DeleteGroupCtrl as delete" class="btn btn-danger" ng-click="delete.deleteGroup(vm.group._id)">
                 <div class="glyphicon glyphicon-remove small-glyph"></div>
               </button>
+            </div>
         </div>
       </div>
     </div>
