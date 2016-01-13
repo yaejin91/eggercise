@@ -23,9 +23,9 @@
             <div>
               Start Date
               <p class="input-group">
-              <input ng-model="vm.formData.start" type="text" 
-              datepicker-popup="mediumDate" 
-              is-open="vm.startDatePickerIsOpen" 
+              <input ng-model="vm.formData.start" type="text"
+              datepicker-popup="mediumDate"
+              is-open="vm.startDatePickerIsOpen"
               ng-click="vm.valuationDatePickerOpen()"
               class="form-control"/>
               <span class="input-group-btn">
@@ -39,9 +39,9 @@
             <div>
               End Date
               <p class="input-group">
-              <input ng-model="vm.formData.end" type="text" 
-              datepicker-popup="mediumDate" 
-              is-open="vm.endDatePickerIsOpen" 
+              <input ng-model="vm.formData.end" type="text"
+              datepicker-popup="mediumDate"
+              is-open="vm.endDatePickerIsOpen"
               ng-click="vm.valuationDatePickerOpen()"
               class="form-control"/>
               <span class="input-group-btn">
@@ -75,6 +75,12 @@
         </div>
       </div>
     </div>
+
+    <div flash-message="5000"></div>
+<!-- 5000 milli-secs is the display duration.
+// Flash alert will be automatically dismissed after 5000 milli-secs.
+-->
+
     <div ng-controller="InviteCtrl as invite" class="col-xs-12">
       <form role="form" ng-submit="invite.createInvite(invite.formData)">
         <div class="row">
