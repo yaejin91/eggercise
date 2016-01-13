@@ -19,52 +19,14 @@ angular.module('eggercise')
     showWorkout: function () {
       WorkoutService.showWorkout()
         .then(function (data) {
-          //multiplier for milliseconds to days conversion 
-          var millisToDays = 1000*60*60*24;
-
-          //user's join date in unit 'days'
-          var joinDate = Math.floor(new Date(data.joinDate)/millisToDays);
-
-          //current date in unit 'days'
-          var todayDate = Math.floor(Date.now()/millisToDays);
-
-          for(var i = 0; i < data._groups.length; i++) {
-            var convertedStartDate = Math.floor(new Date(data._groups[i].start)/millisToDays);
-            if (convertedStartDate < vm.firstStartDate) {
-              //if the start date of a group is the oldest, make vm.firstStartDate equal that.
-              vm.firstStartDate = convertedStartDate;
-            }
-          }
-          var logStartDate = vm.firstStartDate + 1;
-          //if user's date of joining the website is earlier than any of his/her groups' start dates,
-          //set logStartDate to equal joinDate
-          if (joinDate < logStartDate) {
-            logStartDate = joinDate;
-          }
+          //Refactor this
+          var joinDate = WorkoutService.millisToDays(data.joinDate);
+          var todayDate = WorkoutService.millisToDays(Date.now());
+          var firstStartDate = WorkoutService.setStartDate(data._groups,vm.firstStartDate);
           //vm.numberOfDays is number of days between user's groups' earliest log date and current date
-          vm.numberOfDays = todayDate - logStartDate;
+          vm.numberOfDays = WorkoutService.numberOfDays(todayDate, joinDate, firstStartDate);
           vm.user = data;
-          vm.user.convertedExercises = [];
-
-          for(var i=0; i<vm.user.exercises.length; i++) {
-            //This is for cutting the exercise array elements (workout dates) in to a more readable format
-            vm.user.exercises[i] = vm.user.exercises[i].substring(0,10);
-
-            //This converts the user's exercise array into number of days (number of days since 1970 Jan 1st, integer)
-            vm.user.convertedExercises[i] = Math.floor(new Date(vm.user.exercises[i]).getTime()/millisToDays);
-          }
-
-          //Build the array vm.allDates to iterate through in the future
-          // if(vm.numberOfDays !==j){
-            for(var j=vm.numberOfDays+1; j>0; j--) {
-                vm.allDates.push({
-                  //todayDate - j is for checking the dates from now to logStartDate 
-                  date: (new Date((todayDate - j + 1)*millisToDays)+'').substring(0,15),
-                  checked: (vm.user.convertedExercises.indexOf(todayDate - j) !== -1)
-                });
-            }  
-          // }
-          vm.allDates.reverse();
+          vm.allDates = WorkoutService.readableDates(vm.user.exercises, vm.numberOfDays, todayDate);
           $location.path('/log');
         })
         .catch(function (err) {
@@ -72,6 +34,22 @@ angular.module('eggercise')
           $log.error('Error: ',err);
         })
       },
+
+      // showWorkout: function () {
+      //   WorkoutService.showWorkout()
+      //     .then(function (data) {
+      //       vm.firstStartDate = WorkoutService.setStartDate(data._groups, vm.firstStartDate);
+      //       //vm.numberOfDays is number of days between user's groups' earliest log date and current date
+      //       vm.numberOfDays = WorkoutService.numberOfDays(data.joinDate, vm.firstStartDate);
+      //       vm.user = data;
+      //       vm.allDates = WorkoutService.readableDates(vm.user.exercises, vm.numberOfDays, todayDate);
+      //       $location.path('/log');
+      //     })
+      //     .catch(function (err) {
+      //       vm.error = err;
+      //       $log.error('Error: ',err);
+      //     })
+      //   },
 
     //Log Toggle
     logToggle: function(index, date) {
