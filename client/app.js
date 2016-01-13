@@ -6,7 +6,9 @@ angular.module('eggercise', [
   'ngResource',
   'ngSanitize',
   'ui.bootstrap',
-  'ngAnimate'
+  'ngAnimate',
+  'angular-flash.service',
+  'angular-flash.flash-alert-directive'
 ])
   .config(function ($routeProvider, $locationProvider, $httpProvider) {
 
