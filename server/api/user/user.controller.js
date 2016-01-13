@@ -130,18 +130,15 @@ exports.unlogWorkout = function (req, res) {
  * @param res
  */
 exports.showLogs = function (req, res) {
-  var userId = req.user._id;
+  var userId = req.params.userId;
   User.findOne({_id: userId})
-    .populate('_exercises')
-    .exec(function (error, foundUser){
+    .exec(function (error, foundUser) {
       if(error){
-        return handleError(res, 'member exercises not found', 404);
-      }else{
-        res.json(foundUser._exercises);
+        return handleError(res, 'user not found', 404);
+      } else if(foundUser){
+        res.json(foundUser.exercises);
       }
-    });
-}
-
-
+    })
+  };
 
 

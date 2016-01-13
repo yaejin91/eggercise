@@ -153,7 +153,7 @@ describe('Group', function() {
     });
 
     // View all groups (success)
-    it('should return all groups for logged in user', function (done) {
+    fit('should return all groups for logged in user', function (done) {
       agent
       .get('/api/groups')
       .set('Authorization', 'Bearer ' + auth.token)
@@ -163,6 +163,7 @@ describe('Group', function() {
         if(error) {
           done.fail(error);
         } else {
+          console.log('res.body: ', res.body);
           expect(res.status).toBe(200);
           expect(res.body.length).toEqual(1);
           expect(res.body[0].name).toEqual('testGroup');
