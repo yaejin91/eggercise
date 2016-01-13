@@ -1,10 +1,11 @@
 'use strict';
 
 angular.module('eggercise')
-  .controller('ShowGroupCtrl', ['$location', '$log', '$routeParams', 'GroupService', 'Auth', function ($location, $log, $routeParams, GroupService, Auth) {
+  .controller('ShowGroupCtrl', ['$rootScope', '$location', '$log', '$routeParams', 'GroupService', 'Auth', function ($rootScope, $location, $log, $routeParams, GroupService, Auth) {
     var vm = this;
 
       vm.group = {};
+      vm.authUserId = $rootScope.Auth.getUser()._id;
       vm.startdate = {};
       vm.enddate = {};
       vm.totaldays = {};
@@ -46,6 +47,7 @@ angular.module('eggercise')
                 vm.elapsedday = Date.daysBetween(sdate, tdate);
               }
               vm.group = data;
+              console.log('vm.group', vm.group);
 
               for (var i = 0; i < data._members.length; i++) {
                 vm.members.push(data._members[i]);
