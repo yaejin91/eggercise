@@ -95,7 +95,7 @@ angular.module('eggercise')
                   data.leader.exercises = data._members[i].validExercises.length;
                 } else if(data._members[i].validExercises.length > data.runnerUp.exercises) {
                   data.runnerUp.email = data._members[i].email;
-                  data.runnerUp.exercises = data._members[i].validExercises.length;                  
+                  data.runnerUp.exercises = data._members[i].validExercises.length;
                 }
 
               }
@@ -116,7 +116,7 @@ angular.module('eggercise')
                   winnersPot = winnersPot + data._members[i].memberOwes;
                 }
               }
-              
+
               data._members[winnersIndex].memberOwes = winnersPot;
 
               //Comparing current user to the leader of the group

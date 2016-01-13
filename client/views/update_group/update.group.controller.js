@@ -12,7 +12,7 @@ angular.module('eggercise')
 
     vm.startDatePickerIsOpen = false;
     vm.endDatePickerIsOpen = false;
-      
+
     vm.valuationDatePickerOpen = function ($event, whichDate) {
       if ($event) {
           console.log('$event: ', $event);
