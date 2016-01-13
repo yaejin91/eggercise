@@ -10,7 +10,10 @@ angular.module('eggercise', [
   'angular-flash.service',
   'angular-flash.flash-alert-directive'
 ])
-  .config(function ($routeProvider, $locationProvider, $httpProvider) {
+  .config(function ($routeProvider, $locationProvider, $httpProvider, flashProvider) {
+
+    // Support bootstrap 3.0 "alert-danger" class with error flash types
+    flashProvider.errorClassnames.push('alert-danger');
 
     $routeProvider
       .otherwise({
