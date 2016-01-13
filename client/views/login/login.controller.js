@@ -10,11 +10,6 @@ angular.module('eggercise')
       name: 'LoginCtrl',
 
       /**
-       * User credentials
-       */
-      user: { email: 'test@test.com', password: 'test' },
-
-      /**
        * Login method
        */
       login: function () {
