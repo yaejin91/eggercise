@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('eggercise')
-  .service('WorkoutService', function ($rootScope, $q, $http) {
+  .service('WorkoutService', ['DateService','$rootScope','$q','$http', function (DateService, $rootScope, $q, $http) {
     var service = {};
 
     service.showWorkout = function () {
@@ -31,26 +31,10 @@ angular.module('eggercise')
       return deferred.promise;
     };
 
-    service.millisToDays = function (date) {
-      //multiplier for milliseconds to days conversion 
-      var conversionConst = 1000*60*60*24;
-
-      //user's join date in milliseconds
-      var dateToMilli = new Date(date)
-
-      //user's join date in milliseconds to number of days
-      var convertedDate = Math.floor(dateToMilli/conversionConst);
-
-      return convertedDate;
-
-    };
-
-    /*This service is for setting user's start date as earliest
-    start date among user's groups.
-    */
+    //This service is for setting user's start date as earliest start date among user's groups.
     service.setStartDate = function (groups, userStartDate){
       for(var i = 0; i < groups.length; i++) {
-        var convertedStartDate = service.millisToDays(groups[i].start);
+        var convertedStartDate = DateService.millisToDays(groups[i].start);
         if (convertedStartDate < userStartDate) {
           userStartDate = convertedStartDate + 1;
         }
@@ -58,16 +42,17 @@ angular.module('eggercise')
       return userStartDate;
     };
 
-    service.numberOfDays = function (todayDate, joinDate, userStartDate){
+    service.numberOfDays = function (userStartDate){
+      var joinDate = DateService.millisToDays(joinDate);
+      var todayDate = DateService.millisToDays(Date.now());
       if(joinDate < userStartDate) {
         userStartDate = joinDate;
       }
       return todayDate - userStartDate;
     };
 
-    //days = vm.numberOfDays
-    //exerciseArray = vm.user.exercises;
-    service.readableDates = function(exerciseArray, days, todayDate) {
+    service.readableDates = function(exerciseArray, days) {
+      var todayDate = DateService.millisToDays(Date.now());
       var conversionConst = 1000*60*60*24;
       var convertedExercises = [];
       var allDates = [];
@@ -77,7 +62,7 @@ angular.module('eggercise')
         exerciseArray[i] = exerciseArray.substring(0,10);
 
         //This converts the user's exercise array into number of days (number of days since 1970 Jan 1st, integer)
-        convertedExercises[i] = service.millisToDays(exerciseArray[i].getTime());
+        convertedExercises[i] = DateService.millisToDays(exerciseArray[i].getTime());
       }
 
       for(var j=days+1; j>0; j--) {
@@ -91,23 +76,5 @@ angular.module('eggercise')
     }
 
     return service;
-  });
+  }]);
 
-// service.setStartDate = function (groups, userStartDate){
-//   for(var i = 0; i < groups.length; i++) {
-//     var convertedStartDate = DateService.millisToDays(groups[i].start);
-//     if (convertedStartDate < userStartDate) {
-//       userStartDate = convertedStartDate + 1;
-//     }
-//   }
-//   return userStartDate;
-// };
-
-// service.numberOfDays = function (joinDate, userStartDate){
-//   var joinDate = DateService.millisToDays(joinDate);
-//   var todayDate = DateService.millisToDays(Date.now());
-//   if(joinDate < userStartDate) {
-//     userStartDate = joinDate;
-//   }
-//   return todayDate - userStartDate;
-// };

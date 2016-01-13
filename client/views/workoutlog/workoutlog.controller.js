@@ -15,18 +15,15 @@ angular.module('eggercise')
 
     angular.extend(vm, {
 
-    //Show dates that you worked out and ones you didn't (from your join date)
+    //Show dates that you worked out and ones you didn't (from your join date or earliest possible date)
     showWorkout: function () {
       WorkoutService.showWorkout()
         .then(function (data) {
-          //Refactor this
-          var joinDate = WorkoutService.millisToDays(data.joinDate);
-          var todayDate = WorkoutService.millisToDays(Date.now());
-          var firstStartDate = WorkoutService.setStartDate(data._groups,vm.firstStartDate);
+          var startDate = WorkoutService.setStartDate(data._groups,vm.firstStartDate);
           //vm.numberOfDays is number of days between user's groups' earliest log date and current date
-          vm.numberOfDays = WorkoutService.numberOfDays(todayDate, joinDate, firstStartDate);
+          vm.numberOfDays = WorkoutService.numberOfDays(startDate);
           vm.user = data;
-          vm.allDates = WorkoutService.readableDates(vm.user.exercises, vm.numberOfDays, todayDate);
+          vm.allDates = WorkoutService.readableDates(vm.user.exercises, vm.numberOfDays);
           $location.path('/log');
         })
         .catch(function (err) {
@@ -34,22 +31,6 @@ angular.module('eggercise')
           $log.error('Error: ',err);
         })
       },
-
-      // showWorkout: function () {
-      //   WorkoutService.showWorkout()
-      //     .then(function (data) {
-      //       vm.firstStartDate = WorkoutService.setStartDate(data._groups, vm.firstStartDate);
-      //       //vm.numberOfDays is number of days between user's groups' earliest log date and current date
-      //       vm.numberOfDays = WorkoutService.numberOfDays(data.joinDate, vm.firstStartDate);
-      //       vm.user = data;
-      //       vm.allDates = WorkoutService.readableDates(vm.user.exercises, vm.numberOfDays, todayDate);
-      //       $location.path('/log');
-      //     })
-      //     .catch(function (err) {
-      //       vm.error = err;
-      //       $log.error('Error: ',err);
-      //     })
-      //   },
 
     //Log Toggle
     logToggle: function(index, date) {
