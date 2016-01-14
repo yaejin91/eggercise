@@ -41,7 +41,7 @@
       });
     }));
 
-    fit('should define vm', function() {
+    it('should define vm', function() {
       expect(controller).toBeDefined();
       expect(controller.user).toBeDefined();
       expect(controller.formData).toBeDefined();
