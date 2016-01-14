@@ -44,7 +44,6 @@ angular.module('eggercise')
               vm.totaldays = Date.daysBetween(sdate, edate);
               vm.elapsedday = Date.daysBetween(sdate, tdate);
               vm.group = data;
-              console.log('vm.group', vm.group);
 
               for (var i = 0; i < data._members.length; i++) {
                 vm.members.push(data._members[i]);

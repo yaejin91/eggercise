@@ -1,27 +1,23 @@
 (function() {
   'use strict';
 
-  describe('viewLogService', function() {
+  describe('ViewLogService', function() {
     var service, $httpBackend, handler, logData, errorMessage;
 
     var id = '56943db0cd71d5031ad3e194';
     var dummyDate1 = '01-10-2016';
-    var dummyDate2 = '01-11-2016';
     var dummyUser = {
       _id: id,
-      name: 'dummy',
-      email: 'dummy@test.com',
-      password: 'password',
-      exercises: [dummyDate1, dummyDate2]
+      exercises: [dummyDate1]
     };
 
 
     // Configure module that contains the controller being tested
     beforeEach(module('eggercise'));
 
-    beforeEach(inject(function (_$httpBackend_, _viewLogService_) {
+    beforeEach(inject(function (_$httpBackend_, _ViewLogService_) {
       $httpBackend = _$httpBackend_;
-      service = _viewLogService_;
+      service = _ViewLogService_;
       logData = [];
 
 

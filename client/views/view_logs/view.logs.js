@@ -5,10 +5,10 @@ angular.module('eggercise')
     $routeProvider
       .when('/viewLog/:userId', {
         templateUrl: 'views/view_logs/viewlogs.html',
-        controller: 'viewLogCtrl',
+        controller: 'ViewLogCtrl',
         controllerAs: 'vm'
       })
       .otherwise({
-        redirectTo: '/'
+        redirectTo: '/group'
       });
   });
