@@ -1,23 +1,25 @@
 'use strict';
 
 angular.module('eggercise')
-  .controller('InviteCtrl', ['$location', '$log', '$routeParams', 'InviteService', 'toasty', function ($location, $log, $routeParams, InviteService, toasty) {
+  .controller('InviteCtrl', ['$location', '$log', '$routeParams', 'InviteService', 'toasty', 'GroupService', function ($location, $log, $routeParams, InviteService, toasty, GroupService) {
 
     var vm = this;
     vm.formData = {};
-    vm.invites =[];
+    vm.invites = [];
 
     angular.extend(vm, {
       name: 'InviteCtrl'
     });
 
-    vm.flashMessage = function() {
-      console.log('Add invite');
-      // toasty.success({
-      //     title: 'Invite added!',
-      //     msg: ' has been added!'
-      // });
-      toasty('Test!');
+    vm.flashMessage = function(foundInvite) {
+      GroupService.showGroup(foundInvite._group)
+      .then(function (group) {
+        toasty.success({
+          title: 'Invited!',
+          msg: 'You have sucessfully invited ' + vm.formData.email + " to " + group.name,
+          theme: "material"
+        });
+      })
     }
 
 
@@ -25,30 +27,13 @@ angular.module('eggercise')
     vm.createInvite = function () {
       vm.formData._group = $routeParams.group_id;
       InviteService.createInvite(vm.formData)
-      .then(function (foundInvites){
-        for(var i = 0; i < foundInvites.length; i++){
-          vm.invites.push(foundInvites[i]);
-        }
-
-        vm.flashMessage();
-        // setTimeout(notification, 1000);
+      .then(function (foundInvite){
+        vm.invites.push(foundInvite);
+        vm.flashMessage(foundInvite);
       })
       .catch(function (error){
         console.log('createInvites error:' + error);
       })
-
-
-      // function notification () {
-      //   var sentInvite = document.getElementById('sentInvite');
-      //   sentInvite.innerHTML = 'You have successfully sent an invite to: ' + vm.formData.email;
-      //   sentInvite.style.display = 'block';
-
-      //   setTimeout(function (){
-      //     var sentInvite = document.getElementById('sentInvite');
-      //     sentInvite.style.display = 'none';
-      //     sentInvite.innerHTML = '';
-      //   }, 3000);
-      // }
     }
 
   }]);
