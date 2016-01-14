@@ -82,7 +82,6 @@ angular.module('eggercise')
           checked: (convertedExercises.indexOf(todayDate - j) !== -1)
         });
       }
-      console.log(allDates.reverse());
       return allDates.reverse();
     }
 
