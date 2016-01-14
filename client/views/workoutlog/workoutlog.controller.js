@@ -30,15 +30,15 @@ angular.module('eggercise')
 
       //Log Toggle
       logToggle: function(index, date) {
-        WorkoutService.logToggle(index, vm.allDates);
-        WorkoutService.logToggleRoute(logPath, date)
+        var logPath = WorkoutService.setlogPath(index, vm.allDates);
+        WorkoutService.logToggle(logPath, date)
           .then(function (data) {
             vm.user = data;
           })
           .catch(function (err) {
             vm.error = err;
             $log.error('Error: ', err);
-          });
-      }
+          })
+        }
     });
   }]);

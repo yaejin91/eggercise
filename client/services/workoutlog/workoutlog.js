@@ -17,7 +17,18 @@ angular.module('eggercise')
       return deferred.promise;
     };
 
-    service.logToggleRoute = function (logPath, date) {
+    service.setlogPath = function(index, allDates) {
+      var logPath;
+
+      if(allDates[index].checked === true) {
+        logPath = 'log';
+      } else {
+        logPath = 'unlog';
+      }
+      return logPath;
+    }
+
+    service.logToggle = function (logPath, date) {
       var deferred = $q.defer();
       var convertedDate = new Date(date);
 
@@ -29,16 +40,6 @@ angular.module('eggercise')
         deferred.reject(err.data);
       });
       return deferred.promise;
-    };
-    
-    service.logToggle = function(index, allDates) {
-      var logPath;
-
-      if(allDates[index].checked === true) {
-        return logPath = 'log';
-      } else {
-        return logPath = 'unlog';
-      }
     };
 
     //This service is for setting user's start date as earliest start date among user's groups.
@@ -54,7 +55,7 @@ angular.module('eggercise')
       if (earliestStartDate < convertedUserStartDate) {
         logStartDate = earliestStartDate + 1;
       } else {
-        logStartDate = convertedUserStartDate + 1;
+        logStartDate = convertedUserStartDate;
       }
 
       numberOfDays = todayDate - logStartDate;
@@ -69,9 +70,9 @@ angular.module('eggercise')
 
       for(var i=0; i<exerciseArray.length; i++) {
         //This is for cutting the exercise array elements (workout dates) in to a more readable format
-        exerciseArray[i] = exerciseArray.substring(0,10);
+        exerciseArray[i] = exerciseArray[i].substring(0,10);
         //This converts the user's exercise array into number of days (number of days since 1970 Jan 1st, integer)
-        convertedExercises[i] = DateService.millisToDays(exerciseArray[i].getTime());
+        convertedExercises[i] = DateService.millisToDays(new Date(exerciseArray[i]).getTime());
       }
 
       for(var j=days+1; j>0; j--) {
