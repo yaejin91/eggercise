@@ -1,10 +1,24 @@
-<div>
-  <h1>Eggercise</h1>
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3">
+      <h1 class="margin-base-vertical">Eggercise</h1>
 
-  <p>Welcome to the worst -- or perhaps best -- experience of your life.</p>
+      <p>Welcome to the worst -- or perhaps best -- experience of your life.</p>
 
-  <p>Eggercise lets you compete against friends to see who can exercise the most! Money's on the line, so get yo' ass to the gym!</p>
+      <p>Eggercise lets you compete against friends to see who can exercise the most! Money's on the line, so get yo' ass to the gym!</p>
 
-  <p><a href="/signup">Signup</a> or <a href="/login">Login</a> now.
-
+      <p><a href="/signup">Signup</a> or <a href="/login">Login</a> now.</p>
+    </div>
+  </div>
+  <div class="row">
+    <div ng-controller="CarouselDemoCtrl" id="slides_control">
+      <div id="slider" class="col-md-12">
+        <carousel interval="myInterval">
+          <slide ng-repeat="slide in slides" active="slide.active">
+            <img ng-src="{{slide.image}}">
+          </slide>
+        </carousel>
+      </div>
+    </div>
+  </div>
 </div>

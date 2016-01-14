@@ -46,5 +46,4 @@ angular.module('eggercise')
         console.log('This is the error: ', error);
       })
     }
-
   }]);

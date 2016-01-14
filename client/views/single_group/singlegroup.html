@@ -9,16 +9,19 @@
               {{vm.startdate}} to {{vm.enddate}} - ${{vm.group.bet}} Bet
             </div>
 
-              <!-- Update Group Button -->
+            <!-- if check to see if user logged in is creator of the group -->
+            <div ng-if="vm.group._creator === vm.authUserId ">
+            <!-- Update Group Button -->
                 <a id="update-button" href="/group/updateGroup?group_id={{vm.group._id}}">
                 <button class="btn btn-info">
                 <div class="glyphicon glyphicon-pencil small-glyph"></div>
                 </button>
                 </a>
-
+              <!-- Delete Group Button -->
               <button ng-controller="DeleteGroupCtrl as delete" class="btn btn-danger" ng-click="delete.deleteGroup(vm.group._id)">
                 <div class="glyphicon glyphicon-remove small-glyph"></div>
               </button>
+            </div>
         </div>
       </div>
     </div>
@@ -55,13 +58,13 @@
               {{vm.daysAhead}}
             </div>
             <div class="col-md-12 text-center" ng-if="vm.daysAhead">
-                Days Ahead
+              Days Ahead
             </div>
             <div class="days" ng-if="vm.daysBehind">
               {{vm.daysBehind}}
             </div>
             <div class="col-md-12 text-center" ng-if="vm.daysBehind">
-                Days Behind
+              Days Behind
             </div>
           </div>
         </div>
@@ -78,7 +81,7 @@
             </div>
           </div>
           <div class="col-md-12 text-center">
-              Owed
+            Owed
           </div>
         </div>
       </div>
@@ -91,7 +94,11 @@
   <div class="row" ng-repeat="member in vm.members | orderBy: 'member.exercises.length' : true">
     <div class="col-xs-10" >
       <div>
-        <p>{{member.name}}</p>
+        <p>
+          <a href="/viewLog/{{member._id}}">
+          {{member.name}}
+          </a>
+        </p>
       </div>
     </div>
     <div class="col-xs-2">
