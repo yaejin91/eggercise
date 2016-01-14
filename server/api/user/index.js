@@ -10,5 +10,6 @@ router.post('/', controller.create);
 router.post('/updateProfile', auth.isAuthenticated(), controller.updateProfile);
 router.post('/log', auth.isAuthenticated(), controller.logWorkout);
 router.post('/unlog', auth.isAuthenticated(), controller.unlogWorkout);
+router.get('/showLog/:userId', auth.isAuthenticated(), controller.showLogs);
 
 module.exports = router;
