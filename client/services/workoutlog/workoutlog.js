@@ -42,25 +42,23 @@ angular.module('eggercise')
     };
 
     //This service is for setting user's start date as earliest start date among user's groups.
-    service.setStartDate = function (groups, userStartDate){
-      for(var i = 0; i < groups.length; i++) {
-        var convertedStartDate = DateService.millisToDays(groups[i].start);
-        if (convertedStartDate < userStartDate) {
-          userStartDate = convertedStartDate + 1;
-          return userStartDate;
-        } else {
-          return userStartDate = userStartDate;
-        }
-      }
-    };
-
-    service.numberOfDays = function (joinedAt, userStartDate){
-      var joinDate = DateService.millisToDays(joinedAt);
+    service.loggableDays = function (groups, userStartDate){
+      var earliestStartDate, logStartDate, numberOfDays;
       var todayDate = DateService.millisToDays(Date.now());
-      if(joinDate < userStartDate) {
-        userStartDate = joinDate;
+      var convertedUserStartDate = DateService.millisToDays(userStartDate);
+
+      for(var i = 0; i < groups.length; i++) {
+        earliestStartDate = DateService.millisToDays(groups[i].start);
       }
-      return todayDate - userStartDate;
+
+      if (earliestStartDate < convertedUserStartDate) {
+        logStartDate = earliestStartDate + 1;
+      } else {
+        logStartDate = convertedUserStartDate + 1;
+      }
+
+      numberOfDays = todayDate - logStartDate;
+      return numberOfDays;
     };
 
     service.readableDates = function(exerciseArray, days) {

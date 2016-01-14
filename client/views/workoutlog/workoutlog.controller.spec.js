@@ -41,11 +41,11 @@
       });
     }));
 
-    // it('should define vm', function() {
-    //   expect(controller).toBeDefined();
-    //   expect(controller.user).toBeDefined();
-    //   expect(controller.formData).toBeDefined();
-    // });
+    fit('should define vm', function() {
+      expect(controller).toBeDefined();
+      expect(controller.user).toBeDefined();
+      expect(controller.formData).toBeDefined();
+    });
 
     // it('should log an exercise session', function() {
     //   //Test a successful call to the WorkoutService

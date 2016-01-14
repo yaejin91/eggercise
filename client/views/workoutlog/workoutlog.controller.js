@@ -17,9 +17,8 @@ angular.module('eggercise')
         WorkoutService.showWorkout()
           .then(function (data) {
             vm.user = data;
-            var startDate = WorkoutService.setStartDate(data._groups,vm.firstStartDate);
             //vm.numberOfDays is number of days between user's groups' earliest log date and current date
-            vm.numberOfDays = WorkoutService.numberOfDays(data.joinDate, startDate);
+            vm.numberOfDays = WorkoutService.loggableDays(data._groups, data.joinDate);
             vm.allDates = WorkoutService.readableDates(vm.user.exercises, vm.numberOfDays);
             $location.path('/log');
           })
