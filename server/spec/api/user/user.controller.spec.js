@@ -163,6 +163,47 @@ describe('User', function() {
         }
       });
     });
+
+    //test to view single member's exercise logs
+    it('should be able to view the exercise logs of a memeber in a group', function (done){
+      var userId = user._id;
+      agent
+      .get('/api/users/showLog/' + userId)
+      .set('Authorization', 'Bearer ' + auth.token)
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .end(function (error, res){
+        if(error){
+          done.fail(error);
+        }else{
+          expect(res.body.length).toEqual(1);
+          expect(user.exercises).toBeDefined();
+          expect(user._id).toBe(userId);
+          done();
+        }
+      });
+    });
+
+
+    //test to not view single member's exercise logs
+    it('should not be able to view the exercise logs of a memeber in a group', function (done){
+      var userId = "invaliduserid";
+      agent
+      .get('/api/users/showLog/' + userId)
+      .set('Authorization', 'Bearer ' + auth.token)
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .end(function (error, res){
+        if(res){
+          expect(res.status).toBe(404);
+          expect(res.body.err).toBe('user not found');
+          done();
+        }else {
+          done.fail(error);
+        }
+      })
+    });
+
   });
 });
 

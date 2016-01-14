@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('eggercise')
-  .controller('SignupCtrl', function ($location, Auth) {
+  .controller('SignupCtrl', ['$location', 'Auth', function ($location, Auth) {
 
     var vm = this;
 
@@ -25,4 +25,4 @@ angular.module('eggercise')
 
     });
 
-  });
+  }]);
