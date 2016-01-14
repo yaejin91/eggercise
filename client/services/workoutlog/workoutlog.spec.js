@@ -41,16 +41,36 @@
 
       expect(response).toBeTruthy();
     });
-    
 
-    // function respondToHttp(method, url, params) {
-    //   var userId = id;
-    //   if (userId === existingUser._id) {
-    //     return [200, updatedExerciseUser];
-    //   } else {
-    //     return[404, { message: 'Not Found'}];
-    //   }
-    // };
+    //Test service.setlogPath() when we want logPath = 'log'
+    it('should set logPath to log', function () {
+      var fakeWorkouts = [
+      {date: 'Wed Jan 13 2016', checked: false}, 
+      {date: 'Tue Jan 12 2016', checked: false}];
+      var index = 0;
+
+      for(var i = 0; i < fakeWorkouts.length; i++) {
+        fakeWorkouts[i].checked = true;
+        index = i;
+      }
+      var response = service.setlogPath(index, fakeWorkouts);
+      expect(response).toBe('log');
+    });
+
+    //Test service.setlogPath() when we want logPath = 'unlog'
+    fit('should set logPath to unlog', function () {
+      var fakeWorkouts = [
+      {date: 'Mon Jan 11 2016', checked: true}, 
+      {date: 'Tue Jan 12 2016', checked: true}];
+      var index = 0;
+
+      for(var i = 0; i < fakeWorkouts.length; i++) {
+        fakeWorkouts[i].checked = false;
+        index = i;
+      }
+      var response = service.setlogPath(index, fakeWorkouts);
+      expect(response).toBe('unlog');
+    });
 
   });
 })();
