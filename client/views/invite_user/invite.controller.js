@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('eggercise')
-  .controller('InviteCtrl', ['$location', '$log', '$routeParams', 'InviteService', function ($location, $log, $routeParams, InviteService) {
+  .controller('InviteCtrl', ['$location', '$log', '$routeParams', 'InviteService', 'toasty', function ($location, $log, $routeParams, InviteService, toasty) {
 
     var vm = this;
     vm.formData = {};
@@ -10,6 +10,16 @@ angular.module('eggercise')
     angular.extend(vm, {
       name: 'InviteCtrl'
     });
+
+    vm.flashMessage = function() {
+      console.log('Add invite');
+      // toasty.success({
+      //     title: 'Invite added!',
+      //     msg: ' has been added!'
+      // });
+      toasty('Test!');
+    }
+
 
     //Show all exisiting groups in database
     vm.createInvite = function () {
@@ -20,26 +30,25 @@ angular.module('eggercise')
           vm.invites.push(foundInvites[i]);
         }
 
-        $location.path('/group/updateGroup/');
-
-        setTimeout(notification, 1000);
+        vm.flashMessage();
+        // setTimeout(notification, 1000);
       })
       .catch(function (error){
         console.log('createInvites error:' + error);
       })
 
 
-      function notification () {
-        var sentInvite = document.getElementById('sentInvite');
-        sentInvite.innerHTML = 'You have successfully sent an invite to: ' + vm.formData.email;
-        sentInvite.style.display = 'block';
+      // function notification () {
+      //   var sentInvite = document.getElementById('sentInvite');
+      //   sentInvite.innerHTML = 'You have successfully sent an invite to: ' + vm.formData.email;
+      //   sentInvite.style.display = 'block';
 
-        setTimeout(function (){
-          var sentInvite = document.getElementById('sentInvite');
-          sentInvite.style.display = 'none';
-          sentInvite.innerHTML = '';
-        }, 3000);
-      }
+      //   setTimeout(function (){
+      //     var sentInvite = document.getElementById('sentInvite');
+      //     sentInvite.style.display = 'none';
+      //     sentInvite.innerHTML = '';
+      //   }, 3000);
+      // }
     }
 
   }]);

@@ -76,11 +76,7 @@
       </div>
     </div>
 
-    <div flash-message="5000"></div>
-<!-- 5000 milli-secs is the display duration.
-// Flash alert will be automatically dismissed after 5000 milli-secs.
--->
-
+    <toasty></toasty>
     <div ng-controller="InviteCtrl as invite" class="col-xs-12">
       <form role="form" ng-submit="invite.createInvite(invite.formData)">
         <div class="row">

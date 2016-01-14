@@ -7,14 +7,9 @@ angular.module('eggercise', [
   'ngSanitize',
   'ui.bootstrap',
   'ngAnimate',
-  'angular-flash.service',
-  'angular-flash.flash-alert-directive'
+  'angular-toasty'
 ])
-  .config(function ($routeProvider, $locationProvider, $httpProvider, flashProvider) {
-
-    // Support bootstrap 3.0 "alert-danger" class with error flash types
-    flashProvider.errorClassnames.push('alert-danger');
-
+  .config(function ($routeProvider, $locationProvider, $httpProvider) {
     $routeProvider
       .otherwise({
         redirectTo: '/'
