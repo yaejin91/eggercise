@@ -1,18 +1,13 @@
 'use strict';
 
 angular.module('eggercise')
-  .controller('SignupCtrl', function ($location, Auth) {
+  .controller('SignupCtrl', ['$location', 'Auth', function ($location, Auth) {
 
     var vm = this;
 
     angular.extend(vm, {
 
       name: 'SignupCtrl',
-
-      /**
-       * User credentials
-       */
-      user: { name: 'Testing User', email: 'test2@test.com', password: 'test' },
 
       /**
        * Signup
@@ -30,4 +25,4 @@ angular.module('eggercise')
 
     });
 
-  });
+  }]);
