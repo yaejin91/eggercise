@@ -20,7 +20,7 @@ angular.module('eggercise')
         }
       })
       .catch(function (error){
-        console.log('showLogs err:' + error);
-      })
+        vm.error = error;
+      });
     }
   }]);

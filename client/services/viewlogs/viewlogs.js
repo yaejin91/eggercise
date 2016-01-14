@@ -12,8 +12,7 @@ angular.module('eggercise')
           deferred.resolve(foundLogs);
           if(foundLogs = []){
             console.log('This user currently has no logs');
-          }
-          console.log('foundLogs: ', foundLogs);
+          };
         })
         .error(function (error) {
           console.log(error);

@@ -11,7 +11,6 @@
       // Mock ViewLogService methods to return the expected data.
       // No need to call the actual ViewLogService. It has its own spec.
       viewLogService = (function() {
-        console.log('im here yo');
         return {
           showLogs: function(id) {
             if(passPromise) {
@@ -43,7 +42,7 @@
       expect(controller.formData).toBeDefined();
     });
 
-    fit('should show all logs of member in a group', function() {
+    it('should show all logs of member in a group', function() {
       // Test a successful call to the ViewLogService
       passPromise = true;
       // Explicitly call the controller actions we are testing
@@ -54,6 +53,16 @@
       expect(viewLogService.showLogs).toHaveBeenCalled();
       // Test that the data has the correct properties and values
       expect(controller.logs).toBeDefined();
+    });
+
+    it('should not show all logs of member in a group', function() {
+      passPromise = false;
+      controller.showLogs();
+      rootScope.$digest();
+      expect(viewLogService.showLogs).toHaveBeenCalled;
+      expect(controller.error).toBe('showLogs failed');
+
+
     });
 
   
