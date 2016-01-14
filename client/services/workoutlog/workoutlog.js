@@ -55,7 +55,7 @@ angular.module('eggercise')
       if (earliestStartDate < convertedUserStartDate) {
         logStartDate = earliestStartDate + 1;
       } else {
-        logStartDate = convertedUserStartDate;
+        logStartDate = convertedUserStartDate + 1;
       }
 
       numberOfDays = todayDate - logStartDate;
@@ -75,13 +75,14 @@ angular.module('eggercise')
         convertedExercises[i] = DateService.millisToDays(new Date(exerciseArray[i]).getTime());
       }
 
-      for(var j=days+1; j>0; j--) {
+      for(var j=days+1; j>=0; j--) {
         allDates.push({
           //todayDate - j + 1 is for checking the dates from now to firstStartDate 
           date: (new Date((todayDate - j + 1)*conversionConst)+'').substring(0,15),
           checked: (convertedExercises.indexOf(todayDate - j) !== -1)
         });
       }
+      console.log(allDates.reverse());
       return allDates.reverse();
     }
 

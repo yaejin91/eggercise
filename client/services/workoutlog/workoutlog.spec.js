@@ -58,7 +58,7 @@
     });
 
     //Test service.setlogPath() when we want logPath = 'unlog'
-    fit('should set logPath to unlog', function () {
+    it('should set logPath to unlog', function () {
       var fakeWorkouts = [
       {date: 'Mon Jan 11 2016', checked: true}, 
       {date: 'Tue Jan 12 2016', checked: true}];
@@ -70,6 +70,44 @@
       }
       var response = service.setlogPath(index, fakeWorkouts);
       expect(response).toBe('unlog');
+    });
+
+    //Test workout logToggle()
+    //service.logToggle = function (logPath, date)
+    //when logPath = 'log'
+    // it('should toggle a workout log on and off', function () {
+    //   var date = 'Thu Jan 14 2016'
+    //   var dateConverted = new Date(date);
+    //   var logPath = 'log';
+
+    //   $httpBackend.whenPOST(/log\/(\S+)$/)
+    //     .respond(function (method, url) {
+    //       if (logPath === 'log') {
+    //         return [200, dateConverted];
+    //       } else {
+    //         return [404, { message: 'Not Found'}];
+    //       }
+    //     });
+    //   service.logToggle(logPath, date).then(handler.success, handler.error);
+    //   $httpBackend.flush();
+
+    //   //test the results
+    //   expect(dateConverted).toBe('Thu Jan 14 2016 00:00:00 GMT-0800 (PST)');
+    //   expect(handler.error).not.toHaveBeenCalled();
+    //   expect(errorMessage).toBeUndefined();
+    // });
+
+    //Test readableDates()
+    it('should convert workout log dates into readable format', function () {
+      var exerciseArray = [
+        //In order: Tuesday, Wednesdsay, Thursdsay
+        '2016-01-12T08:00:00.000Z',
+        '2016-01-13T08:00:00.000Z',
+        '2016-01-14T08:00:00.000Z'
+      ];
+      var response = service.readableDates(exerciseArray, -1);
+      //It's expected to be Thursday because of allDates.reverse()
+      expect(response[0].date).toBe("Thu Jan 14 2016");
     });
 
   });
