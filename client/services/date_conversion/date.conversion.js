@@ -17,5 +17,11 @@ angular.module('eggercise')
       return convertedDate;
 
     };
+
+    service.dateToMilli = function (date) {
+      var convertedDate = new Date(date).getTime();
+      return convertedDate;
+    }
+    
     return service;
   });

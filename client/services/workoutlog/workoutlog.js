@@ -54,8 +54,8 @@ angular.module('eggercise')
       }
     };
 
-    service.numberOfDays = function (userStartDate){
-      var joinDate = DateService.millisToDays(joinDate);
+    service.numberOfDays = function (joinedAt, userStartDate){
+      var joinDate = DateService.millisToDays(joinedAt);
       var todayDate = DateService.millisToDays(Date.now());
       if(joinDate < userStartDate) {
         userStartDate = joinDate;
