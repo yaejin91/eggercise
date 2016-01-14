@@ -11,15 +11,24 @@ angular.module('eggercise')
       name: 'InviteCtrl'
     });
 
-    vm.flashMessage = function(foundInvite) {
-      GroupService.showGroup(foundInvite._group)
-      .then(function (group) {
-        toasty.success({
-          title: 'Invited!',
-          msg: 'You have sucessfully invited ' + vm.formData.email + " to " + group.name,
-          theme: "material"
-        });
-      })
+    vm.flashMessage = function(message, data) {
+      if (data === {'err': 'Did not create the invite'}) {
+        toasty.message({
+          title: 'Failure',
+          msg: 'You have already invited this member to the group',
+          theme: 'material'
+        })
+      } else {
+        GroupService.showGroup(data._group)
+        .then(function (group) {
+          console.log('This is data: ', data);
+          toasty.message({
+            title: 'Invited!',
+            msg: 'You have sucessfully invited ' + vm.formData.email + " to " + group.name,
+            theme: "material"
+          });
+        })
+      }
     }
 
 
@@ -28,11 +37,13 @@ angular.module('eggercise')
       vm.formData._group = $routeParams.group_id;
       InviteService.createInvite(vm.formData)
       .then(function (foundInvite){
+        console.log('This is foundInvite: ', foundInvite);
         vm.invites.push(foundInvite);
-        vm.flashMessage(foundInvite);
+        vm.flashMessage('success', foundInvite);
       })
       .catch(function (error){
-        console.log('createInvites error:' + error);
+        vm.flashMessage('error', error)
+        console.log('This is the error: ', error);
       })
     }
 
