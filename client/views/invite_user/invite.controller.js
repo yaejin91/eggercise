@@ -13,7 +13,7 @@ angular.module('eggercise')
 
     vm.flashMessage = function(message, data) {
       if (data === {'err': 'Did not create the invite'}) {
-        toasty.message({
+        toasty[message]({
           title: 'Failure',
           msg: 'You have already invited this member to the group',
           theme: 'material'
@@ -22,7 +22,7 @@ angular.module('eggercise')
         GroupService.showGroup(data._group)
         .then(function (group) {
           console.log('This is data: ', data);
-          toasty.message({
+          toasty[message]({
             title: 'Invited!',
             msg: 'You have sucessfully invited ' + vm.formData.email + " to " + group.name,
             theme: "material"
