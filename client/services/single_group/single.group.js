@@ -30,27 +30,24 @@ angular.module('eggercise')
       return allMembersExercises;
     };
 
-    //membersArray = data._members
     service.membersValidExercises = function (membersArray, startDate, endDate) {
       var startDate_ms = DateService.dateToMilli(startDate);
       var endDate_ms = DateService.dateToMilli(endDate);
 
       for (var i = 0; i < membersArray.length; i++) {
-        membersArray[i].validExercises = [];
+        var validExercises = [];
         for (var j = 0; j < membersArray[i].exercises.length; j++) {
           //each member's separate log entries changed into milliseconds unit
           var logInMilli = DateService.dateToMilli(membersArray[i].exercises[j]);
 
           //if log is in between start and end date of the group, push to array
           if ((logInMilli >= startDate_ms) && (logInMilli <= endDate_ms)){
-            membersArray[i].validExercises.push(membersArray[i].exercises[j]);
-            // console.log('logInMilli is valid');
+            validExercises.push(membersArray[i].exercises[j]);
           }
         }
+        membersArray[i].validExercises = validExercises;
       }
       //membersArray[i] now have array validExercises
-      // console.log('validExercises: ', membersArray[0].validExercises);
-      console.log('membersArray on Services: ', membersArray);
       return membersArray;
     };
 
@@ -58,7 +55,8 @@ angular.module('eggercise')
     //leader = data.leader
     //runnerUp = data.runnerUp
     service.assignLeader = function (membersArray, startDate, endDate) {
-      var membersArray = service.membersValidExercises(membersArray, startDate, endDate)
+      // var membersArray = []
+      // var membersArray = [service.membersValidExercises(membersArray, startDate, endDate)]
       var leaderAndRunnerUp = [];
       var leader = {email: 'leader@test.com', exercises: 0};
       var runnerUp = {email: 'runnerUp@test.com', exercises: 0};

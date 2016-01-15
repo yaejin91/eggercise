@@ -11,7 +11,6 @@ angular.module('eggercise')
       vm.totaldays;
       vm.daysElapsed;
       vm.group_id = $routeParams.id;
-      vm.exercises = [];
       vm.youOwe;
       vm.daysBehind;
       vm.daysAhead;
@@ -30,7 +29,6 @@ angular.module('eggercise')
               vm.endDate = DateService.getFullDate(data.end);
               vm.totaldays = DateService.daysBetween(data.start, data.end);
               vm.daysElapsed = SingleGroupService.elapsedDay(data.start, data.end);
-              vm.exercises = SingleGroupService.membersExercises(data._members);
               vm.group = data;
 
               //Execute moneyOwed()
