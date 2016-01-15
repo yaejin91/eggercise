@@ -38,7 +38,7 @@
       <div class="jumbotron">
         <div class="row">
           <div class="col-md-12 text-center">
-            <div class="reponsive-font-size" class="days">
+            <div class="days">
               {{vm.elapsedday}} / {{vm.totaldays}}
             </div>
           </div>
@@ -54,17 +54,17 @@
       <div class="jumbotron">
         <div class="row">
           <div class="col-md-12 text-center">
-            <div class="reponsive-font-size" class="days" ng-if="vm.daysAhead">
+            <div class="days" ng-if="vm.daysAhead">
               {{vm.daysAhead}}
             </div>
             <div class="col-md-12 text-center" ng-if="vm.daysAhead">
-                Days Ahead
+              Days Ahead
             </div>
             <div class="days" ng-if="vm.daysBehind">
               {{vm.daysBehind}}
             </div>
             <div class="col-md-12 text-center" ng-if="vm.daysBehind">
-                Days Behind
+              Days Behind
             </div>
           </div>
         </div>
@@ -76,12 +76,12 @@
       <div class="jumbotron">
         <div class="row">
           <div class="col-md-12 text-center">
-            <div class="reponsive-font-size" class="days">
+            <div class="days">
               ${{vm.youOwe}}
             </div>
           </div>
           <div class="col-md-12 text-center">
-              Owed
+            Owed
           </div>
         </div>
       </div>
@@ -94,7 +94,11 @@
   <div class="row" ng-repeat="member in vm.members | orderBy: 'member.exercises.length' : true">
     <div class="col-xs-10" >
       <div>
-        <p>{{member.name}}</p>
+        <p>
+          <a href="/viewLog/{{member._id}}">
+          {{member.name}}
+          </a>
+        </p>
       </div>
     </div>
     <div class="col-xs-2">
