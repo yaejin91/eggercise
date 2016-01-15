@@ -17,16 +17,18 @@ angular.module('eggercise')
     };
 
     service.dateToMilli = function (date) {
+      // var newDate = new Date(date)
       var convertedDate = new Date(date).getTime();
       return convertedDate;
     };
 
     //This service is for extracting month and date from the given date format.
-    service.getMonthAndDate = function (date) {
+    service.getFullDate = function (date) {
       var dateToChange = new Date(date);
       var month = dateToChange.getMonth() + 1;
       var day = dateToChange.getDate();
-      var monthAndDay = month + '/' + day;
+      var year = dateToChange.getFullYear();
+      var monthAndDay = month + '/' + day + '/' + year;
 
       return monthAndDay;
     };

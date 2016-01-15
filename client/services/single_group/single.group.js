@@ -31,8 +31,6 @@ angular.module('eggercise')
     };
 
     //membersArray = data._members
-    //startDate_ms = vm.startDate_ms
-    //endDate_ms = vm.endDate_ms
     service.membersValidExercises = function (membersArray, startDate, endDate) {
       var startDate_ms = DateService.dateToMilli(startDate);
       var endDate_ms = DateService.dateToMilli(endDate);
@@ -46,10 +44,13 @@ angular.module('eggercise')
           //if log is in between start and end date of the group, push to array
           if ((logInMilli >= startDate_ms) && (logInMilli <= endDate_ms)){
             membersArray[i].validExercises.push(membersArray[i].exercises[j]);
+            // console.log('logInMilli is valid');
           }
         }
       }
-      //membersArray now have array validExercises
+      //membersArray[i] now have array validExercises
+      // console.log('validExercises: ', membersArray[0].validExercises);
+      console.log('membersArray on Services: ', membersArray);
       return membersArray;
     };
 
@@ -63,7 +64,7 @@ angular.module('eggercise')
       var runnerUp = {email: 'runnerUp@test.com', exercises: 0};
 
       for (var i = 0; i < membersArray.length; i++) {
-        membersArray[i].validExercises = [];
+        membersArray[i].validExercises;
         //if user has the most exercises, his/her email is set as the group's leader's email
         //the leader's number of exercises is also in this object
         if (membersArray[i].validExercises.length > leader.exercises) {

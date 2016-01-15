@@ -73,29 +73,30 @@
     });
 
     //Test workout logToggle()
-    //service.logToggle = function (logPath, date)
-    //when logPath = 'log'
-    // it('should toggle a workout log on and off', function () {
-    //   var date = 'Thu Jan 14 2016'
-    //   var dateConverted = new Date(date);
-    //   var logPath = 'log';
+    // when logPath = 'log'
+    it('should toggle a workout log on and off', function () {
+      var date = 'Thu Jan 14 2016'
+      var dateConverted = new Date(date);
+      var logPath = 'log';
 
-    //   $httpBackend.whenPOST(/log\/(\S+)$/)
-    //     .respond(function (method, url) {
-    //       if (logPath === 'log') {
-    //         return [200, dateConverted];
-    //       } else {
-    //         return [404, { message: 'Not Found'}];
-    //       }
-    //     });
-    //   service.logToggle(logPath, date).then(handler.success, handler.error);
-    //   $httpBackend.flush();
+     // $http.post('/api/users/' + logPath, {date: convertedDate})
 
-    //   //test the results
-    //   expect(dateConverted).toBe('Thu Jan 14 2016 00:00:00 GMT-0800 (PST)');
-    //   expect(handler.error).not.toHaveBeenCalled();
-    //   expect(errorMessage).toBeUndefined();
-    // });
+      $httpBackend.whenPOST(/api\/users\/log$/)
+        .respond(function (method, url) {
+          if (logPath === 'log') {
+            return [200, dateConverted];
+          } else {
+            return [404, { message: 'Not Found'}];
+          }
+        });
+      service.logToggle(logPath, date).then(handler.success, handler.error);
+      $httpBackend.flush();
+
+      //test the results
+      expect(date).toBe('Thu Jan 14 2016 00:00:00 GMT-0800 (PST)');
+      expect(handler.error).not.toHaveBeenCalled();
+      expect(errorMessage).toBeUndefined();
+    });
 
     //Test readableDates()
     it('should convert workout log dates into readable format', function () {

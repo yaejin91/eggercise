@@ -7,9 +7,7 @@ angular.module('eggercise')
       vm.group = {};
       vm.authUserId = $rootScope.Auth.getUser()._id;
       vm.startDate;
-      vm.startDate_ms;
       vm.endDate;
-      vm.endDate_ms;
       vm.totaldays;
       vm.daysElapsed;
       vm.group_id = $routeParams.id;
@@ -25,16 +23,16 @@ angular.module('eggercise')
 
         //show Group
         showGroup: function (id) {
+          var test;
           GroupService.showGroup(id)
             .then(function (data) {
-              vm.group = data;
-              vm.startDate = DateService.getMonthAndDate(data.start);
-              vm.endDate = DateService.getMonthAndDate(data.end);
-              vm.startDate_ms = DateService.dateToMilli(data.start);
-              vm.endDate_ms = DateService.dateToMilli(data.end);
+              vm.startDate = DateService.getFullDate(data.start);
+              vm.endDate = DateService.getFullDate(data.end);
               vm.totaldays = DateService.daysBetween(data.start, data.end);
               vm.daysElapsed = SingleGroupService.elapsedDay(data.start, data.end);
               vm.exercises = SingleGroupService.membersExercises(data._members);
+              vm.group = data;
+
               //Execute moneyOwed()
               vm.moneyOwed(id);
 
@@ -54,8 +52,7 @@ angular.module('eggercise')
               var leaderAndRunnerUpArray = [];
               data.you = user;
               var membersArray = SingleGroupService.membersValidExercises(data._members, vm.startDate, vm.endDate);
-              console.log(membersArray);
-              leaderAndRunnerUpArray = SingleGroupService.assignLeader(membersArray);
+              leaderAndRunnerUpArray = SingleGroupService.assignLeader(membersArray, vm.startDate, vm.endDate);
 
               var winnersPot = SingleGroupService.potCalculation(membersArray, leaderAndRunnerUpArray[0], leaderAndRunnerUpArray[1], vm.group.bet);
 
