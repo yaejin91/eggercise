@@ -22,6 +22,12 @@ angular.module('eggercise')
       var convertedDate = new Date(date).getTime();
       return convertedDate;
     }
+
+    //This service is for extracting month and date from the given date format.
+    //date = data.start or data.end
+    service.getMonthAndDate = function (date) {
+      // var 
+    }
     
     return service;
   });

@@ -28,8 +28,14 @@ angular.module('eggercise')
         showGroup: function (id) {
           GroupService.showGroup(id)
             .then(function (data) {
+              //sdate is the group's start date
               var sdate = new Date(data.start);
+              console.log('sdate: ', sdate);
+              console.log('sdate.getMonth() + 1: ',sdate.getMonth() + 1);
+              console.log('sdate.getDate(): ', sdate.getDate());
               vm.startdate = ((sdate.getMonth() + 1) + "/" + sdate.getDate());
+              console.log('(sdate.getMont() + 1)...: ', vm.startdate);
+              //edate is group's end date
               var edate = new Date(data.end);
               vm.enddate = ((edate.getMonth() + 1) + "/" + edate.getDate());
               Date.daysBetween = function (sdate, edate) {
