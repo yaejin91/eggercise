@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('eggercise')
-  .controller('ShowGroupCtrl', ['$rootScope', '$location', '$log', '$routeParams', 'GroupService', 'Auth', 'LeaderService', function ($rootScope, $location, $log, $routeParams, GroupService, Auth, LeaderService) {
+  .controller('ShowGroupCtrl', ['$rootScope', '$location', '$log', '$routeParams', 'GroupService', 'Auth', 'LeaderService', 'DateService', 'SingleGroupService', function ($rootScope, $location, $log, $routeParams, GroupService, Auth, LeaderService, DateService, SingleGroupService) {
     var vm = this;
 
       vm.group = {};
@@ -11,7 +11,6 @@ angular.module('eggercise')
       vm.totaldays = {};
       vm.elapsedday = {};
       vm.group_id = $routeParams.id;
-      vm.members = [];
       vm.exercises = [];
       vm.sdate_ms;
       vm.edate_ms;
@@ -28,42 +27,16 @@ angular.module('eggercise')
         showGroup: function (id) {
           GroupService.showGroup(id)
             .then(function (data) {
-              //sdate is the group's start date
-              var sdate = new Date(data.start);
-              console.log('sdate: ', sdate);
-              console.log('sdate.getMonth() + 1: ',sdate.getMonth() + 1);
-              console.log('sdate.getDate(): ', sdate.getDate());
-              vm.startdate = ((sdate.getMonth() + 1) + "/" + sdate.getDate());
-              console.log('(sdate.getMont() + 1)...: ', vm.startdate);
-              //edate is group's end date
-              var edate = new Date(data.end);
-              vm.enddate = ((edate.getMonth() + 1) + "/" + edate.getDate());
-              Date.daysBetween = function (sdate, edate) {
-                var one_day = 1000 * 60 * 60 * 24;
-                vm.sdate_ms = sdate.getTime();
-                vm.edate_ms = edate.getTime();
-                var difference_ms = vm.edate_ms - vm.sdate_ms;
-                return Math.round(difference_ms/one_day);
-              }
-              var tdate = new Date();
-              vm.totaldays = Date.daysBetween(sdate, edate);
-              if(tdate < sdate) {
-                vm.elapsedday = 0;
-              } else {
-                vm.elapsedday = Date.daysBetween(sdate, tdate);
-              }
               vm.group = data;
+              vm.startdate = DateService.getMonthAndDate(data.start);
+              vm.enddate = DateService.getMonthAndDate(data.end);
+              vm.sdate_ms = DateService.dateToMilli(data.start);
+              vm.edate_ms = DateService.dateToMilli(data.end);
+              vm.totaldays = DateService.daysBetween(data.start, data.end);
+              vm.elapsedday = SingleGroupService.elapsedDay(data.start, data.end);
+              vm.exercises = SingleGroupService.membersExercises(data._members);
 
-              for (var i = 0; i < data._members.length; i++) {
-                vm.members.push(data._members[i]);
-                for (var j = 0; j < data._members[i].exercises.length; j++) {
-                  if (data._members[i].exercises[j] === 0) {
-                    j++;
-                  }
-                  vm.exercises.push(data._members[i].exercises[j]);
-                }
-              }
-
+              //Execute moneyOwed()
               vm.moneyOwed(id);
 
             })
