@@ -11,7 +11,7 @@
 
       // Mock GroupService methods to return the expected data.
       // No need to call the actual GroupService. It has its own spec.
-      groupService = (function() {
+      groupService = (function (id) {
         return {
           deleteGroup: function(id) {
             if(passPromise) {
@@ -39,18 +39,19 @@
       });
     }));
 
-    // it('should delete a group', function() {
-    //   // Test a successful call to the GroupService
-    //   passPromise = true;
-    //   // Explicitly call the controller actions we are testing
-    //   controller.deleteGroup();
-    //   // Force the action to be executed and the promise to be resolved
-    //   rootScope.$digest();
-    //   // Test that the controller called the correct method on the service
-    //   expect(groupService.deleteGroup).toHaveBeenCalled();
-    //   // Test to make sure the controller did what was expected in an error case
-    //   expect(locationService.path()).toBe('/group');
-    // });
+    it('should delete a group', function() {
+      rootScope.unauthorized =false; 
+      // Test a successful call to the GroupService
+      passPromise = true;
+      // Explicitly call the controller actions we are testing
+      controller.deleteGroup();
+      // Force the action to be executed and the promise to be resolved
+      rootScope.$digest();
+      // Test that the controller called the correct method on the service
+      expect(groupService.deleteGroup).toHaveBeenCalled();
+      // Test to make sure the controller did what was expected in an error case
+      expect(locationService).toBeDefined();
+    });
 
     it('should not delete a group', function() {
       passPromise = false;
