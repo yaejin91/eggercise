@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('eggercise')
-  .controller('ShowGroupCtrl', ['$rootScope', '$location', '$log', '$routeParams', 'GroupService', 'Auth', function ($rootScope, $location, $log, $routeParams, GroupService, Auth) {
+  .controller('ShowGroupCtrl', ['$rootScope', '$location', '$log', '$routeParams', 'GroupService', 'Auth', 'LeaderService', function ($rootScope, $location, $log, $routeParams, GroupService, Auth, LeaderService) {
     var vm = this;
 
       vm.group = {};
