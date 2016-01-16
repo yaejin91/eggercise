@@ -73,14 +73,15 @@
     });
 
     //Test workout logToggle()
-    //service.logToggle = function (logPath, date)
-    //when logPath = 'log'
+    // when logPath = 'log'
     // it('should toggle a workout log on and off', function () {
     //   var date = 'Thu Jan 14 2016'
     //   var dateConverted = new Date(date);
     //   var logPath = 'log';
 
-    //   $httpBackend.whenPOST(/log\/(\S+)$/)
+    //  // $http.post('/api/users/' + logPath, {date: convertedDate})
+
+    //   $httpBackend.whenPOST(/api\/users\/log$/)
     //     .respond(function (method, url) {
     //       if (logPath === 'log') {
     //         return [200, dateConverted];
