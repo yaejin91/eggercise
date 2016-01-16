@@ -59,14 +59,19 @@ body {
   margin-bottom: 4px !important;
 }
 
-@media screen and (max-width: 380px) {
-  .reponsive-font-size {
-    font-size: medium;
+
+/* Landscape phones and down */
+@media (max-width: 480px) { 
+  #changeFontSize{
+    font-size: 1.5em;
+  },
+  .modifyMaxWidth{
+    max-width: 78%;
+    margin-left: 20px;
   }
-  /*.glyph-title-font-size{
-    font-size: 123%;
-  }*/
 }
+
+
 
 .large-glyph {
   font-size: 500%;
@@ -84,6 +89,11 @@ body {
 
 #update-button{
   text-decoration: none;
+}
+
+
+#cancel-button{
+  margin-left: 2px;
 }
 
 .days {

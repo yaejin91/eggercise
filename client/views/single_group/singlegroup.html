@@ -38,7 +38,7 @@
       <div class="jumbotron">
         <div class="row">
           <div class="col-md-12 text-center">
-            <div class="days">
+            <div class="days" id="changeFontSize">
               {{vm.elapsedday}} / {{vm.totaldays}}
             </div>
           </div>
@@ -54,13 +54,13 @@
       <div class="jumbotron">
         <div class="row">
           <div class="col-md-12 text-center">
-            <div class="days" ng-if="vm.daysAhead">
+            <div class="days" ng-if="vm.daysAhead" id="changeFontSize" >
               {{vm.daysAhead}}
             </div>
             <div class="col-md-12 text-center" ng-if="vm.daysAhead">
               Days Ahead
             </div>
-            <div class="days" ng-if="vm.daysBehind">
+            <div class="days" ng-if="vm.daysBehind" id="changeFontSize">
               {{vm.daysBehind}}
             </div>
             <div class="col-md-12 text-center" ng-if="vm.daysBehind">
@@ -76,7 +76,7 @@
       <div class="jumbotron">
         <div class="row">
           <div class="col-md-12 text-center">
-            <div class="days">
+            <div class="days" id="changeFontSize">
               ${{vm.youOwe}}
             </div>
           </div>
