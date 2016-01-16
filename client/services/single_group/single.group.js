@@ -97,10 +97,6 @@ angular.module('eggercise')
       return membersArray[winnersIndex].memberOwes;
     };
 
-    //groupBet = vm.group.bet
-    //winnersPot = winnersPot
-    //leader = leader;
-    //runnerUp = runnerUp;
     service.youWinOrOwe = function (winnersPot, leader, runnerUp, groupBet) {
       var you = Auth.getUser();
       var resultObject = {};

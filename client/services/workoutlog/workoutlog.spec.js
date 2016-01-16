@@ -4,7 +4,7 @@
   describe('WorkoutService', function() {
     var service, $httpBackend, workoutData,handler, errorMessage, $log;
     
-    // Configure module that contains the controller being tested
+    // Configure module that contains the service being tested
     beforeEach(module('eggercise'));
 
     beforeEach(inject(function (_$log_, _$httpBackend_, _WorkoutService_) {
@@ -72,14 +72,11 @@
       expect(response).toBe('unlog');
     });
 
-    //Test workout logToggle()
-    // when logPath = 'log'
+    //Test workout logToggle() when logPath = 'log'
     // it('should toggle a workout log on and off', function () {
     //   var date = 'Thu Jan 14 2016'
     //   var dateConverted = new Date(date);
     //   var logPath = 'log';
-
-    //  // $http.post('/api/users/' + logPath, {date: convertedDate})
 
     //   $httpBackend.whenPOST(/api\/users\/log$/)
     //     .respond(function (method, url) {
