@@ -11,9 +11,7 @@ angular.module('eggercise')
       vm.endDate;
       vm.totaldays;
       vm.daysElapsed;
-      vm.daysBehind;
-      vm.daysAhead;
-      vm.daysDifference; //this will replace daysBehind and daysAhead
+      vm.daysDifference;
       vm.daysDifferenceAbsolute;
       vm.owe;
       vm.oweAbsolute;
