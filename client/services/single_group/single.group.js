@@ -47,16 +47,11 @@ angular.module('eggercise')
         }
         membersArray[i].validExercises = validExercises;
       }
-      //membersArray[i] now have array validExercises
+      //membersArray[i] now have array validExercises as one of its properties
       return membersArray;
     };
 
-    //membersArray = data._members
-    //leader = data.leader
-    //runnerUp = data.runnerUp
     service.assignLeader = function (membersArray, startDate, endDate) {
-      // var membersArray = []
-      // var membersArray = [service.membersValidExercises(membersArray, startDate, endDate)]
       var leaderAndRunnerUp = [];
       var leader = {email: 'leader@test.com', exercises: 0};
       var runnerUp = {email: 'runnerUp@test.com', exercises: 0};
@@ -83,14 +78,7 @@ angular.module('eggercise')
       return leaderAndRunnerUp;
     };
 
-    //membersArray = data._members
-    //leader = data.leader
-    //runnerUp = data.runnerUp
-    //groupBet = vm.group.bet
     service.potCalculation = function (membersArray, leader, runnerUp, groupBet) {
-      var leaderAndRunnerUp = service.assignLeader(membersArray, leader, runnerUp);
-      var leader = leaderAndRunnerUp[0];
-      var runnerUp = leaderAndRunnerUp[1];
       var winnersPot = 0;
       var winnersIndex = 0;
 
@@ -109,25 +97,24 @@ angular.module('eggercise')
       return membersArray[winnersIndex].memberOwes;
     };
 
-    //daysDifference = vm.daysAhead/vm.daysBehind
-    //owe = vm.youOwe
     //groupBet = vm.group.bet
     //winnersPot = winnersPot
-    service.youWinOrOwe = function (daysDifference, owe, groupBet, winnersPot) {
+    //leader = leader;
+    //runnerUp = runnerUp;
+    service.youWinOrOwe = function (winnersPot, leader, runnerUp, groupBet) {
       var you = Auth.getUser();
-      var leaderAndRunnerUp = service.assignLeader(membersArray);
-      var currentLeader = leaderAndRunnerUp[0];
-      var currentRunnerUp = leaderAndRunnerUp[1];
       var resultObject = {};
+      var owe;
+      var daysDifference;
 
-      if(you.email == currentLeader.email) {
-        daysDifference = Math.abs(currentLeader.exercises - currentRunnerUp.exercises);
+      if(you.email == leader.email) {
+        daysDifference = leader.exercises - runnerUp.exercises;
         owe = winnersPot;
-        resultObject = {aheadBy: daysDifference, win: winnerPot};
+        resultObject = {days: daysDifference, money: winnersPot};
       } else {
-        daysDifference = Math.abs(currentLeader.exercises - you.exercises.length);
-        owe = Math.abs(daysDiffernce * groupBet);
-        resultObject = {behindBy: daysDifference, lose: owe};
+        daysDifference = leader.exercises - you.exercises;
+        owe = daysDifference * groupBet;
+        resultObject = {days: daysDifference, money: owe};
       }
       return resultObject;
     }

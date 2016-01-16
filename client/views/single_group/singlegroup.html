@@ -49,39 +49,46 @@
       </div>
     </div>
 
-   <!-- <div ng-init="vm.moneyOwed(vm.group_id)">  -->
     <div class="col-xs-4">
       <div class="jumbotron">
         <div class="row">
           <div class="col-md-12 text-center">
-            <div class="days" ng-if="vm.daysAhead">
-              {{vm.daysAhead}}
+            <div class="days" ng-if="vm.daysDifference>0">
+              {{vm.daysDifferenceAbsolute}}
             </div>
-            <div class="col-md-12 text-center" ng-if="vm.daysAhead">
+            <div class="col-md-12 text-center" ng-if="vm.daysDifference>1">
               Days Ahead
             </div>
-            <div class="days" ng-if="vm.daysBehind">
-              {{vm.daysBehind}}
+            <div class="col-md-12 text-center" ng-if="vm.daysDifference==1">
+              Day Ahead
             </div>
-            <div class="col-md-12 text-center" ng-if="vm.daysBehind">
+            <div class="days" ng-if="vm.daysDifference<0">
+              {{vm.daysDifferenceAbsolute}}
+            </div>
+            <div class="col-md-12 text-center" ng-if="vm.daysDifference<-1">
               Days Behind
+            </div>
+            <div class="col-md-12 text-center" ng-if="vm.daysDifference==-1">
+              Day Behind
             </div>
           </div>
         </div>
       </div>
     </div>
-  <!-- </div> -->
 
     <div class="col-xs-4">
       <div class="jumbotron">
         <div class="row">
           <div class="col-md-12 text-center">
             <div class="days">
-              ${{vm.youOwe}}
+              ${{vm.oweAbsolute}}
             </div>
           </div>
-          <div class="col-md-12 text-center">
+          <div class="col-md-12 text-center" ng-if="vm.owe>0">
             Owed
+          </div>
+          <div class="col-md-12 text-center" ng-if="vm.owe<0">
+            Owe
           </div>
         </div>
       </div>
@@ -90,8 +97,7 @@
 
   <h3>Days Exercised</h3>
   <hr>
-  <!-- <div class="row" ng-repeat="member in vm.members | orderBy: 'member.exercises.length' : true"> -->
-  <div class="row" ng-repeat="member in vm.members | orderBy: 'member.exercises.length' : true">
+  <div class="row" ng-repeat="member in vm.membersArray | orderBy: 'member.exercises.length' : true">
     <div class="col-xs-10" >
       <div>
         <p>
@@ -102,7 +108,7 @@
       </div>
     </div>
     <div class="col-xs-2">
-      <p>{{member.exercises.length}}</p>
+      <p>{{member.validExercises.length}}</p>
     </div>
   </div>
 
