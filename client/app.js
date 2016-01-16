@@ -69,4 +69,15 @@ angular.module('eggercise', [
         });
       }
     });
+  })
+
+  .run(function ($rootScope, $location) {
+
+    $rootScope.$on('$locationChangeStart', function() {
+      $rootScope.previousPage = location.pathname;
+    });
+
+    $rootScope.back = function () {
+      $location.path($rootScope.previousPage);
+    };
   });
