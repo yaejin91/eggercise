@@ -12,10 +12,11 @@ angular.module('eggercise')
     });
 
     vm.flashMessage = function(message, data) {
-      if (data === {'err': 'Did not create the invite'}) {
+      if (message === 'error') {
+        console.log('In the flashMessage error & data: ', data);
         toasty[message]({
           title: 'Failure',
-          msg: 'You have already invited this member to the group',
+          msg: data.err,
           theme: 'material'
         })
       } else {
@@ -44,6 +45,8 @@ angular.module('eggercise')
       .catch(function (error){
         vm.flashMessage('error', error)
         console.log('This is the error: ', error);
+        console.log('$routeParams.group_id', $routeParams.group_id);
+        $location.path( $routeParams.group_id);
       })
     }
   }]);
