@@ -70,9 +70,9 @@ angular.module('eggercise')
 
       for(var i=0; i<exerciseArray.length; i++) {
         //This is for cutting the exercise array elements (workout dates) in to a more readable format
-        exerciseArray[i] = exerciseArray[i].substring(0,10);
+        exerciseArray[i] = DateService.dateToMilli(exerciseArray[i].substring(0,10));
         //This converts the user's exercise array into number of days (number of days since 1970 Jan 1st, integer)
-        convertedExercises[i] = DateService.millisToDays(new Date(exerciseArray[i]).getTime());
+        convertedExercises[i] = DateService.millisToDays(exerciseArray[i]);
       }
 
       for(var j=days+1; j>=0; j--) {
