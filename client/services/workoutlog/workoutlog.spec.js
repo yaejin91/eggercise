@@ -2,28 +2,13 @@
   'use strict';
 
   describe('WorkoutService', function() {
-    var service, $httpBackend, workoutData,handler, errorMessage;
-    var id = '5669e40077cc88a84bbb5c13';
-    var existingDate = '12-31-2015';
-    var newDate = '01-02-2016';
-    var existingUser = {
-      _id: id,
-      name: 'testlogging',
-      email: 'testlogging@test.com',
-      password: 'test',
-      exercises: [existingDate]
-    };
-    var updatedExerciseUser = {
-      _id: id,
-      name: 'testlogging',
-      email: 'testlogging@test.com',
-      password: 'test'
-    };
+    var service, $httpBackend, workoutData,handler, errorMessage, $log;
     
     // Configure module that contains the controller being tested
     beforeEach(module('eggercise'));
 
-    beforeEach(inject(function (_$httpBackend_, _WorkoutService_) {
+    beforeEach(inject(function (_$log_, _$httpBackend_, _WorkoutService_) {
+      $log = _$log_;
       $httpBackend = _$httpBackend_;
       service = _WorkoutService_;
       workoutData = [];
@@ -44,75 +29,87 @@
       spyOn(handler, 'error').and.callThrough();
     }));
 
-    //Test for logWorkout()
-    // it('should let a user log workout', function () {
-    //   id = '5669e40077cc88a84bbb5c13';     
-    //   $httpBackend.whenPOST(/log/)
-    //     .respond (respondToHttp);
+    //Test service.showWorkout()
+    it('should show all of users workout log', function () {
+      var response = service.showWorkout()
+        .then(function () {
+          $log.info('Success!');
+        })
+        .catch(function (err) {
+          $log.error('Error: ', err);
+        });
 
-    //   // setup the service to use the success and error handler functions we defined in the beforeEach block.
-    //   service.logWorkout().then(handler.success, handler.error);
+      expect(response).toBeTruthy();
+    });
+
+    //Test service.setlogPath() when we want logPath = 'log'
+    it('should set logPath to log', function () {
+      var fakeWorkouts = [
+      {date: 'Wed Jan 13 2016', checked: false}, 
+      {date: 'Tue Jan 12 2016', checked: false}];
+      var index = 0;
+
+      for(var i = 0; i < fakeWorkouts.length; i++) {
+        fakeWorkouts[i].checked = true;
+        index = i;
+      }
+      var response = service.setlogPath(index, fakeWorkouts);
+      expect(response).toBe('log');
+    });
+
+    //Test service.setlogPath() when we want logPath = 'unlog'
+    it('should set logPath to unlog', function () {
+      var fakeWorkouts = [
+      {date: 'Mon Jan 11 2016', checked: true}, 
+      {date: 'Tue Jan 12 2016', checked: true}];
+      var index = 0;
+
+      for(var i = 0; i < fakeWorkouts.length; i++) {
+        fakeWorkouts[i].checked = false;
+        index = i;
+      }
+      var response = service.setlogPath(index, fakeWorkouts);
+      expect(response).toBe('unlog');
+    });
+
+    //Test workout logToggle()
+    // when logPath = 'log'
+    // it('should toggle a workout log on and off', function () {
+    //   var date = 'Thu Jan 14 2016'
+    //   var dateConverted = new Date(date);
+    //   var logPath = 'log';
+
+    //  // $http.post('/api/users/' + logPath, {date: convertedDate})
+
+    //   $httpBackend.whenPOST(/api\/users\/log$/)
+    //     .respond(function (method, url) {
+    //       if (logPath === 'log') {
+    //         return [200, dateConverted];
+    //       } else {
+    //         return [404, { message: 'Not Found'}];
+    //       }
+    //     });
+    //   service.logToggle(logPath, date).then(handler.success, handler.error);
     //   $httpBackend.flush();
-      
-    //   // tests the results
-    //   expect(handler.success).toHaveBeenCalled();
+
+    //   //test the results
+    //   expect(dateConverted).toBe('Thu Jan 14 2016 00:00:00 GMT-0800 (PST)');
     //   expect(handler.error).not.toHaveBeenCalled();
     //   expect(errorMessage).toBeUndefined();
     // });
 
-    // //Test for logWorkout() Fail
-    // it('should NOT let a user log workout', function () {
-    //   id = 'fakeid';
-    //   $httpBackend.whenPOST(/log/)
-    //     .respond (respondToHttp);
-
-    //   service.logWorkout().then(handler.success, handler.error);
-    //   $httpBackend.flush();
-
-    //   //test the results
-    //   expect(handler.error).toHaveBeenCalled();
-    //   expect(handler.success).not.toHaveBeenCalled();
-    //   expect(errorMessage).toBeDefined();
-    // });
-
-    // //Test for unlogWorkout()
-    // it('should let a user unlog workout', function () {
-    //   id = '5669e40077cc88a84bbb5c13';      
-    //   $httpBackend.whenPOST(/unlog/)
-    //     .respond(respondToHttp);
-
-    //   service.unlogWorkout().then(handler.success, handler.error);
-    //   $httpBackend.flush();
-      
-    //   // tests the results
-    //   expect(handler.success).toHaveBeenCalled();
-    //   expect(handler.error).not.toHaveBeenCalled();
-    //   expect(errorMessage).toBeDefined();
-    // });
-
-    // //Test for unlogWorkout() Fail
-    // it('should NOT let a user unlog workout', function () {
-    //   id = 'fakeid';
-    //   $httpBackend.whenPOST(/unlog/)
-    //     .respond (respondToHttp);
-
-    //   service.unlogWorkout().then(handler.success, handler.error);
-    //   $httpBackend.flush();
-
-    //   //test the results
-    //   expect(handler.error).toHaveBeenCalled();
-    //   expect(handler.success).not.toHaveBeenCalled();
-    //   expect(errorMessage).toBeDefined();
-    // });
-
-    function respondToHttp(method, url, params) {
-      var userId = id;
-      if (userId === existingUser._id) {
-        return [200, updatedExerciseUser];
-      } else {
-        return[404, { message: 'Not Found'}];
-      }
-    };
+    //Test readableDates()
+    it('should convert workout log dates into readable format', function () {
+      var exerciseArray = [
+        //In order: Tuesday, Wednesdsay, Thursdsay
+        '2016-01-12T08:00:00.000Z',
+        '2016-01-13T08:00:00.000Z',
+        '2016-01-14T08:00:00.000Z'
+      ];
+      var response = service.readableDates(exerciseArray, -1);
+      //It's expected to be Thursday because of allDates.reverse()
+      expect(response[0].date).toBe("Thu Jan 14 2016");
+    });
 
   });
 })();
