@@ -72,6 +72,45 @@ body {
   background: -moz-linear-gradient(top, white 0%, white 55%, #2E4272 130%);
 }
 
+.loglist {
+  margin: auto;
+  padding: 10px 0 10px 60px;
+  background-color: white;
+
+  /* outer shadows  (note the rgba is red, green, blue, alpha) */
+  -webkit-box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 0px 1px 6px rgba(23, 69, 88, .5);
+
+  /* rounded corners */
+  -webkit-border-radius: 12px;
+  -moz-border-radius: 7px;
+  border-radius: 7px;
+
+  /* gradients */
+  background: -webkit-gradient(linear, left top, left bottom,
+  color-stop(0%, white), color-stop(15%, white), color-stop(100%, #2E4272));
+  background: -moz-linear-gradient(top, white 0%, white 55%, #2E4272 130%);
+}
+
+.logworkout {
+  padding: 10px 0 10px 0;
+  background-color: white;
+
+  /* outer shadows  (note the rgba is red, green, blue, alpha) */
+  -webkit-box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 0px 1px 6px rgba(23, 69, 88, .5);
+
+  /* rounded corners */
+  -webkit-border-radius: 12px;
+  -moz-border-radius: 7px;
+  border-radius: 7px;
+
+  /* gradients */
+  background: -webkit-gradient(linear, left top, left bottom,
+  color-stop(0%, white), color-stop(15%, white), color-stop(100%, #2E4272));
+  background: -moz-linear-gradient(top, white 0%, white 55%, #2E4272 130%);
+}
+
 .groupimage {
   margin-top: 0.5em;
 }
