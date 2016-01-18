@@ -16,10 +16,13 @@ angular.module('eggercise')
       showWorkout: function () {
         WorkoutService.showWorkout()
           .then(function (data) {
+            var logsInDays = [];
             vm.user = data;
             //vm.numberOfDays is number of days between user's groups' earliest log date and current date
             vm.numberOfDays = WorkoutService.loggableDays(data._groups, data.joinDate);
-            vm.allDates = WorkoutService.readableDates(vm.user.exercises, vm.numberOfDays);
+            // logsInDays is an array that stores workout logs in number of days since Jan 1, 1970
+            logsInDays = WorkoutService.convertToDays(vm.user.exercises);
+            vm.allDates = WorkoutService.readableLogDates(logsInDays, vm.numberOfDays);
             $location.path('/log');
           })
           .catch(function (err) {

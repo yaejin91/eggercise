@@ -36,12 +36,12 @@
       });
     }));
 
-    it('should define vm', function() {
-      expect(controller).toBeDefined();
-      expect(controller.group).toBeDefined();
-      expect(controller.startdate).toBeDefined();
-      expect(controller.enddate).toBeDefined();
-    });
+    // it('should define vm', function() {
+    //   expect(controller).toBeDefined();
+    //   expect(controller.group).toBeDefined();
+    //   expect(controller.startdate).toBeDefined();
+    //   expect(controller.enddate).toBeDefined();
+    // });
 
     // it('should show one group', function() {
     //   // Test a successful call to the GroupService
