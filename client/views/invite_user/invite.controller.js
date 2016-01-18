@@ -32,7 +32,6 @@ angular.module('eggercise')
       }
     }
 
-
     //Show all exisiting groups in database
     vm.createInvite = function () {
       vm.formData._group = $routeParams.group_id;
