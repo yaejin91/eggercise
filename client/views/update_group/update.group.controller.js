@@ -18,22 +18,15 @@ angular.module('eggercise')
           $event.preventDefault();
           $event.stopPropagation(); // This is the magic
       }
-      if(whichDate === 'start'){
+      if (whichDate === 'start') {
         this.startDatePickerIsOpen = true;
-      }else if(whichDate === 'end'){
+      } else if (whichDate === 'end') {
         this.endDatePickerIsOpen = true;
       }
-
-      };
-
-
-
-
+    };
 
     angular.extend(vm, {
-
       name: 'UpdateGroupCtrl'
-
     });
 
     //get update group
@@ -43,7 +36,6 @@ angular.module('eggercise')
           vm.group = data;
           vm.formData.start = new Date(vm.group.start);
           vm.formData.end = new Date(vm.group.end);
-
         })
         .catch(function (error) {
           vm.error = error;
@@ -73,5 +65,4 @@ angular.module('eggercise')
           vm.error = error;
         });
     }
-
   }]);
