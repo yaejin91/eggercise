@@ -1,16 +1,19 @@
 <div class="container">
 <div ng-init="vm.showGroup(vm.group_id)">
   <h1>{{ vm.group.name }}</h1>
+  <div class="col-xs-12">
+    {{vm.group.description}}
+  </div>
   <div class="row">
     <div class="col-xs-12">
       <div class="panel panel-default">
         <div class="panel-body">
-            <div class="col-xs-10">
+            <div class="col-xs-4">
               {{vm.startDate}} to {{vm.endDate}} - ${{vm.group.bet}} Bet
             </div>
 
             <!-- if check to see if user logged in is creator of the group -->
-            <div ng-if="vm.group._creator === vm.authUserId ">
+            <div class="col-xs-4" ng-if="vm.group._creator === vm.authUserId ">
             <!-- Update Group Button -->
                 <a id="update-button" href="/group/updateGroup?group_id={{vm.group._id}}">
                 <button class="btn btn-info">
@@ -28,14 +31,7 @@
   </div>
 
   <div class="row">
-    <div class="col-xs-12">
-      {{vm.group.description}}
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-xs-4">
-      <div class="jumbotron">
+    <div class="col-xs-4 groupdata">
         <div class="row">
           <div class="col-md-12 text-center">
             <div class="days">
@@ -46,11 +42,9 @@
               Days Elapsed
           </div>
         </div>
-      </div>
     </div>
 
-    <div class="col-xs-4">
-      <div class="jumbotron">
+    <div class="col-xs-4 groupdata">
         <div class="row">
           <div class="col-md-12 text-center">
             <div class="days" ng-if="vm.daysDifference>0">
@@ -73,11 +67,9 @@
             </div>
           </div>
         </div>
-      </div>
     </div>
 
-    <div class="col-xs-4">
-      <div class="jumbotron">
+    <div class="col-xs-4 groupdata">
         <div class="row">
           <div class="col-md-12 text-center">
             <div class="days">
@@ -91,7 +83,6 @@
             Owe
           </div>
         </div>
-      </div>
     </div>
   </div>
 
@@ -118,7 +109,7 @@
     <div>
       <div ng-repeat="member in vm.group._members">
         <div>
-          <div class="col-xs-10">{{member.name}}</div>
+          <div class="col-xs-10 memberlist">{{member.name}}</div>
           <div class="col-xs-2" ng-if="member.daysAhead">
             Wins ${{member.memberOwes}}
           </div>
