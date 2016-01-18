@@ -2,7 +2,7 @@
   <div>
     <h1 class="margin-base-vertical">New Group</h1>
   </div>
-  <div class="row pageforms">
+  <div class="row pageforms modifyWidth">
       <form role="form" ng-submit="vm.createGroup()">
         <div class="row">
           <div class="input-group">
@@ -27,7 +27,7 @@
               ng-click="vm.valuationDatePickerOpen()"
               class="form-control"/>
               <span class="input-group-btn">
-                <button type="button" class="btn btn-default" ng-click="vm.valuationDatePickerOpen($event, 'start')">
+                <button type="button" class="btn btn-default form-icon" ng-click="vm.valuationDatePickerOpen($event, 'start')">
                   <i id="start-date-glyph" class="glyphicon glyphicon-calendar"></i>
                 </button>
               </span>
@@ -38,14 +38,14 @@
               <p class="input-group">
               <input ng-model="vm.formData.end" type="text" uib-datepicker-popup="mediumDate" is-open="vm.endDatePickerIsOpen" ng-click="vm.valuationDatePickerOpen()" placehodler="End Date" class="form-control">
               <span class="input-group-btn">
-                <button type="button" class="btn btn-default" ng-click="vm.valuationDatePickerOpen($event, 'end')">
+                <button type="button" class="btn btn-default form-icon" ng-click="vm.valuationDatePickerOpen($event, 'end')">
                   <i class="glyphicon glyphicon-calendar"></i>
                 </button>
               </span>
               </p>
             </div>
             <input type="submit" class="btn btn-primary" value="Create Group">
-            <a href="/group" class="btn btn-default">Cancel</a>
+            <a href="/group" class="btn btn-default" id="cancel-button">Cancel</a>
           </div>
         </div>
       </form>

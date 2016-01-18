@@ -1,11 +1,12 @@
-<div class="container">
+<div class="container" id="modifyWidth">
   <div ui-sortable ng-init="vm.showLogs()">
-      <h2> Current Logs: </h2>
+      <h2> Logged Workouts: </h2>
+      <hr>
       <span id ="noLogs"></span>
       </hr>
       <div ng-repeat="log in vm.logs">
         <p class="loggedDates">{{log}}</p>
       </div>
+      <a ng-click='back()'> Back </a>
   </div>
-  <a ng-click='back()'> Back </a>
 </div>

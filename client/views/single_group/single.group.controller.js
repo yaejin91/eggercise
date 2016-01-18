@@ -14,6 +14,7 @@ angular.module('eggercise')
     vm.daysDifferenceAbsolute;
     vm.owe;
     vm.oweAbsolute;
+    vm.authUserId = SingleGroupService.getUserId();
 
     angular.extend(vm, {
 
