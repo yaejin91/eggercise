@@ -2,15 +2,16 @@
   'use strict';
 
   describe('WorkoutService', function() {
-    var service, $httpBackend, workoutData,handler, errorMessage, $log;
+    var service, DateService, $httpBackend, workoutData,handler, errorMessage, $log;
     
-    // Configure module that contains the controller being tested
+    // Configure module that contains the service being tested
     beforeEach(module('eggercise'));
 
-    beforeEach(inject(function (_$log_, _$httpBackend_, _WorkoutService_) {
+    beforeEach(inject(function (_$log_, _$httpBackend_, _WorkoutService_, _DateService_) {
       $log = _$log_;
       $httpBackend = _$httpBackend_;
       service = _WorkoutService_;
+      DateService = _DateService_;
       workoutData = [];
 
       // Define an object with functions to handle success and error for our API calls
@@ -72,43 +73,43 @@
       expect(response).toBe('unlog');
     });
 
-    //Test workout logToggle()
-    //service.logToggle = function (logPath, date)
-    //when logPath = 'log'
-    // it('should toggle a workout log on and off', function () {
-    //   var date = 'Thu Jan 14 2016'
-    //   var dateConverted = new Date(date);
-    //   var logPath = 'log';
+    //Test workout logToggle() when logPath = 'log'
+    it('should toggle a workout log on and off', function () {
+      var logPath = 'log';
+      var testDate = {date: 'Thu Jan 14 2016', logPath: logPath};
 
-    //   $httpBackend.whenPOST(/log\/(\S+)$/)
-    //     .respond(function (method, url) {
-    //       if (logPath === 'log') {
-    //         return [200, dateConverted];
-    //       } else {
-    //         return [404, { message: 'Not Found'}];
-    //       }
-    //     });
-    //   service.logToggle(logPath, date).then(handler.success, handler.error);
-    //   $httpBackend.flush();
+      $httpBackend.whenPOST(/api\/users\/log$/)
+        .respond(function (method, url) {
+          if (logPath === 'log') {
+            return [200, testDate];
+          } else {
+            return [404, { message: 'Not Found'}];
+          }
+        });
+      service.logToggle(logPath, testDate.date).then(handler.success, handler.error);
+      $httpBackend.flush();
 
-    //   //test the results
-    //   expect(dateConverted).toBe('Thu Jan 14 2016 00:00:00 GMT-0800 (PST)');
-    //   expect(handler.error).not.toHaveBeenCalled();
-    //   expect(errorMessage).toBeUndefined();
-    // });
+      //test the results
+      expect(testDate.date).toBe('Thu Jan 14 2016');
+      expect(testDate.logPath).toBe('log');
+      expect(handler.error).not.toHaveBeenCalled();
+      expect(errorMessage).toBeUndefined();
+    });
 
-    //Test readableDates()
-    it('should convert workout log dates into readable format', function () {
-      var exerciseArray = [
+    //Test convertToDays()
+    //This service converts all log dates to number of days since Jan 1, 1970
+    it('should convert workout log dates into number of Days', function () {
+      var testExerciseArray = [
         //In order: Tuesday, Wednesdsay, Thursdsay
         '2016-01-12T08:00:00.000Z',
         '2016-01-13T08:00:00.000Z',
         '2016-01-14T08:00:00.000Z'
       ];
-      var response = service.readableDates(exerciseArray, -1);
+      var response = service.convertToDays(testExerciseArray);
       //It's expected to be Thursday because of allDates.reverse()
-      expect(response[0].date).toBe("Thu Jan 14 2016");
+      expect(response[0]).toBe(16812);
+      expect(response[1]).toBe(16813);
+      expect(response[2]).toBe(16814);
     });
-
   });
 })();
