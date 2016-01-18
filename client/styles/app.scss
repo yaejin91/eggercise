@@ -8,21 +8,6 @@ body {
   margin-bottom: 60px;
 }
 
-/* Media-Query Landscape phones and down */
-@media (max-width: 480px) { 
-  #changeFontSize{
-    font-size: 1.5em;
-  },
-  .modifyMaxWidth{
-    max-width: 78%;
-    margin-left: 20px;
-  },
-  #modifyWidth{
-    width: 95%;
-  }
-
-}
-
 .landingpage {
   color: white;
   text-align: center;
@@ -148,6 +133,10 @@ body {
   position: absolute;
 }
 
+.form-icon{
+  margin-bottom: 4px;
+}
+
 .margin-base-vertical {
   margin: 40px 0;
   text-align: center;
@@ -221,4 +210,18 @@ body {
   display: none;
   width: 80%;
   margin: 2px;
+}
+
+/* Media-Query Landscape phones and down */
+@media (max-width: 480px) { 
+  #changeFontSize{
+    font-size: 1.5em;
+  }
+
+  .modifyWidth{
+    width: 80%;
+    margin-right: auto;
+    margin-left: auto;
+
+  }
 }
