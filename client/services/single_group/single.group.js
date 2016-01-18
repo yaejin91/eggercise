@@ -4,14 +4,20 @@ angular.module('eggercise')
   .service('SingleGroupService', ['DateService', 'Auth', function (DateService, Auth) {
     var service = {};
 
+    service.getUserId = function(){
+      var authUserId = Auth.getUser()._id;
+      return authUserId;
+    }
+
     service.elapsedDay = function (startDate, endDate) {
       var daysElapsed;
-      var todayDate = new Date();
+      var todayDate = DateService.dateToMilli(new Date());
+      var convertedStartDate = DateService.dateToMilli(startDate);
 
-      if (todayDate < startDate) {
+      if (todayDate < convertedStartDate) {
         daysElapsed = 0;
       } else {
-        daysElapsed = DateService.daysBetween(startDate, todayDate)
+        daysElapsed = DateService.daysBetween(convertedStartDate, todayDate)
       }
       return daysElapsed;
     };
