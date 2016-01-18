@@ -1,6 +1,7 @@
-<div class="container">
-  <div class="pageforms loglist" ng-init="vm.showLogs()">
-      <h2> Current Logs: </h2>
+<div class="container" id="modifyWidth">
+  <div ui-sortable ng-init="vm.showLogs()">
+      <h2> Logged Workouts: </h2>
+      <hr>
       <span id ="noLogs"></span>
       </hr>
       <div ng-repeat="log in vm.logs">
