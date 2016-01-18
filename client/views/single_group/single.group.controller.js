@@ -16,7 +16,6 @@ angular.module('eggercise')
     vm.oweAbsolute;
     vm.authUserId = SingleGroupService.getUserId();
 
-
     angular.extend(vm, {
 
       name: 'ShowGroupCtrl',
