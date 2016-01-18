@@ -38,18 +38,11 @@ exports.create = function (req, res) {
     status: false
   });
 
-  console.log('This is the req.body: ', req.body);
-  console.log('This is the creatorId: ', creatorId);
-  console.log('This is the groupId: ', groupId);
-  console.log('This is the groupCreator: ', groupCreator);
-  console.log('This is the invite: ', invite);
   invite.save(function (error, savedInvite, groupId) {
     if (savedInvite) {
       var subject = "You've been invited to join eggercise!"
       var emailText = generateInvitation(invitedUserName, groupCreatorName, savedInvite._id);
       var emailTo = savedInvite.email;
-
-      console.log('This is the emailText: ', emailText);
 
       EmailService.send(emailTo, subject, emailText, function(err, json) {
         if (json) {
