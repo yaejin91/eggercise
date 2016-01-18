@@ -55,9 +55,9 @@
             </div>
             <div class="col-md-12 text-center" ng-if="vm.daysDifference==1" >
               Day Ahead
-            </div>
-            <div class="days" ng-if="vm.daysDifference<0">
-              {{vm.daysDifferenceAbsolute}}
+            </div> 
+            <div class="col-md-12 text-center" ng-if="vm.daysDifference==0">
+              0 Days Ahead/Behind
             </div>
             <div class="col-md-12 text-center" ng-if="vm.daysDifference<-1">
               Days Behind
@@ -81,6 +81,9 @@
           </div>
           <div class="col-md-12 text-center" ng-if="vm.owe<0">
             Owe
+          </div>
+          <div class="col-md-12 text-center" ng-if="vm.owe==0">
+            Owe/Owed
           </div>
         </div>
     </div>
