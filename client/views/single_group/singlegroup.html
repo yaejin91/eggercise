@@ -1,16 +1,19 @@
 <div class="container">
 <div ng-init="vm.showGroup(vm.group_id)">
   <h1>{{ vm.group.name }}</h1>
+  <div class="col-xs-12">
+    {{vm.group.description}}
+  </div>
   <div class="row">
     <div class="col-xs-12">
       <div class="panel panel-default">
         <div class="panel-body">
-            <div class="col-xs-10">
-              {{vm.startdate}} to {{vm.enddate}} - ${{vm.group.bet}} Bet
+            <div id="group-info">
+              {{vm.startDate}} to {{vm.endDate}} - ${{vm.group.bet}} Bet
             </div>
 
             <!-- if check to see if user logged in is creator of the group -->
-            <div ng-if="vm.group._creator === vm.authUserId ">
+            <div class="col-xs-4" ng-if="vm.group._creator === vm.authUserId ">
             <!-- Update Group Button -->
                 <a id="update-button" href="/group/updateGroup?group_id={{vm.group._id}}">
                 <button class="btn btn-info">
@@ -28,14 +31,7 @@
   </div>
 
   <div class="row">
-    <div class="col-xs-12">
-      {{vm.group.description}}
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-xs-4">
-      <div class="jumbotron">
+    <div class="col-xs-4 groupdata">
         <div class="row">
           <div class="col-md-12 text-center">
             <div class="days" id="changeFontSize">
@@ -46,52 +42,53 @@
               Days Elapsed
           </div>
         </div>
-      </div>
     </div>
 
-   <!-- <div ng-init="vm.moneyOwed(vm.group_id)">  -->
-    <div class="col-xs-4">
-      <div class="jumbotron">
+    <div class="col-xs-4 groupdata">
         <div class="row">
           <div class="col-md-12 text-center">
-            <div class="days" ng-if="vm.daysAhead" id="changeFontSize" >
-              {{vm.daysAhead}}
+            <div class="days" ng-if="vm.daysDifference>0">
+              {{vm.daysDifferenceAbsolute}}
             </div>
-            <div class="col-md-12 text-center" ng-if="vm.daysAhead">
+            <div class="col-md-12 text-center" ng-if="vm.daysDifference>1">
               Days Ahead
             </div>
-            <div class="days" ng-if="vm.daysBehind" id="changeFontSize">
-              {{vm.daysBehind}}
+            <div class="col-md-12 text-center" ng-if="vm.daysDifference==1" >
+              Day Ahead
             </div>
-            <div class="col-md-12 text-center" ng-if="vm.daysBehind">
+            <div class="days" ng-if="vm.daysDifference<0">
+              {{vm.daysDifferenceAbsolute}}
+            </div>
+            <div class="col-md-12 text-center" ng-if="vm.daysDifference<-1">
               Days Behind
+            </div>
+            <div class="col-md-12 text-center" ng-if="vm.daysDifference==-1">
+              Day Behind
             </div>
           </div>
         </div>
-      </div>
     </div>
-  <!-- </div> -->
 
-    <div class="col-xs-4">
-      <div class="jumbotron">
+    <div class="col-xs-4 groupdata">
         <div class="row">
           <div class="col-md-12 text-center">
             <div class="days" id="changeFontSize">
-              ${{vm.youOwe}}
+              ${{vm.oweAbsolute}}
             </div>
           </div>
-          <div class="col-md-12 text-center">
+          <div class="col-md-12 text-center" ng-if="vm.owe>0">
             Owed
           </div>
+          <div class="col-md-12 text-center" ng-if="vm.owe<0">
+            Owe
+          </div>
         </div>
-      </div>
     </div>
   </div>
 
   <h3>Days Exercised</h3>
   <hr>
-  <!-- <div class="row" ng-repeat="member in vm.members | orderBy: 'member.exercises.length' : true"> -->
-  <div class="row" ng-repeat="member in vm.members | orderBy: 'member.exercises.length' : true">
+  <div class="row" ng-repeat="member in vm.membersArray | orderBy: 'member.exercises.length' : true">
     <div class="col-xs-10" >
       <div>
         <p>
@@ -102,7 +99,7 @@
       </div>
     </div>
     <div class="col-xs-2">
-      <p>{{member.exercises.length}}</p>
+      <p>{{member.validExercises.length}}</p>
     </div>
   </div>
 
@@ -112,7 +109,7 @@
     <div>
       <div ng-repeat="member in vm.group._members">
         <div>
-          <div class="col-xs-10">{{member.name}}</div>
+          <div class="col-xs-10 memberlist">{{member.name}}</div>
           <div class="col-xs-2" ng-if="member.daysAhead">
             Wins ${{member.memberOwes}}
           </div>
