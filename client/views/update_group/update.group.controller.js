@@ -9,7 +9,6 @@ angular.module('eggercise')
     vm.groups = [];
     vm.group_id = $routeParams.group_id;
 
-
     vm.startDatePickerIsOpen = false;
     vm.endDatePickerIsOpen = false;
 
