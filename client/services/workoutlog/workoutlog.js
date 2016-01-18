@@ -62,11 +62,8 @@ angular.module('eggercise')
       return numberOfDays;
     };
 
-    service.readableDates = function(exerciseArray, days) {
-      var todayDate = DateService.millisToDays(Date.now());
-      var conversionConst = 1000*60*60*24;
+    service.readableDates = function(exerciseArray) {
       var convertedExercises = [];
-      var allDates = [];
 
       for(var i=0; i<exerciseArray.length; i++) {
         //This is for cutting the exercise array elements (workout dates) in to a more readable format
@@ -74,16 +71,23 @@ angular.module('eggercise')
         //This converts the user's exercise array into number of days (number of days since 1970 Jan 1st, integer)
         convertedExercises[i] = DateService.millisToDays(exerciseArray[i]);
       }
+      return convertedExercises;
+    };
+
+    service.availableLogs = function(convertedArray, days) {
+      var allDates = [];
+      var todayDate = DateService.millisToDays(Date.now());
+      var conversionConst = 1000*60*60*24;
 
       for(var j=days+1; j>=0; j--) {
         allDates.push({
           //todayDate - j + 1 is for checking the dates from now to firstStartDate 
           date: (new Date((todayDate - j + 1)*conversionConst)+'').substring(0,15),
-          checked: (convertedExercises.indexOf(todayDate - j) !== -1)
+          checked: (convertedArray.indexOf(todayDate - j) !== -1)
         });
       }
       return allDates.reverse();
-    }
+    };
 
     return service;
   }]);
