@@ -17,20 +17,6 @@ angular.module('eggercise')
       return daysElapsed;
     };
 
-    service.membersExercises = function (membersArray) {
-      var allMembersExercises = [];
-
-      for (var i = 0; i < membersArray.length; i++) {
-        for (var j = 0; j < membersArray[i].exercises.length; j++) {
-          if (membersArray[i].exercises[j] === 0) {
-            j++;
-          }
-          allMembersExercises.push(membersArray[i].exercises[j]);
-        }
-      }
-      return allMembersExercises;
-    };
-
     service.membersValidExercises = function (membersArray, startDate, endDate) {
       var startDate_ms = DateService.dateToMilli(startDate);
       var endDate_ms = DateService.dateToMilli(endDate);
