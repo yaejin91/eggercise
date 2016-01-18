@@ -8,6 +8,21 @@ body {
   margin-bottom: 60px;
 }
 
+/* Media-Query Landscape phones and down */
+@media (max-width: 480px) { 
+  #changeFontSize{
+    font-size: 1.5em;
+  },
+  .modifyMaxWidth{
+    max-width: 78%;
+    margin-left: 20px;
+  },
+  #modifyWidth{
+    width: 95%;
+  }
+
+}
+
 .landingpage {
   color: white;
   text-align: center;
@@ -129,17 +144,6 @@ body {
   margin-bottom: 4px !important;
 }
 
-
-/* Landscape phones and down */
-@media (max-width: 480px) { 
-  #changeFontSize{
-    font-size: 1.5em;
-  },
-  .modifyMaxWidth{
-    max-width: 78%;
-    margin-left: 20px;
-  }
-}
 
 
 .large-glyph {
