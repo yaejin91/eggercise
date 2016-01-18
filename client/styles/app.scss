@@ -5,18 +5,84 @@ html {
 
 body {
   font-family: sans-serif;
-  margin: 0 0 60px;
+  margin-bottom: 60px;
 }
-.loggedDates{
-  font-size: 1.15em;
 
+.landingpage {
+  color: white;
+  text-align: center;
+  height: 400px;
+  background: url('../../assets/images/eggerciseimage.jpg') no-repeat center;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+  -o-background-size: cover;
 }
+
+.signupbtn {
+  background-color: #162955;
+}
+
+.pageforms {
+  margin: auto;
+  width: 33%;
+}
+
+.groupdata {
+  margin: 10px;
+  height: 120px;
+  width: 300px;
+  padding: 20px;
+  background-color: white;
+
+  /* outer shadows  (note the rgba is red, green, blue, alpha) */
+  -webkit-box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 0px 1px 6px rgba(23, 69, 88, .5);
+
+  /* rounded corners */
+  -webkit-border-radius: 12px;
+  -moz-border-radius: 7px;
+  border-radius: 7px;
+
+  /* gradients */
+  background: -webkit-gradient(linear, left top, left bottom,
+  color-stop(0%, white), color-stop(15%, white), color-stop(100%, #2E4272));
+  background: -moz-linear-gradient(top, white 0%, white 55%, #2E4272 130%);
+}
+
+.logadd {
+  margin: 10px;
+  height: 80px;
+  // width: 300px;
+  // padding: 20px;
+  background-color: white;
+
+  /* outer shadows  (note the rgba is red, green, blue, alpha) */
+  -webkit-box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 0px 1px 6px rgba(23, 69, 88, .5);
+
+  /* rounded corners */
+  -webkit-border-radius: 12px;
+  -moz-border-radius: 7px;
+  border-radius: 7px;
+
+  /* gradients */
+  background: -webkit-gradient(linear, left top, left bottom,
+  color-stop(0%, white), color-stop(15%, white), color-stop(100%, #2E4272));
+  background: -moz-linear-gradient(top, white 0%, white 55%, #2E4272 130%);
+}
+
+.groupimage {
+  margin-top: 0.5em;
+}
+
 .footer {
+  padding-top: 2px;
   bottom: 0;
   margin-top: 2px;
   width: 100%;
   height: 60px;
-  background: #222222;
+  background: #162955;
   text-align: center;
   color: #337ab7;
   position: absolute;
@@ -27,18 +93,22 @@ body {
   text-align: center;
 }
 
+.navbar {
+  background-color: #162955;
+  color: white;
+}
+
+.navbar > li > a {
+  color: #000;
+}
+
 .nav-tabs {
   border-bottom: none;
 }
 
-#noLogs{
-  color: tomato;
-  font-weight: bold;
-  display: none;
-  width: 80%;
-  margin: 2px;
-}
-
+// .landtext {
+//   padding-top: 40px;
+// }
 
 #slides_control > div {
   height: 700px;
@@ -60,11 +130,12 @@ body {
 }
 
 .large-glyph {
-  font-size: 500%;
+  color: black;
+  font-size: 200%;
 }
 
 .glyph-title {
-  font-size: 200%;
+  color: black;
 }
 
 .control-button {
@@ -80,6 +151,14 @@ body {
 .days {
   font-weight: bold;
   font-size: 300%;
+}
+
+.memberlist {
+  margin-bottom: 20px;
+}
+
+.workoutlog {
+  text-align: center;
 }
 
 #sentInvite {
