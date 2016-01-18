@@ -28,11 +28,13 @@ exports.create = function (req, res) {
   var groupCreator = req.user;
 
   var invite = new Invite ({
+    name: req.body.name,
     email: req.body.email,
     _group: groupId,
     status: false
   });
 
+  console.log('This is the req.body: ', req.body);
   console.log('This is the creatorId: ', creatorId);
   console.log('This is the groupId: ', groupId);
   console.log('This is the groupCreator: ', groupCreator);
