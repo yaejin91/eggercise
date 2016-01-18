@@ -31,22 +31,29 @@
 
     //Test service elapsedDay() 
     it('should return number of days elapsed between two dates', function () {
-      var groupStartDate = new Date();
-      var groupEndDate = new Date('2016-01-31T08:00:00.000Z');
-      var numberOfDays = service.elapsedDay(groupStartDate, groupEndDate)
+      //Change the date two weeks ago into milliseconds
+      var groupStartDate = DateService.dateToMilli(new Date() - 1209600000);
+      //Set group end date to today (in milliseconds)
+      var groupEndDate = DateService.dateToMilli(new Date());
+      var numberOfDays = service.elapsedDay(groupStartDate, groupEndDate);
         
-      expect(numberOfDays).toBeDefined();
+      expect(numberOfDays).toBe(14);
     });
 
     //Test service elapsedDay() when group start date is later than today's date
     it('should return 0 for number of days elapsed', function () {
-      var todayDate = new Date();
-      var groupStartDate = new Date('2017-01-01T08:00:00.000Z');
-      var groupEndDate = new Date('2017-01-31T08:00:00.000Z');
+      var todayDate = DateService.dateToMilli(new Date());
+      //set group start date to 2 weeks from today
+      var groupStartDate = todayDate + 1209600000;
+      //set group end date to 2 weeks from group start date
+      var groupEndDate = groupStartDate + 1209600000;
       var noDaysElapsed = service.elapsedDay(groupStartDate, groupEndDate)
     
-        expect(noDaysElapsed).toBe(0);
+      expect(noDaysElapsed).toBe(0);
     });
+
+    //Test membersExercises()
+    // it('should ')
 
     
   })
