@@ -19,7 +19,7 @@ angular.module('eggercise')
               $location.path($scope.returnToPath);
               $scope.returnToPath = null;
             } else {
-              $location.path('/');
+              $location.path('/group');
             }
           })
           .catch(function (err) {
