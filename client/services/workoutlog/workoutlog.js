@@ -62,7 +62,7 @@ angular.module('eggercise')
       return numberOfDays;
     };
 
-    service.readableDates = function(exerciseArray) {
+    service.convertToDays = function(exerciseArray) {
       var convertedExercises = [];
 
       for(var i=0; i<exerciseArray.length; i++) {
@@ -74,7 +74,7 @@ angular.module('eggercise')
       return convertedExercises;
     };
 
-    service.availableLogs = function(convertedArray, days) {
+    service.readableLogDates = function(convertedArray, days) {
       var allDates = [];
       var todayDate = DateService.millisToDays(Date.now());
       var conversionConst = 1000*60*60*24;

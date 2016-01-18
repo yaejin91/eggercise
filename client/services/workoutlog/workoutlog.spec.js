@@ -2,7 +2,7 @@
   'use strict';
 
   describe('WorkoutService', function() {
-    var service, dateService, $httpBackend, workoutData,handler, errorMessage, $log;
+    var service, DateService, $httpBackend, workoutData,handler, errorMessage, $log;
     
     // Configure module that contains the service being tested
     beforeEach(module('eggercise'));
@@ -11,7 +11,7 @@
       $log = _$log_;
       $httpBackend = _$httpBackend_;
       service = _WorkoutService_;
-      dateService = _DateService_;
+      DateService = _DateService_;
       workoutData = [];
 
       // Define an object with functions to handle success and error for our API calls
@@ -96,19 +96,20 @@
       expect(errorMessage).toBeUndefined();
     });
 
-    //Test readableDates()
-    fit('should convert workout log dates into readable format', function () {
+    //Test convertToDays()
+    //This service converts all log dates to number of days since Jan 1, 1970
+    it('should convert workout log dates into number of Days', function () {
       var testExerciseArray = [
         //In order: Tuesday, Wednesdsay, Thursdsay
         '2016-01-12T08:00:00.000Z',
         '2016-01-13T08:00:00.000Z',
         '2016-01-14T08:00:00.000Z'
       ];
-      var response = service.readableDates(testExerciseArray, -1);
-      console.log(response);
+      var response = service.convertToDays(testExerciseArray);
       //It's expected to be Thursday because of allDates.reverse()
-      expect(response[0].date).toBe("Thu Jan 14 2016");
+      expect(response[0]).toBe(16812);
+      expect(response[1]).toBe(16813);
+      expect(response[2]).toBe(16814);
     });
-
   });
 })();
