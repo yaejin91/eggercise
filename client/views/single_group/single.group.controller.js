@@ -23,7 +23,6 @@ angular.module('eggercise')
       showGroup: function (id) {
         GroupService.showGroup(id)
           .then(function (data) {
-            console.log('data.start: ', data.start);
             vm.startDate = DateService.getFullDate(data.start);
             vm.endDate = DateService.getFullDate(data.end);
             vm.totaldays = DateService.daysBetween(data.start, data.end);
