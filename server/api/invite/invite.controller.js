@@ -25,7 +25,6 @@ function generateInvitation (id) {
 exports.create = function (req, res) {
   var creatorId = req.user._id;
   var groupId = req.body._group;
-
   var groupCreator = req.user;
 
   var invite = new Invite ({
@@ -33,7 +32,12 @@ exports.create = function (req, res) {
     _group: groupId,
     status: false
   });
-  invite.save(function (error, savedInvite) {
+
+  console.log('This is the creatorId: ', creatorId);
+  console.log('This is the groupId: ', groupId);
+  console.log('This is the groupCreator: ', groupCreator);
+  console.log('This is the invite: ', invite);
+  invite.save(function (error, savedInvite, groupId) {
     if (savedInvite) {
       var subject = "You've been invited to join eggercise!"
       var emailText = generateInvitation(savedInvite._id);

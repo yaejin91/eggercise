@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('eggercise')
-  .controller('InviteCtrl', ['$location', '$log', '$routeParams', 'InviteService', 'toasty', 'GroupService', function ($location, $log, $routeParams, InviteService, toasty, GroupService) {
+  .controller('InviteCtrl', ['$location', '$log', '$routeParams', '$window', 'InviteService', 'toasty', 'GroupService', function ($location, $log, $routeParams, $window, InviteService, toasty, GroupService) {
 
     var vm = this;
     vm.formData = {};
@@ -48,7 +48,6 @@ angular.module('eggercise')
         console.log('This is the error: ', error);
         console.log('This was the user input: ', vm.formData.email);
         vm.flashMessage('error', vm.formData.email)
-        $location.path('/group/show/vm.formData._group');
       })
     }
   }]);
