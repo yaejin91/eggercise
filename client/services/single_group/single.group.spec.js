@@ -52,8 +52,11 @@
       expect(noDaysElapsed).toBe(0);
     });
 
-    //Test membersExercises()
-    // it('should ')
+    //Test membersValidExercises()
+    //when members' exercises are within startDate and endDate
+    // it('should add members exercises into validExercises array', function () {
+    //   var groupStartDate = DateService.dateToMilli(new Date() - 1209600000);
+    // })
 
     
   })
