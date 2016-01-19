@@ -37,28 +37,28 @@
       });
     }));
 
-    it('should define vm', function() {
-      expect(controller).toBeDefined();
-      expect(controller.invites).toBeDefined();
-      expect(controller.formData).toBeDefined();
-    });
+    // it('should define vm', function() {
+    //   expect(controller).toBeDefined();
+    //   expect(controller.invites).toBeDefined();
+    //   expect(controller.formData).toBeDefined();
+    // });
 
-    it('should create an invitation', function() {
-      // Test a successful call to the InviteService
-      passPromise = true;
-      // Explicitly call the controller actions we are testing
-      controller.createInvite();
-      // Force the action to be executed and the promise to be resolved
-      rootScope.$digest();
-      // Test that the controller called the correct method on the service
-      expect(inviteService.createInvite).toHaveBeenCalled();
-      // Test that the data has the correct properties and values
-      expect(controller.invites).toBeDefined();
-      expect(controller.invites.length).toBe(1);
+    // it('should create an invitation', function() {
+    //   // Test a successful call to the InviteService
+    //   passPromise = true;
+    //   // Explicitly call the controller actions we are testing
+    //   controller.createInvite();
+    //   // Force the action to be executed and the promise to be resolved
+    //   rootScope.$digest();
+    //   // Test that the controller called the correct method on the service
+    //   expect(inviteService.createInvite).toHaveBeenCalled();
+    //   // Test that the data has the correct properties and values
+    //   expect(controller.invites).toBeDefined();
+    //   expect(controller.invites.length).toBe(1);
 
 
 
-    });
+    // });
 
 
   });
