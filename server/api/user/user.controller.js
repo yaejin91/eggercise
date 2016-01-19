@@ -1,7 +1,7 @@
 'use strict';
 
 var _ = require('lodash'),
-  mongoose = require('mongoose');
+mongoose = require('mongoose');
 
 var authService = require('../../auth/auth.service');
 var User = require('./user.model');
@@ -122,7 +122,6 @@ exports.unlogWorkout = function (req, res) {
 };
 
 
-
 /**
  * Show each members logs when clicked on a member.
  *
@@ -141,6 +140,7 @@ exports.showLogs = function (req, res) {
     })
   };
 
+
 /**
  * Remove a member from a group as a group creator
  *
@@ -158,6 +158,5 @@ exports.delete = function (req, res){
     });
   });
 }
-
 
 

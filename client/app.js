@@ -7,9 +7,9 @@ angular.module('eggercise', [
   'ngSanitize',
   'ui.bootstrap',
   'ngAnimate',
+  'angular-toasty'
 ])
   .config(function ($routeProvider, $locationProvider, $httpProvider) {
-
     $routeProvider
       .otherwise({
         redirectTo: '/'
@@ -39,12 +39,7 @@ angular.module('eggercise', [
           $cookieStore.remove('token');
           return $q.reject(response);
         }
-        else {
-          $location.path('/');
-          return $q.reject(response);
-        }
       }
-
     };
   })
   .run(function ($rootScope, $location, Auth) {
