@@ -101,4 +101,27 @@ angular.module('eggercise')
       return _user;
     };
 
+    this.getUserNow = function () {
+      var deferred = $q.defer();
+    
+      if($cookieStore.get('token')){
+        $http.get('/api/users/me')
+          .success(function (res) {
+            deferred.resolve(res);
+          })
+          .error(function (error) {
+            deferred.reject('Error: ',  error);
+            console.log('error');
+          });
+          return deferred.promise;
+      }else{
+        deferred.resolve();
+      }
+      return deferred.promise;
+    };
+
+
+
+
+
   });
