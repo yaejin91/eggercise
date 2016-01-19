@@ -38,12 +38,8 @@ angular.module('eggercise', [
           $location.path('/login');
           $cookieStore.remove('token');
           return $q.reject(response);
-        } else {
-          $location.path('/');
-          return $q.reject(response);
         }
       }
-
     };
   })
   .run(function ($rootScope, $location, Auth) {
