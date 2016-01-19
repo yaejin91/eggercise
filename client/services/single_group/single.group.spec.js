@@ -29,6 +29,36 @@
       spyOn(handler, 'error').and.callThrough();
     }));
 
+    //TODO: Make sure to change all these dates so that they are relative to current date
+    //The dates below are UTC format.
+    var leaderExercises = [
+      '2016-01-12T08:00:00.000Z',
+      '2016-01-13T08:00:00.000Z',
+      '2016-01-14T08:00:00.000Z',
+      '2016-01-15T08:00:00.000Z',
+      '2016-01-16T08:00:00.000Z'
+    ];
+    var runnerUpExercises = [
+      '2016-01-13T08:00:00.000Z',
+      '2015-01-14T08:00:00.000Z',
+      '2016-01-15T08:00:00.000Z',
+    ];
+    
+    var fakeMemberArray = [
+      {
+        name: 'runnerUpPotato', 
+        execises: runnerUpExercises, 
+        validExercises: runnerUpExercises,
+        email: 'runnerUp@email.com'
+      },
+      {
+        name: 'leaderPotato', 
+        exercises: leaderExercises, 
+        validExercises: leaderExercises,
+        email: 'leader@email.com'
+      }
+    ];
+
     //Test service elapsedDay() 
     it('should return number of days elapsed between two dates', function () {
       //Change the date two weeks ago into milliseconds
@@ -74,14 +104,30 @@
       var groupStartDate = DateService.dateToMilli(new Date()) - 1209600000;
       var groupEndDate = DateService.dateToMilli(new Date()) + 1209600000;
       var exerciseDates = [
-        '2015-01-14T08:00:00.000Z',
+        '2013-01-14T08:00:00.000Z',
         '2016-01-15T08:00:00.000Z',
         '2016-01-16T08:00:00.000Z'
       ];
-      var fakeMemberArray = [{name: 'potato', exercises: exerciseDates}];
+      var fakeMember = [{name: 'potato', exercises: exerciseDates}];
 
-      var response = service.membersValidExercises(fakeMemberArray, groupStartDate, groupEndDate);
+      var response = service.membersValidExercises(fakeMember, groupStartDate, groupEndDate);
+      expect(response[0].validExercises).toBeDefined();
       expect(response[0].validExercises.length).toBe(2);
+    });
+
+    //Test assignLeader()
+    //The first element of the returned array should always be the leader object.
+    //The second element of the returned array should always be the runnerUp object.
+    it('should assign a leader', function () {
+      var groupStartDate = DateService.dateToMilli(new Date()) - 1209600000;
+      var groupEndDate = DateService.dateToMilli(new Date()) + 1209600000;
+
+      var response = service.assignLeader(fakeMemberArray, groupStartDate, groupEndDate);
+
+      expect(response[0].exercises).toBe(5);
+      expect(response[0].email).toBe('leader@email.com');
+      expect(response[1].exercises).toBe(3);
+      expect(response[1].email).toBe('runnerUp@email.com');
     });
     
   })
