@@ -155,12 +155,3 @@ exports.showGroupLeaderboard = function (req, res){
 
 
 
-
-//show total # of exercises of each member in that group
-// exports.exercisesCount = function (req, res) {
-
-// })
-
-
-
-
