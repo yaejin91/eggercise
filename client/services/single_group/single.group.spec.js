@@ -29,6 +29,7 @@
       spyOn(handler, 'error').and.callThrough();
     }));
 
+
     //Test service elapsedDay() 
     it('should return number of days elapsed between two dates', function () {
       //Change the date two weeks ago into milliseconds
@@ -54,9 +55,21 @@
 
     //Test membersValidExercises()
     //when members' exercises are within startDate and endDate
-    // it('should add members exercises into validExercises array', function () {
-    //   var groupStartDate = DateService.dateToMilli(new Date() - 1209600000);
-    // })
+    fit('should add members exercises into validExercises array', function () {
+      var groupStartDate = DateService.dateToMilli(new Date()) - 1209600000;
+      var groupEndDate = DateService.dateToMilli(new Date()) + 1209600000;
+      var exerciseDates = [
+        '2016-01-14T08:00:00.000Z',
+        '2016-01-15T08:00:00.000Z',
+        '2016-01-16T08:00:00.000Z'
+      ];
+      var fakeMemberArray = [{name: 'potato', exercises: exerciseDates}];
+
+      var response = service.membersValidExercises(fakeMemberArray, groupStartDate, groupEndDate);
+      console.log(response);
+      expect(response[0].validExercises).toBeDefined();
+      
+    });
 
     
   })
