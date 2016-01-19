@@ -116,11 +116,7 @@ describe('User', function() {
       });
     });
 
-    //Test for showing user's workout dates
-    // it('should show all exercise dates', function (done) {
-      
-    // })
-
+  
     //Test for logging an exercise
     it('should log an exercise', function (done) {
       var newDate = new Date('12-12-2015').toString();
@@ -215,10 +211,14 @@ describe('User', function() {
         if(error){
           done.fail(error);
         }else{
-          expect(res.body.length).toEqual(1);
-          expect(user.exercises).toBeDefined();
-          expect(user._id).toBe(userId);
-          done();
+          User.findOne({name: 'test'}, function(error, deletedUser){
+            if(error){
+              done.fail.error;
+            }else{
+              expect(deletedUser).toBeDefined();
+              done();
+            }
+          })
         }
       });
     });
@@ -226,16 +226,16 @@ describe('User', function() {
 
     //test to not view single member's exercise logs
     it('should not be able to remove a member in a group as a group creator', function (done){
-      var userId = "invaliduserid";
+      var userId = "wrongUseridyo";
       agent
-      .post('/api/users/showLog/' + userId)
+      .post('/api/users/delete/' + userId)
       .set('Authorization', 'Bearer ' + auth.token)
       .expect('Content-Type', /json/)
       .expect(200)
       .end(function (error, res){
         if(res){
           expect(res.status).toBe(404);
-          expect(res.body.err).toBe('user not found');
+          expect(res.body.err).toBe('user not deleted');
           done();
         }else {
           done.fail(error);
