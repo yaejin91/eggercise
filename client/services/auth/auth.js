@@ -113,9 +113,8 @@ angular.module('eggercise')
             deferred.reject('Error: ',  error);
             console.log('error');
           });
-          return deferred.promise;
       }else{
-        deferred.resolve();
+        deferred.resolve(_user);
       }
       return deferred.promise;
     };
