@@ -34,31 +34,18 @@
 
     //Two weeks in milliseconds
     var twoWeeks = 1209600000;
-    var leaderExercises = [
-      '2016-01-12T08:00:00.000Z',
-      '2016-01-13T08:00:00.000Z',
-      '2016-01-14T08:00:00.000Z',
-      '2016-01-15T08:00:00.000Z',
-      '2016-01-16T08:00:00.000Z'
-    ];
 
-    var runnerUpExercises = [
-      '2016-01-12T08:00:00.000Z',
-      '2016-01-13T08:00:00.000Z',
-      '2016-01-14T08:00:00.000Z',
-      '2016-01-15T08:00:00.000Z',
-    ];
+    var day1 = (new Date(new Date().getTime() - 518400000)).toISOString();
+    var day2 = (new Date(new Date().getTime() - 432000000)).toISOString();
+    var day3 = (new Date(new Date().getTime() - 345600000)).toISOString();
+    var day4 = (new Date(new Date().getTime() - 259200000)).toISOString();
+    var day5 = (new Date(new Date().getTime() - 172800000)).toISOString();
 
-    var potato3Exercises = [
-      '2016-01-14T08:00:00.000Z',
-      '2016-01-15T08:00:00.000Z',
-      '2016-01-16T08:00:00.000Z'
-    ];
-    
-    var potato4Exercises = [
-      '2016-01-13T08:00:00.000Z',
-      '2016-01-14T08:00:00.000Z',
-    ];
+    var leaderExercises = [day1, day2, day3, day4, day5];
+    var runnerUpExercises = [day1, day2, day3, day4];
+    var potato3Exercises = [day1, day2, day3];
+    var potato4Exercises = [day1, day2];
+
 
     var fakeMemberArray = [
       {
@@ -90,6 +77,9 @@
 
     //Test service elapsedDay() 
     it('should return number of days elapsed between two dates', function () {
+
+      var day5 = DateService.dateToMilli(new Date()) + 432000000;
+      
       //Change the date two weeks ago into milliseconds
       var groupStartDate = DateService.dateToMilli(new Date() - twoWeeks);
       //Set group end date to today (in milliseconds)
@@ -116,11 +106,7 @@
     it('should add members exercises into validExercises array', function () {
       var groupStartDate = DateService.dateToMilli(new Date()) - twoWeeks;
       var groupEndDate = DateService.dateToMilli(new Date()) + twoWeeks;
-      var exerciseDates = [
-        '2016-01-14T08:00:00.000Z',
-        '2016-01-15T08:00:00.000Z',
-        '2016-01-16T08:00:00.000Z'
-      ];
+      var exerciseDates = [day1, day2, day3];
       var fakeMemberArray = [{name: 'potato', exercises: exerciseDates}];
 
       var response = service.membersValidExercises(fakeMemberArray, groupStartDate, groupEndDate);
@@ -132,11 +118,9 @@
     it('should add members exercises into validExercises array', function () {
       var groupStartDate = DateService.dateToMilli(new Date()) - twoWeeks;
       var groupEndDate = DateService.dateToMilli(new Date()) + twoWeeks;
-      var exerciseDates = [
-        '2013-01-14T08:00:00.000Z',
-        '2016-01-15T08:00:00.000Z',
-        '2016-01-16T08:00:00.000Z'
-      ];
+      //invalidDate is the same date as today a year ago
+      var invalidDate = (new Date(new Date().getTime() - 31540000000)).toISOString();
+      var exerciseDates = [invalidDate, day1, day2];
       var fakeMember = [{name: 'potato', exercises: exerciseDates}];
 
       var response = service.membersValidExercises(fakeMember, groupStartDate, groupEndDate);
@@ -176,10 +160,17 @@
     });
 
     //Test youWinOrOwe()
-    //when you are not the leader of the group
-    // it('should calculate how much you owe the leader', function () {
-      
-    // });
+    it('should calculate how much you owe the leader', function () {
+      var winnersPot = 30;
+      var leader = {email: 'leader@email.com', exercises: 10};
+      var runnerUp = {email: 'runnerUp@email.com', exercises: 9};
+      var you = {email: 'me@email.com', exercises: 8};
+      var groupBet = 10;
+
+      var response = service.youWinOrOwe(winnersPot, leader, runnerUp, groupBet);
+
+      expect(response.money).toBeDefined();
+    });
     
   })
 })();
