@@ -1,7 +1,7 @@
 'use strict';
 
 var _ = require('lodash'),
-  mongoose = require('mongoose');
+mongoose = require('mongoose');
 
 var authService = require('../../auth/auth.service');
 var User = require('./user.model');
@@ -122,7 +122,6 @@ exports.unlogWorkout = function (req, res) {
 };
 
 
-
 /**
  * Show each members logs when clicked on a member.
  *
@@ -140,5 +139,24 @@ exports.showLogs = function (req, res) {
       }
     })
   };
+
+
+/**
+ * Remove a member from a group as a group creator
+ *
+ * @param req
+ * @param res
+ */
+exports.delete = function (req, res){
+  var user = new User({_id: req.params.userId});
+  user.remove(function (error, deletedUser){
+    if(error){
+      return handleError(res, 'user not deleted', 404);
+    }
+    res.status(200).json({
+      user: deletedUser
+    });
+  });
+}
 
 

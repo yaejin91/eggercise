@@ -9,7 +9,7 @@ angular.module('eggercise')
       var conversionConst = 1000*60*60*24;
       //date in milliseconds
       var dateToMilli = new Date(date)
-      //date in milliseconds to number of days
+      //date in milliseconds to number of days since Jan 1, 1970
       var convertedDate = Math.floor(dateToMilli/conversionConst);
 
       return convertedDate;

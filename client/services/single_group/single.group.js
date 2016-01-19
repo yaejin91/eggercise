@@ -3,12 +3,7 @@
 angular.module('eggercise')
   .service('SingleGroupService', ['DateService', 'Auth', function (DateService, Auth) {
     var service = {};
-
-    service.getUserId = function(){
-      var authUserId = Auth.getUser()._id;
-      return authUserId;
-    }
-
+    
     service.elapsedDay = function (startDate, endDate) {
       var daysElapsed;
       var todayDate = DateService.dateToMilli(new Date());
@@ -20,20 +15,6 @@ angular.module('eggercise')
         daysElapsed = DateService.daysBetween(convertedStartDate, todayDate)
       }
       return daysElapsed;
-    };
-
-    service.membersExercises = function (membersArray) {
-      var allMembersExercises = [];
-
-      for (var i = 0; i < membersArray.length; i++) {
-        for (var j = 0; j < membersArray[i].exercises.length; j++) {
-          if (membersArray[i].exercises[j] === 0) {
-            j++;
-          }
-          allMembersExercises.push(membersArray[i].exercises[j]);
-        }
-      }
-      return allMembersExercises;
     };
 
     service.membersValidExercises = function (membersArray, startDate, endDate) {
