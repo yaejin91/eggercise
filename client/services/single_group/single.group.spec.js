@@ -70,7 +70,7 @@
 
     //Test membersValidExercises()
     //when one of member's exercises are not within startDate and endDate
-    fit('should add members exercises into validExercises array', function () {
+    it('should add members exercises into validExercises array', function () {
       var groupStartDate = DateService.dateToMilli(new Date()) - 1209600000;
       var groupEndDate = DateService.dateToMilli(new Date()) + 1209600000;
       var exerciseDates = [
