@@ -46,7 +46,6 @@ angular.module('eggercise')
             var leaderAndRunnerUpArray = [];
             var potAndDaysDifference = {};
 
-            console.log('data._members: ',data._members);
             vm.membersArray = SingleGroupService.membersValidExercises(data._members, vm.startDate, vm.endDate);
             leaderAndRunnerUpArray = SingleGroupService.assignLeader(vm.membersArray, vm.startDate, vm.endDate);
             var leader = leaderAndRunnerUpArray[0];

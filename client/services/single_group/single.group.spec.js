@@ -29,8 +29,11 @@
       spyOn(handler, 'error').and.callThrough();
     }));
 
-    //TODO: Make sure to change all these dates so that they are relative to current date
+    //***TODO: Make sure to change all these dates so that they are relative to current date (ever green)
     //The dates below are UTC format.
+
+    //Two weeks in milliseconds
+    var twoWeeks = 1209600000;
     var leaderExercises = [
       '2016-01-12T08:00:00.000Z',
       '2016-01-13T08:00:00.000Z',
@@ -38,16 +41,29 @@
       '2016-01-15T08:00:00.000Z',
       '2016-01-16T08:00:00.000Z'
     ];
+
     var runnerUpExercises = [
+      '2016-01-12T08:00:00.000Z',
       '2016-01-13T08:00:00.000Z',
-      '2015-01-14T08:00:00.000Z',
+      '2016-01-14T08:00:00.000Z',
       '2016-01-15T08:00:00.000Z',
     ];
+
+    var potato3Exercises = [
+      '2016-01-14T08:00:00.000Z',
+      '2016-01-15T08:00:00.000Z',
+      '2016-01-16T08:00:00.000Z'
+    ];
     
+    var potato4Exercises = [
+      '2016-01-13T08:00:00.000Z',
+      '2016-01-14T08:00:00.000Z',
+    ];
+
     var fakeMemberArray = [
       {
         name: 'runnerUpPotato', 
-        execises: runnerUpExercises, 
+        exercises: runnerUpExercises, 
         validExercises: runnerUpExercises,
         email: 'runnerUp@email.com'
       },
@@ -56,13 +72,26 @@
         exercises: leaderExercises, 
         validExercises: leaderExercises,
         email: 'leader@email.com'
+      },
+      {
+        name: 'potato3',
+        exercises: potato3Exercises,
+        validExercises: potato3Exercises,
+        email: 'potato3@email.com'
+
+      },
+      {
+        name: 'potato4',
+        exercises: potato4Exercises,
+        validExercises: potato4Exercises,
+        email: 'potato4@email.com'
       }
     ];
 
     //Test service elapsedDay() 
     it('should return number of days elapsed between two dates', function () {
       //Change the date two weeks ago into milliseconds
-      var groupStartDate = DateService.dateToMilli(new Date() - 1209600000);
+      var groupStartDate = DateService.dateToMilli(new Date() - twoWeeks);
       //Set group end date to today (in milliseconds)
       var groupEndDate = DateService.dateToMilli(new Date());
       var numberOfDays = service.elapsedDay(groupStartDate, groupEndDate);
@@ -74,9 +103,9 @@
     it('should return 0 for number of days elapsed', function () {
       var todayDate = DateService.dateToMilli(new Date());
       //set group start date to 2 weeks from today
-      var groupStartDate = todayDate + 1209600000;
+      var groupStartDate = todayDate + twoWeeks;
       //set group end date to 2 weeks from group start date
-      var groupEndDate = groupStartDate + 1209600000;
+      var groupEndDate = groupStartDate + twoWeeks;
       var noDaysElapsed = service.elapsedDay(groupStartDate, groupEndDate)
     
       expect(noDaysElapsed).toBe(0);
@@ -85,8 +114,8 @@
     //Test membersValidExercises()
     //when member's exercises are within startDate and endDate
     it('should add members exercises into validExercises array', function () {
-      var groupStartDate = DateService.dateToMilli(new Date()) - 1209600000;
-      var groupEndDate = DateService.dateToMilli(new Date()) + 1209600000;
+      var groupStartDate = DateService.dateToMilli(new Date()) - twoWeeks;
+      var groupEndDate = DateService.dateToMilli(new Date()) + twoWeeks;
       var exerciseDates = [
         '2016-01-14T08:00:00.000Z',
         '2016-01-15T08:00:00.000Z',
@@ -101,8 +130,8 @@
     //Test membersValidExercises()
     //when one of member's exercises are not within startDate and endDate
     it('should add members exercises into validExercises array', function () {
-      var groupStartDate = DateService.dateToMilli(new Date()) - 1209600000;
-      var groupEndDate = DateService.dateToMilli(new Date()) + 1209600000;
+      var groupStartDate = DateService.dateToMilli(new Date()) - twoWeeks;
+      var groupEndDate = DateService.dateToMilli(new Date()) + twoWeeks;
       var exerciseDates = [
         '2013-01-14T08:00:00.000Z',
         '2016-01-15T08:00:00.000Z',
@@ -119,16 +148,38 @@
     //The first element of the returned array should always be the leader object.
     //The second element of the returned array should always be the runnerUp object.
     it('should assign a leader', function () {
-      var groupStartDate = DateService.dateToMilli(new Date()) - 1209600000;
-      var groupEndDate = DateService.dateToMilli(new Date()) + 1209600000;
+      var groupStartDate = DateService.dateToMilli(new Date()) - twoWeeks;
+      var groupEndDate = DateService.dateToMilli(new Date()) + twoWeeks;
 
       var response = service.assignLeader(fakeMemberArray, groupStartDate, groupEndDate);
 
       expect(response[0].exercises).toBe(5);
       expect(response[0].email).toBe('leader@email.com');
-      expect(response[1].exercises).toBe(3);
+      expect(response[1].exercises).toBe(4);
       expect(response[1].email).toBe('runnerUp@email.com');
     });
+
+    //Test potCalculation()
+    it('should calculate the winners pot', function () {
+      var groupBet = 5;
+      var groupStartDate = DateService.dateToMilli(new Date()) - twoWeeks;
+      var groupEndDate = DateService.dateToMilli(new Date()) + twoWeeks;
+      var leaderAndRunnerUp = service.assignLeader(fakeMemberArray, groupStartDate, groupEndDate)
+      var leader = leaderAndRunnerUp[0];
+      var runnerUp = leaderAndRunnerUp[1];
+
+      expect(leader.exercises).toBe(5);
+      expect(leader.email).toBe('leader@email.com');
+
+      var response = service.potCalculation(fakeMemberArray, leader, runnerUp, groupBet);
+      expect(response).toBeDefined();
+    });
+
+    //Test youWinOrOwe()
+    //when you are not the leader of the group
+    // it('should calculate how much you owe the leader', function () {
+      
+    // });
     
   })
 })();
