@@ -8,12 +8,6 @@ var User = require('./user.model');
 
 var errorHandler = require('../../error/error-handling');
 
-
-// function handleError (res, err, status) {
-//   // return res.status(status).send(err);
-//   return res.status(status).json({err: err});
-// }
-
 /**
  * Creates a new user in the DB.
  *
