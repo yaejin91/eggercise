@@ -94,9 +94,15 @@ angular.module('eggercise')
       var youWithValidExercises = service.membersValidExercises(you, startDate, endDate);
 
       if(you[0].email == leader.email) {
-        daysDifference = leader.validExercisesLength - runnerUp.validExercisesLength;
-        owe = winnersPot;
-        resultObject = {days: daysDifference, money: winnersPot};
+        if(runnerUp.validExercisesLength >= 0) {
+          daysDifference = leader.validExercisesLength - runnerUp.validExercisesLength;
+          owe = winnersPot;
+          resultObject = {days: daysDifference, money: winnersPot};   
+        } else {
+          daysDifference = 0;
+          owe = winnersPot;
+          resultObject= {days: daysDifference, money: winnersPot};
+        }
       } else {
         daysDifference = youWithValidExercises[0].validExercises.length - leader.validExercisesLength;
         owe = daysDifference * groupBet;

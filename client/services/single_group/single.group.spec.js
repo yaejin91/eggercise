@@ -2,15 +2,16 @@
   'use strict';
 
   describe('SingleGroupService', function () {
-    var service, DateService, handler, singleGroupData, errorMessage, $log;
+    var service, Auth, DateService, handler, singleGroupData, errorMessage, $log;
 
     //Configure module that contains the serivce being tested
     beforeEach(module('eggercise'));
 
-    beforeEach(inject(function (_$log_, _SingleGroupService_, _DateService_) {
+    beforeEach(inject(function (_$log_, _SingleGroupService_, _DateService_, _Auth_) {
       $log = _$log_;
       service = _SingleGroupService_;
       DateService = _DateService_;
+      Auth = _Auth_;
       singleGroupData = [];
 
       // Define an object with functions to handle success and error for our API calls
@@ -160,14 +161,16 @@
     });
 
     //Test youWinOrOwe()
-    it('should calculate how much you owe the leader', function () {
+    fit('should calculate how much you owe the leader', function () {
+      var groupStartDate = DateService.dateToMilli(new Date()) - twoWeeks;
+      var groupEndDate = DateService.dateToMilli(new Date()) + twoWeeks;
       var winnersPot = 30;
-      var leader = {email: 'leader@email.com', exercises: 10};
-      var runnerUp = {email: 'runnerUp@email.com', exercises: 9};
-      var you = {email: 'me@email.com', exercises: 8};
+      var leader = {email: 'leader@email.com', exercises: 10, validExercisesLength: 10};
+      var runnerUp = {email: 'runnerUp@email.com', exercises: 9, validExercisesLength: 9};
       var groupBet = 10;
+      var you = [Auth.getUser()];
 
-      var response = service.youWinOrOwe(winnersPot, leader, runnerUp, groupBet);
+      var response = service.youWinOrOwe(winnersPot, leader, runnerUp, groupBet, groupStartDate, groupEndDate);
 
       expect(response.money).toBeDefined();
     });
