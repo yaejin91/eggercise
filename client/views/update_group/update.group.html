@@ -63,13 +63,28 @@
     <div class="col-md-12">
       <h2>Group Members</h2>
       <hr>
+      <span id="ifAdmin"></span>
       <div>
-        <div ng-repeat="members in vm.group._members">
-          <div class="col-md-10">
-            <div>
-              <p>{{members.name}}</p>
+        <div>
+          <!-- <div ng-repeat="members in vm.group._members"> -->
+          <div ng-repeat="members in vm.group._members">
+            <div class="col-md-10 fix-margin">
+              <div>
+                <div>
+                  <!-- Delete Member Button -->
+                  <div id="delete-member" ng-disabled="hideButton">
+                    <!-- <div ng-if="member._name"> -->
+                      {{members.name}}
+                    <!-- </div> -->
+                    <button ng-controller="DeleteMemberCtrl as delete" class="btn btn-danger" ng-click="delete.deleteMember(vm.memberId)">
+                      <div class="glyphicon glyphicon-remove small-glyph"></div>
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
+
         </div>
       </div>
     </div>
