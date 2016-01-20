@@ -23,18 +23,6 @@ function generateInvitation (invitedUserName, groupCreator, id) {
   return emailBody + " " + fullUrl;
 }
 
-//Creates a new invite in the DB
-exports.create = function (req, res) {
-  var invite = new Invite ({
-    name: req.body.name,
-    email: req.body.email,
-    _group: req.body._group,
-    status: false
-  });
-
-  invite.save(createInvite(invite, req, res));
-}
-
 function createInvite (savedInvite, req, res) {
   var creatorId = req.user._id;
   var groupId = req.body._group;
@@ -67,6 +55,18 @@ function sendInvite (savedInvite, req, res) {
     console.log('Error for failed send: ', err);
     res.json(err);
   }
+}
+
+//Creates a new invite in the DB
+exports.create = function (req, res) {
+  var invite = new Invite ({
+    name: req.body.name,
+    email: req.body.email,
+    _group: req.body._group,
+    status: false
+  });
+
+  invite.save(createInvite(invite, req, res));
 }
 
 //Invitee accepts invitation
