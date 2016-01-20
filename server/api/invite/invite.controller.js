@@ -44,16 +44,19 @@ function createInvite (savedInvite, req, res) {
 function sendInvite (savedInvite, req, res) {
   if (res.json) {
     savedInvite.sent_at = Date.now();
-    savedInvite.save(function (error, sentInvite) {
-      if (error) {
-        console.log('The invitation did not save successfully.');
-      } else {
-        res.json(sentInvite);
-      }
-    });
+    var returnedPromise = savedInvite.save();
+    renderInvite(returnedPromise, savedInvite, res);
   } else {
     console.log('Error for failed send: ', err);
     res.json(err);
+  }
+}
+
+function renderInvite (returnedPromise, sentInvite, res) {
+  if (!returnedPromise) {
+    console.log('The invitation did not save successfully.');
+  } else {
+    res.json(sentInvite);
   }
 }
 
@@ -72,6 +75,7 @@ exports.create = function (req, res) {
 //Invitee accepts invitation
 exports.acceptInvite = function(req, res) {
   var inviteId = req.params.invite_id;
+
   Invite.findById({ _id: inviteId})
     .exec(function (error, invite) {
       if (error) {
