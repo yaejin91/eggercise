@@ -44,6 +44,7 @@ angular.module('eggercise', [
       }
     };
   })
+
   .run(function ($rootScope, $location, Auth) {
 
     $rootScope.Auth = Auth;
