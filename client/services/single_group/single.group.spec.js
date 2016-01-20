@@ -161,19 +161,19 @@
     });
 
     //Test youWinOrOwe()
-    fit('should calculate how much you owe the leader', function () {
-      var groupStartDate = DateService.dateToMilli(new Date()) - twoWeeks;
-      var groupEndDate = DateService.dateToMilli(new Date()) + twoWeeks;
-      var winnersPot = 30;
-      var leader = {email: 'leader@email.com', exercises: 10, validExercisesLength: 10};
-      var runnerUp = {email: 'runnerUp@email.com', exercises: 9, validExercisesLength: 9};
-      var groupBet = 10;
-      var you = [Auth.getUser()];
+    // it('should calculate how much you owe the leader', function () {
+    //   var groupStartDate = DateService.dateToMilli(new Date()) - twoWeeks;
+    //   var groupEndDate = DateService.dateToMilli(new Date()) + twoWeeks;
+    //   var winnersPot = 30;
+    //   var leader = {email: 'leader@email.com', exercises: 10, validExercisesLength: 10};
+    //   var runnerUp = {email: 'runnerUp@email.com', exercises: 9, validExercisesLength: 9};
+    //   var groupBet = 10;
+    //   var you = [Auth.getUser()];
 
-      var response = service.youWinOrOwe(winnersPot, leader, runnerUp, groupBet, groupStartDate, groupEndDate);
+    //   var response = service.youWinOrOwe(winnersPot, leader, runnerUp, groupBet, groupStartDate, groupEndDate);
 
-      expect(response.money).toBeDefined();
-    });
+    //   expect(response.money).toBeDefined();
+    // });
     
   })
 })();
