@@ -142,6 +142,13 @@ body {
   text-align: center;
 }
 
+
+.fix-margin{
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+
 .navbar {
   background-color: #162955;
   color: white;
@@ -162,7 +169,6 @@ body {
 .form-control {
   margin-bottom: 4px !important;
 }
-
 
 
 .large-glyph {
@@ -198,8 +204,20 @@ body {
   margin-bottom: 20px;
 }
 
+#delete-member{
+  margin-left: auto;
+  margin-left: auto;
+}
+
+#hideButton{
+  /*display: none;*/
+}
 .workoutlog {
   text-align: center;
+}
+
+#ifAdmin{
+  font-weight: bold;
 }
 
 /* Media-Query Landscape phones and down */
