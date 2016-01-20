@@ -64,26 +64,32 @@ exports.showGroup = function (req, res) {
   var groupMemberIds = [];
 
   function runStatus(group) {
+    console.log('group in runStatus: ',group);
     res.status(200).json(group);
   }
 
   if (mongoose.Types.ObjectId.isValid(req.params.group_id)) {
     Group.findOne({_id: req.params.group_id})
       .populate('_members')
-      .exec(function (err, group) {
+      .exec(function (error, group) {
       groupCreatorId = group._creator.toString();
 
-      if (err) { return err.handler(res, err, 500);
+      if (error) { 
+        return err.handler(res, err, 500);
       } else if (group) {
+        console.log('group in else if', group);
         // store the member group ids in an array
         for (var i = 0; i < group._members.length; i++) {
           // cast the group member id to a string data type
           var stringGroupMemberId = group._members[i]._id.toString();
           groupMemberIds.push(stringGroupMemberId);
         }
+        console.log('groupMemberIds: ', groupMemberIds);
         // check if the logged in user is part of the group
         for (var j = 0; j < groupMemberIds.length; j++) {
+          console.log('loggedUserId: ',loggedUserId);
           if (loggedUserId === groupMemberIds[j]) {
+            console.log('before runStatus()');
             runStatus(group);
           }
         }
@@ -95,8 +101,8 @@ exports.showGroup = function (req, res) {
 //Delete a group
 exports.delete = function (req, res){
   var group = new Group({_id: req.params.group_id});
-  group.remove(function (err, deletedGroup){
-    if(err){
+  group.remove(function (error, deletedGroup){
+    if(error){
       // res.status(400).json({err: 'deletedGroup not found'});
       return err.handler(res, 'deletedGroup not found', 404);
     }
@@ -128,8 +134,8 @@ exports.update = function (req, res){
     }
   }
 
-  Group.findByIdAndUpdate(groupId, update, options, function (err, updatedGroup) {
-    if (err) { return err.handler(res, err);}
+  Group.findByIdAndUpdate(groupId, update, options, function (error, updatedGroup) {
+    if (error) { return err.handler(res, error, 500)}
     res.status(200).json(updatedGroup);
   });
 }

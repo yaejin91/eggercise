@@ -108,52 +108,52 @@ describe('Invite', function() {
       });
     });
 
-    //create an invitation(positive)
-    fit('should create a new invitation through an email address', function (done){
-    agent
-      .post('/api/invites/create')
-      .send({
-        email: 'inviteemail@gmail.com',
-        _group: group._id
-      })
-      .set('Authorization', 'Bearer ' + auth.token)
-      .expect('Content-Type', /json/)
-      .expect(200)
-      .end(function (error, res) {
-        if(error){
-          done.fail(error);
-        } else {
-          var returnedInvite = res.body;
-          expect(returnedInvite).toBeDefined();
-          expect(returnedInvite.email).toBe('inviteemail@gmail.com');
-          expect(returnedInvite._group).toBe((group._id).toJSON());
-          expect(returnedInvite.sent_at).toBeDefined();
-          Invite.findOne({ _id: returnedInvite._id })
-          .remove(function (error) {
-            done();
-          })
-        }
-      });
-    });
+    // //create an invitation(positive)
+    // it('should create a new invitation through an email address', function (done){
+    // agent
+    //   .post('/api/invites/create')
+    //   .send({
+    //     email: 'inviteemail@gmail.com',
+    //     _group: group._id
+    //   })
+    //   .set('Authorization', 'Bearer ' + auth.token)
+    //   .expect('Content-Type', /json/)
+    //   .expect(200)
+    //   .end(function (error, res) {
+    //     if(error){
+    //       done.fail(error);
+    //     } else {
+    //       var returnedInvite = res.body;
+    //       expect(returnedInvite).toBeDefined();
+    //       expect(returnedInvite.email).toBe('inviteemail@gmail.com');
+    //       expect(returnedInvite._group).toBe((group._id).toJSON());
+    //       expect(returnedInvite.sent_at).toBeDefined();
+    //       Invite.findOne({ _id: returnedInvite._id })
+    //       .remove(function (error) {
+    //         done();
+    //       })
+    //     }
+    //   });
+    // });
 
-    //doesn't create an invitation(negative)
-    it('should not create a new invitation through an email address', function (done){
-    agent
-      .post('/api/invites/create')
-      .send({
-        _group: group._id
-      })
-      .set('Authorization', 'Bearer ' + auth.token)
-      .expect('Content-Type', /json/)
-      .expect(422)
-      .end(function (error, res) {
-        if (error) {
-          done.fail(error);
-        } else {
-          done();
-        }
-      });
-    });
+    // //doesn't create an invitation(negative)
+    // it('should not create a new invitation through an email address', function (done){
+    // agent
+    //   .post('/api/invites/create')
+    //   .send({
+    //     _group: group._id
+    //   })
+    //   .set('Authorization', 'Bearer ' + auth.token)
+    //   .expect('Content-Type', /json/)
+    //   .expect(422)
+    //   .end(function (error, res) {
+    //     if (error) {
+    //       done.fail(error);
+    //     } else {
+    //       done();
+    //     }
+    //   });
+    // });
 
     //doesn't create an invitation(negative)
     // DO NOT know how to mock a service with a callback.
