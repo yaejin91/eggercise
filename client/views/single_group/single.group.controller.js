@@ -24,7 +24,6 @@ angular.module('eggercise')
       showGroup: function (id) {
         Auth.getUserNow()
         .then(function (data){
-          console.log('data:', data);
           vm.authUserId = data._id;
           
           //existing showGroup logic

@@ -39,9 +39,13 @@ angular.module('eggercise', [
           $cookieStore.remove('token');
           return $q.reject(response);
         }
+        else{
+          return $q.reject(response);
+        }
       }
     };
   })
+  
   .run(function ($rootScope, $location, Auth) {
 
     $rootScope.Auth = Auth;
