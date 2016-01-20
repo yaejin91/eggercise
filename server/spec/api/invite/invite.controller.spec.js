@@ -107,99 +107,100 @@ describe('Invite', function() {
         }
       });
     });
-
-    //create an invitation(positive)
-    fit('should create a new invitation through an email address', function (done){
-    agent
-      .post('/api/invites/create')
-      .send({
-        email: 'inviteemail@gmail.com',
-        _group: group._id
-      })
-      .set('Authorization', 'Bearer ' + auth.token)
-      .expect('Content-Type', /json/)
-      .expect(200)
-      .end(function (error, res) {
-        if(error){
-          done.fail(error);
-        } else {
-          var returnedInvite = res.body;
-          expect(returnedInvite).toBeDefined();
-          expect(returnedInvite.email).toBe('inviteemail@gmail.com');
-          expect(returnedInvite._group).toBe((group._id).toJSON());
-          expect(returnedInvite.sent_at).toBeDefined();
-          Invite.findOne({ _id: returnedInvite._id })
-          .remove(function (error) {
-            done();
-          })
-        }
-      });
-    });
-
-    //doesn't create an invitation(negative)
-    it('should not create a new invitation through an email address', function (done){
-    agent
-      .post('/api/invites/create')
-      .send({
-        _group: group._id
-      })
-      .set('Authorization', 'Bearer ' + auth.token)
-      .expect('Content-Type', /json/)
-      .expect(422)
-      .end(function (error, res) {
-        if (error) {
-          done.fail(error);
-        } else {
-          done();
-        }
-      });
-    });
-
-    //doesn't create an invitation(negative)
-    // DO NOT know how to mock a service with a callback.
-    // Will come back to this later
-    // it('should not send a new invitation', function (done){
-    //   spyOn(EmailService, 'send').and.respond(function() {
-
-    //   });
-
-    // agent
-    //   .post('/api/invites/create')
-    //   .send({
-    //     email: 'invitee2@mail.com',
-    //     _group: group._id
-    //   })
-    //   .set('Authorization', 'Bearer ' + auth.token)
-    //   .expect('Content-Type', /json/)
-    //   .expect(422)
-    //   .end(function (error, res) {
-    //     if (error) {
-    //       done.fail(error);
-    //     } else {
-    //       console.log('this is the res in the if: ', res.body);
-    //       expect(res.body.err).toBe('Did not create the invite');
-    //       done();
-    //     }
-    //   });
-    // });
-
-    //Test for returning an existing invitation successfully
-    it('should have invitee accept invitation', function (done) {
-      agent
-      .get('/api/invites/accept/'+invite._id)
-      .expect('Content-Type', /json/)
-      .expect(200)
-      .end(function (error, res) {
-        if(error){
-          done.fail(error);
-        } else {
-          expect(res.body.email).toBe(invitedUser.email);
-          done();
-        }
-      });
-    });
   });
 });
+    //create an invitation(positive)
+//     it('should create a new invitation through an email address', function (done){
+//     agent
+//       .post('/api/invites/create')
+//       .send({
+//         email: 'inviteemail@gmail.com',
+//         _group: group._id
+//       })
+//       .set('Authorization', 'Bearer ' + auth.token)
+//       .expect('Content-Type', /json/)
+//       .expect(200)
+//       .end(function (error, res) {
+//         if(error){
+//           done.fail(error);
+//         } else {
+//           var returnedInvite = res.body;
+//           expect(returnedInvite).toBeDefined();
+//           expect(returnedInvite.email).toBe('inviteemail@gmail.com');
+//           expect(returnedInvite._group).toBe((group._id).toJSON());
+//           expect(returnedInvite.sent_at).toBeDefined();
+//           Invite.findOne({ _id: returnedInvite._id })
+//           .remove(function (error) {
+//             done();
+//           })
+//         }
+//       });
+//     });
+
+//     //doesn't create an invitation(negative)
+//     it('should not create a new invitation through an email address', function (done){
+//     agent
+//       .post('/api/invites/create')
+//       .send({
+//         _group: group._id
+//       })
+//       .set('Authorization', 'Bearer ' + auth.token)
+//       .expect('Content-Type', /json/)
+//       .expect(422)
+//       .end(function (error, res) {
+//         if (error) {
+//           done.fail(error);
+//         } else {
+//           done();
+//         }
+//       });
+//     });
+
+//     //doesn't create an invitation(negative)
+//     // DO NOT know how to mock a service with a callback.
+//     // Will come back to this later
+//     // it('should not send a new invitation', function (done){
+//     //   spyOn(EmailService, 'send').and.respond(function() {
+
+//     //   });
+
+//     // agent
+//     //   .post('/api/invites/create')
+//     //   .send({
+//     //     email: 'invitee2@mail.com',
+//     //     _group: group._id
+//     //   })
+//     //   .set('Authorization', 'Bearer ' + auth.token)
+//     //   .expect('Content-Type', /json/)
+//     //   .expect(422)
+//     //   .end(function (error, res) {
+//     //     if (error) {
+//     //       done.fail(error);
+//     //     } else {
+//     //       console.log('this is the res in the if: ', res.body);
+//     //       expect(res.body.err).toBe('Did not create the invite');
+//     //       done();
+//     //     }
+//     //   });
+//     // });
+
+//     //Test for returning an existing invitation successfully
+//     it('should have invitee accept invitation', function (done) {
+//       agent
+//       .get('/api/invites/accept/'+invite._id)
+//       .expect('Content-Type', /json/)
+//       .expect(200)
+//       .end(function (error, res) {
+//         if(error){
+//           done.fail(error);
+//         } else {
+//           expect(res.body.email).toBe(invitedUser.email);
+//           done();
+//         }
+//       });
+//     });
+//   });
+// });
 
 
 function loginUser (auth, done) {
@@ -211,14 +212,15 @@ function loginUser (auth, done) {
   })
   .expect(200)
   .end(onResponse);
+}
 
-  function onResponse(error, res) {
-    if(error) {
-      throw error;
-    } else {
-      auth.token = res.body.token;
-      agent.saveCookies(res);
-      done();
-    }
+function onResponse(error, res) {
+  if(error) {
+    throw error;
+  } else {
+    auth.token = res.body.token;
+    agent.saveCookies(res);
+    done();
   }
 }
+
