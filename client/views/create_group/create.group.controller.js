@@ -7,8 +7,21 @@ angular.module('eggercise')
         vm.groups = [];
         vm.formData = {};
 
-        // var creatorId = $routeParams.creatorId;
-        // vm.formData._creator = creatorId
+    vm.startDatePickerIsOpen = false;
+    vm.endDatePickerIsOpen = false;
+
+    vm.valuationDatePickerOpen = function ($event, whichDate) {
+      if ($event) {
+          $event.preventDefault();
+          $event.stopPropagation(); // This is the magic
+      }
+      if(whichDate === 'start'){
+        this.startDatePickerIsOpen = true;
+      }else if(whichDate === 'end'){
+        this.endDatePickerIsOpen = true;
+      }
+
+      };
 
         angular.extend(vm, {
 

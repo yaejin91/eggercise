@@ -5,11 +5,12 @@ angular.module('eggercise', [
   'ngCookies',
   'ngResource',
   'ngSanitize',
+  'ngMessages',
   'ui.bootstrap',
   'ngAnimate',
+  'angular-toasty'
 ])
   .config(function ($routeProvider, $locationProvider, $httpProvider) {
-
     $routeProvider
       .otherwise({
         redirectTo: '/'
@@ -39,14 +40,13 @@ angular.module('eggercise', [
           $cookieStore.remove('token');
           return $q.reject(response);
         }
-        else {
-          $location.path('/');
+        else{
           return $q.reject(response);
         }
       }
-
     };
   })
+  
   .run(function ($rootScope, $location, Auth) {
 
     $rootScope.Auth = Auth;
@@ -69,4 +69,15 @@ angular.module('eggercise', [
         });
       }
     });
+  })
+
+  .run(function ($rootScope, $location) {
+
+    $rootScope.$on('$locationChangeStart', function() {
+      $rootScope.previousPage = location.pathname;
+    });
+
+    $rootScope.back = function () {
+      $location.path($rootScope.previousPage);
+    };
   });
