@@ -5,7 +5,7 @@ var _ = require('lodash'),
 
 var Group = require('./group.model'),
   User = require('../user/user.model');
-
+  
 var errorHandler = require('../../error/error-handling');
 
 //Show all groups
@@ -24,7 +24,6 @@ exports.showAllGroups = function (req, res) {
 
 
 //Creates a new group in the DB.
-//TODO: should return new group created with the attributes.
 exports.create = function (req, res) {
   var creatorId = req.user._id;
   var group = new Group ({
@@ -64,7 +63,6 @@ exports.showGroup = function (req, res) {
   var groupMemberIds = [];
 
   function runStatus(group) {
-    console.log('group in runStatus: ',group);
     res.status(200).json(group);
   }
 
@@ -77,19 +75,15 @@ exports.showGroup = function (req, res) {
       if (error) { 
         errorHandler.handle(res, error, 500);
       } else if (group) {
-        console.log('group in else if', group);
         // store the member group ids in an array
         for (var i = 0; i < group._members.length; i++) {
           // cast the group member id to a string data type
           var stringGroupMemberId = group._members[i]._id.toString();
           groupMemberIds.push(stringGroupMemberId);
         }
-        console.log('groupMemberIds: ', groupMemberIds);
         // check if the logged in user is part of the group
         for (var j = 0; j < groupMemberIds.length; j++) {
-          console.log('loggedUserId: ',loggedUserId);
           if (loggedUserId === groupMemberIds[j]) {
-            console.log('before runStatus()');
             runStatus(group);
           }
         }
