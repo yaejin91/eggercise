@@ -116,7 +116,7 @@ describe('User', function() {
       });
     });
 
-  
+
     //Test for logging an exercise
     it('should log an exercise', function (done) {
       var newDate = new Date('12-12-2015').toString();

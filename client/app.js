@@ -33,20 +33,18 @@ angular.module('eggercise', [
       },
 
       responseError: function (response) {
-        console.log('response.status: ', response.status);
         if (response.status === 401) {
-          console.log('responseError going to login');
           $location.path('/login');
           $cookieStore.remove('token');
           return $q.reject(response);
         }
-        else{
+         else {
           return $q.reject(response);
         }
       }
     };
   })
-  
+
   .run(function ($rootScope, $location, Auth) {
 
     $rootScope.Auth = Auth;
