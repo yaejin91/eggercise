@@ -23,11 +23,14 @@
             </div>
             <div>
               New Password
-              <input type="password" ng-model="vm.formData.password" class="form-control">
+              <input type="password" name="newpass1" ng-model="vm.formData.newpass" class="form-control">
             </div>
             <div>
               Confirm Password
-              <input type="password" class="form-control">
+              <input type="password" name="newPass2" class="form-control" ng-pattern="{{vm.formData.newpass}}" ng-model="newPass2">
+              <div ng-messages="profileForm.newPass2.$error">
+                <div ng-message="pattern">Passwords do not match</div>
+              </div>
             </div>
             <input type="submit" class="btn btn-lg btn-primary btn-block signupbtn" value="Update Profile">
         </div>
