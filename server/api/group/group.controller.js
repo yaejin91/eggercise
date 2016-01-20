@@ -6,9 +6,7 @@ var _ = require('lodash'),
 var Group = require('./group.model'),
   User = require('../user/user.model');
 
-function handleError (res, err, status) {
-  return res.status(status).json({err: err});
-}
+var err = require('../../error/error-handling');
 
 //Show all groups
 exports.showAllGroups = function (req, res) {
@@ -17,7 +15,7 @@ exports.showAllGroups = function (req, res) {
     .populate('_groups')
     .exec(function (error, foundUser) {
     if (error) {
-      return handleError(res, error, 500);
+      return err.handler(res, error, 500);
     } else if (foundUser) {
       res.json(foundUser._groups);
     }
@@ -43,7 +41,7 @@ exports.create = function (req, res) {
     if (data) {
       User.findOne({_id: creatorId}, function (error, creator){
         if (error) {
-          return handleError(res, error, 500);
+          return err.handler(res, error, 500);
         } else {
           var id = mongoose.Types.ObjectId(creator._id);
           creator._groups.push(data._id);
@@ -53,7 +51,7 @@ exports.create = function (req, res) {
       });
     } else if (error) {
       console.error(error.stack);
-      return handleError(res, error, 500);
+      return err.handler(res, error, 500);
     }
   });
 }
@@ -75,7 +73,7 @@ exports.showGroup = function (req, res) {
       .exec(function (err, group) {
       groupCreatorId = group._creator.toString();
 
-      if (err) { return handleError(res, err, 500);
+      if (err) { return err.handler(res, err, 500);
       } else if (group) {
         // store the member group ids in an array
         for (var i = 0; i < group._members.length; i++) {
@@ -100,7 +98,7 @@ exports.delete = function (req, res){
   group.remove(function (err, deletedGroup){
     if(err){
       // res.status(400).json({err: 'deletedGroup not found'});
-      return handleError(res, 'deletedGroup not found', 404);
+      return err.handler(res, 'deletedGroup not found', 404);
     }
     res.status(200).json({
       group: deletedGroup
@@ -131,7 +129,7 @@ exports.update = function (req, res){
   }
 
   Group.findByIdAndUpdate(groupId, update, options, function (err, updatedGroup) {
-    if (err) { return handleError(res, err);}
+    if (err) { return err.handler(res, err);}
     res.status(200).json(updatedGroup);
   });
 }
@@ -148,7 +146,7 @@ exports.showGroupLeaderboard = function (req, res){
         members: foundGroup._members
       });
     } else {
-      return handleError(res, 'group not found', 404);
+      return err.handler(res, 'group not found', 404);
     }
   })
 };

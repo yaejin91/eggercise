@@ -27,6 +27,7 @@ describe('Group', function() {
         done.fail(error);
       } else {
         creator = dummyUser;
+        // console.log('dummyUser: ', dummyUser._id);
         loginUser(auth, done);
       }
     });
@@ -35,6 +36,8 @@ describe('Group', function() {
   afterAll(function (done) {
     User.remove({_id: creator._id}, function (error, removedCreator) {
       if (error) {
+        console.log('creator: ', creator._id);
+        console.log('error: ',error);
         done.fail(error);
       } else {
         done();
