@@ -13,6 +13,7 @@ angular.module('eggercise')
     vm.daysDifference;
     vm.daysDifferenceAbsolute;
     vm.owe;
+    vm.winnersPot;
     vm.oweAbsolute;
     vm.authUserId;
 
@@ -24,7 +25,6 @@ angular.module('eggercise')
       showGroup: function (id) {
         Auth.getUserNow()
         .then(function (data){
-          console.log('data:', data);
           vm.authUserId = data._id;
           
           //existing showGroup logic
@@ -60,8 +60,8 @@ angular.module('eggercise')
             leaderAndRunnerUpArray = SingleGroupService.assignLeader(vm.membersArray, vm.startDate, vm.endDate);
             var leader = leaderAndRunnerUpArray[0];
             var runnerUp = leaderAndRunnerUpArray[1];
-            var winnersPot = SingleGroupService.potCalculation(vm.membersArray, leader, runnerUp, vm.group.bet);
-            potAndDaysDifference = SingleGroupService.youWinOrOwe(winnersPot, leader, runnerUp, vm.group.bet);
+            vm.winnersPot = SingleGroupService.potCalculation(vm.membersArray, leader, runnerUp, vm.group.bet);
+            potAndDaysDifference = SingleGroupService.youWinOrOwe(vm.winnersPot, leader, runnerUp, vm.group.bet, vm.startDate, vm.endDate);
             vm.daysDifference = potAndDaysDifference.days;
             vm.daysDifferenceAbsolute = Math.abs(vm.daysDifference);
             vm.owe = potAndDaysDifference.money;

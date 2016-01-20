@@ -40,8 +40,8 @@ angular.module('eggercise')
 
     service.assignLeader = function (membersArray, startDate, endDate) {
       var leaderAndRunnerUp = [];
-      var leader = {email: 'leader@test.com', exercises: 0};
-      var runnerUp = {email: 'runnerUp@test.com', exercises: 0};
+      var leader = {email: 'leader@test.com', exercises: -1, validExercisesLength: -1};
+      var runnerUp = {email: 'runnerUp@test.com', exercises: -2, validExercisesLength: -2};
 
       for (var i = 0; i < membersArray.length; i++) {
         membersArray[i].validExercises;
@@ -51,14 +51,17 @@ angular.module('eggercise')
           //put old leader in runnerUp (runnerUp overthrows leader)
           runnerUp.email = leader.email;
           runnerUp.exercises = leader.exercises;
+          runnerUp.validExercisesLength = leader.validExercisesLength;
 
           //assign new leader
           leader.email = membersArray[i].email;
           leader.exercises = membersArray[i].validExercises.length;
+          leader.validExercisesLength = membersArray[i].validExercises.length
           //assign new runnerUp
         } else if(membersArray[i].validExercises.length > runnerUp.exercises) {
           runnerUp.email = membersArray[i].email;
           runnerUp.exercises = membersArray[i].validExercises.length;
+          runnerUp.validExercisesLength = membersArray[i].validExercises.length
         }
       }
       leaderAndRunnerUp = [leader, runnerUp];
@@ -72,35 +75,35 @@ angular.module('eggercise')
       for (var i = 0; i < membersArray.length; i++) {
         //Comparing each user to the leader of the group
         if(membersArray[i].email == leader.email) {
-          membersArray[i].daysAhead = Math.abs(leader.exercises - runnerUp.exercises);
+          membersArray[i].daysAhead = Math.abs(leader.validExercisesLength - runnerUp.validExercisesLength);
           winnersIndex = i;
         } else {
-          membersArray[i].daysBehind = Math.abs(leader.exercises - membersArray[i].exercises.length);
+          membersArray[i].daysBehind = Math.abs(leader.validExercisesLength - membersArray[i].validExercises.length);
           membersArray[i].memberOwes = Math.abs(membersArray[i].daysBehind*groupBet);
           winnersPot = winnersPot + membersArray[i].memberOwes;
         }
       }
-      membersArray[winnersIndex].memberOwes = winnersPot;
-      return membersArray[winnersIndex].memberOwes;
+      return winnersPot;
     };
 
-    service.youWinOrOwe = function (winnersPot, leader, runnerUp, groupBet) {
-      var you = Auth.getUser();
+    service.youWinOrOwe = function (winnersPot, leader, runnerUp, groupBet, startDate, endDate) {
+      var you = [Auth.getUser()];
       var resultObject = {};
       var owe;
       var daysDifference;
+      var youWithValidExercises = service.membersValidExercises(you, startDate, endDate);
 
-      if(you.email == leader.email) {
-        daysDifference = leader.exercises - runnerUp.exercises;
+      if(you[0].email == leader.email) {
+        daysDifference = leader.validExercisesLength - runnerUp.validExercisesLength;
         owe = winnersPot;
         resultObject = {days: daysDifference, money: winnersPot};
       } else {
-        daysDifference = leader.exercises - you.exercises;
+        daysDifference = youWithValidExercises[0].validExercises.length - leader.validExercisesLength;
         owe = daysDifference * groupBet;
         resultObject = {days: daysDifference, money: owe};
       }
       return resultObject;
-    }
+    };
 
     return service;
 
