@@ -7,10 +7,15 @@ angular.module('eggercise')
     vm.formData = {};
     vm.group = {};
     vm.groups = [];
+    vm.members = [];
+    vm.memberId;
+    vm.creatorName;
     vm.group_id = $routeParams.group_id;
-
     vm.startDatePickerIsOpen = false;
     vm.endDatePickerIsOpen = false;
+
+
+
 
     vm.valuationDatePickerOpen = function ($event, whichDate) {
       if ($event) {
@@ -28,11 +33,31 @@ angular.module('eggercise')
       name: 'UpdateGroupCtrl'
     });
 
+
+    vm.showAdmin = function (){
+      var ifAdmin = document.getElementById('ifAdmin');
+        ifAdmin.innerHTML = '\u25C8 Admin: ' + vm.creatorName + ' \u25C8';
+        ifAdmin.style.display = 'block';
+    }
+
     //get update group
     vm.getGroup = function (id) {
       GroupService.showGroup(id)
         .then(function (data) {
           vm.group = data;
+
+          //getting member id in group's data
+          for(var i = 0; i < data._members.length; i++){
+            var memberId = data._members[i]._id;
+            vm.memberId = memberId;
+
+            //if truthy that group creator matches member id shown, state that he/she is admin
+            if(vm.group._creator === vm.memberId){
+              vm.creatorName = data._members[i].name
+              vm.showAdmin();
+            }
+          }
+
           vm.formData.start = new Date(vm.group.start);
           vm.formData.end = new Date(vm.group.end);
         })
