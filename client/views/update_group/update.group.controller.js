@@ -45,7 +45,6 @@ angular.module('eggercise')
       GroupService.showGroup(id)
         .then(function (data) {
           vm.group = data;
-          console.log('vm.group._id: ', vm.group._id);
           //getting member id in group's data
           for(var i = 0; i < data._members.length; i++){
             var memberId = data._members[i]._id;
