@@ -7,9 +7,11 @@ var Group = require('../group/group.model'),
   Invite = require('./invite.model'),
   EmailService = require('../../email/email.service');
 
-function handleError (res, err, status) {
-  return res.status(status).json({err: err});
-}
+var errorHandler = require('../../error/error-handling');
+
+// function handleError (res, err, status) {
+//   return res.status(status).json({err: err});
+// }
 
 function handleSuccess(res, message, status) {
   return res.status(status).json({message: message});
@@ -37,7 +39,7 @@ function createInvite (savedInvite, req, res) {
 
     EmailService.send(emailTo, subject, emailText, sendInvite(savedInvite, req, res));
   } else {
-    return handleError(res, 'Did not create the invite', 422);
+    errorHandler.handle(res, 'Did not create the invite', 422);
   }
 }
 
@@ -113,22 +115,22 @@ exports.acceptInvite = function(req, res) {
   Invite.findById({ _id: inviteId})
     .exec(function (error, invite) {
       if (error) {
-        return handleError(res, error);
+        errorHandler.handle(res, 'Invite not found', 404);
       } else if (invite != null) {
         User.findOne({ email: invite.email}, function (error, user) {
           if (error) {
-            return handleError(res, error);
+            errorHandler.handle(res, 'User not found', 404);
           } else {
             user._groups.push(invite._group);
             user.save(function (error, savedUser) {
               if (error) {
-                return handleError(res, error);
+                errorHandler.handle(res, error, 500);
               } else {
                 Group.findById( {_id: invite._group}, function (error, group) {
                   group._members.push(user._id);
                   group.save(function (error, savedGroup) {
                     if (error) {
-                      return handleError(res, error);
+                      errorHandler.handle(res, error, 500);
                     } else {
                       res.status(200).json(group);
                     }
