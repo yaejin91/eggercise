@@ -45,7 +45,6 @@ exports.getMe = function (req, res) {
     });
 };
 
-
 /**
  * Update a user profile in the DB.
  *
