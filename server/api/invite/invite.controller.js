@@ -74,7 +74,6 @@ exports.create = function (req, res) {
   // Run a check for an existing invite in the database
   var query = Invite.find ({ email: invite.email, _group: invite._group });
   query.exec(function (error, foundInvitationsArray) {
-    console.log('This is foundInvitationsArray: ', foundInvitationsArray);
     if (foundInvitationsArray.length <= 0) {
       // If no invites were found for this email address, then create invite
       invite.save(createInvite(invite, req, res));
