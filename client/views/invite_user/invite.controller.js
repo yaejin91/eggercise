@@ -12,21 +12,25 @@ angular.module('eggercise')
     });
 
     vm.flashMessage = function(message, data) {
+      console.log('This is data._group: ', data._group);
       if (message === 'error') {
         toasty[message]({
           title: 'Failure',
-          msg: data + ' has already been invited. Please select a different email address',
+          msg: data.name + ' at ' + data.email + ' has already been invited to this group. Please select a different email address',
           theme: 'material'
         })
       } else {
-        GroupService.showGroup(data._group)
-        .then(function (group) {
-          toasty[message]({
-            title: 'Invited!',
-            msg: 'You have sucessfully invited ' + vm.formData.email + " to " + group.name,
-            theme: "material"
-          });
-        })
+        console.log('This is data._group: ', data._group);
+        if (data._group !== null) {
+          GroupService.showGroup(data._group)
+          .then(function (group) {
+            toasty[message]({
+              title: 'Invited!',
+              msg: 'You have sucessfully invited ' + vm.formData.email + " to " + group.name,
+              theme: "material"
+            });
+          })
+        }
       }
     }
 
@@ -39,7 +43,7 @@ angular.module('eggercise')
         vm.flashMessage('success', foundInvite);
       })
       .catch(function (error){
-        vm.flashMessage('error', vm.formData.email)
+        vm.flashMessage('error', vm.formData)
       })
     }
   }]);

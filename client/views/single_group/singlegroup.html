@@ -52,21 +52,21 @@
             <div class="days">
               {{vm.daysDifferenceAbsolute}}
             </div>
-          </div>
-          <div class="col-md-12 text-center" ng-if="vm.daysDifference>1">
-            Days Ahead
-          </div>
-          <div class="col-md-12 text-center" ng-if="vm.daysDifference==1" >
-            Day Ahead
-          </div>
-          <div class="col-md-12 text-center" ng-if="vm.daysDifference==0">
-            Days Ahead/Behind
-          </div>
-          <div class="col-md-12 text-center" ng-if="vm.daysDifference<-1">
-            Days Behind
-          </div>
-          <div class="col-md-12 text-center" ng-if="vm.daysDifference==-1">
-            Day Behind
+            <div class="col-md-12 text-center" ng-if="vm.daysDifference>1">
+              Days Ahead Of Runner-Up
+            </div>
+            <div class="col-md-12 text-center" ng-if="vm.daysDifference==1" >
+              Day Ahead Of Runner-Up
+            </div> 
+            <div class="col-md-12 text-center" ng-if="vm.daysDifference==0">
+              Days Ahead/Behind
+            </div>
+            <div class="col-md-12 text-center" ng-if="vm.daysDifference<-1">
+              Days Behind The Leader
+            </div>
+            <div class="col-md-12 text-center" ng-if="vm.daysDifference==-1">
+              Day Behind The Leader
+            </div>
           </div>
         </div>
     </div>
@@ -74,8 +74,11 @@
     <div class="col-xs-4 groupdata">
         <div class="row">
           <div class="col-md-12 text-center">
-            <div class="days" id="changeFontSize">
+            <div class="days" ng-if="vm.owe<=0" id="changeFontSize">
               ${{vm.oweAbsolute}}
+            </div>
+            <div class="days" ng-if="vm.owe>0" id="changeFontSize">
+              ${{vm.winnersPot}}
             </div>
           </div>
           <div class="col-md-12 text-center" ng-if="vm.owe>0">
@@ -116,7 +119,7 @@
         <div>
           <div class="col-xs-10 memberlist">{{member.name}}</div>
           <div class="col-xs-2" ng-if="member.daysAhead">
-            Wins ${{member.memberOwes}}
+            Wins ${{vm.winnersPot}}
           </div>
           <div class="col-xs-2" ng-if="member.daysBehind">
             Pays ${{member.memberOwes}}

@@ -51,7 +51,7 @@ angular.module('eggercise', [
 
     $rootScope.$on('$locationChangeStart', function (event, next, current) {
       var requestedPath = $location.url();
-      var publicPages = ['/', '/login', '/signup'];
+      var publicPages = ['/', '/login', '/signup', '/invites/accept/:invite_id'];
       var restrictedPage = publicPages.indexOf(requestedPath) === -1;
 
       if (restrictedPage) {
