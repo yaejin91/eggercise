@@ -1,9 +1,9 @@
 <!-- Modal for updating a new group-->
 <div ng-init="vm.getGroup(vm.group_id)"></div>
-<div class="container">
+<div class="container  modifyWidth">
   <h2> Update your group: {{vm.group.name}} </h2>
   <div class="row">
-    <div class="col-xs-12 modifyWidth">
+    <div class="col-xs-12">
       <form role="form" ng-submit="vm.updateGroup(vm.group_id, vm.formData)">
 
         <div class="row">
@@ -63,13 +63,28 @@
     <div class="col-md-12">
       <h2>Group Members</h2>
       <hr>
+      <span id="ifAdmin"></span>
       <div>
-        <div ng-repeat="members in vm.group._members">
-          <div class="col-md-10">
-            <div>
-              <p>{{members.name}}</p>
+        <div>
+          <!-- <div ng-repeat="members in vm.group._members"> -->
+          <div ng-repeat="members in vm.group._members">
+            <div class="col-md-10 fix-margin">
+              <div>
+                <div>
+                  <!-- Delete Member Button -->
+                  <div id="delete-member" ng-disabled="hideButton">
+                    <!-- <div ng-if="member._name"> -->
+                      {{members.name}}
+                    <!-- </div> -->
+                    <button ng-controller="DeleteMemberCtrl as delete" class="btn btn-danger" ng-click="delete.deleteMember(vm.memberId)">
+                      <div class="glyphicon glyphicon-remove small-glyph"></div>
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
+
         </div>
       </div>
     </div>

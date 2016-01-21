@@ -11,7 +11,6 @@ angular.module('eggercise')
     InviteService.acceptInvite(vm.inviteId)
     .then(function (group) {
       vm.group = group;
-      console.log('accept invite: ', vm.group._id);
       $location.path('/group/show/' + vm.group._id);
     })
     .catch(function (error) {

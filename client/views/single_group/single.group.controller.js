@@ -26,7 +26,7 @@ angular.module('eggercise')
         Auth.getUserNow()
         .then(function (data){
           vm.authUserId = data._id;
-          
+
           //existing showGroup logic
           GroupService.showGroup(id)
             .then(function (data) {
