@@ -54,34 +54,23 @@ exports.getMe = function (req, res) {
  */
 exports.updateProfile = function (req, res) {
   var query = req.user._id;
-  var options = {new: true};
   var password = req.body.password;
 
-  var formInputs = {
-    name: req.body.name,
-    email: req.body.email,
-  };
-
-  if (password) {
-    User.findById(query)
-    .exec(function (err, user) {
-      if (err) { return handleError(res, err); }
-      if (!user) { return res.json(401); }
-      user.password = password;
-      user.save();
-    });
-  };
-
-  var update = {};
-  for (var key in formInputs) {
-    if(formInputs[key]) {
-      update[key] = formInputs[key];
+  User.findById(query)
+  .exec(function (err, user) {
+    if (err) { return handleError(res, err); }
+    if (!user) { return res.json(401); }
+    if (req.body.name !== undefined) {
+      user.name = req.body.name;
     }
-  }
-
-  User.findByIdAndUpdate(query, update, options, function (err, user) {
-    if (err) { return handleError(res, err);}
-    res.status(200).json(user);
+    if (req.body.email !== undefined) {
+      user.email = req.body.email;
+    }
+    if (password !== undefined) {
+      user.password = password;
+    }
+    user.save();
+    res.json(user);
   });
 };
 
