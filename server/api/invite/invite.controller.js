@@ -9,9 +9,9 @@ var Group = require('../group/group.model'),
 
 var errorHandler = require('../../error/error-handling');
 
-// function handleError (res, err, status) {
-//   return res.status(status).json({err: err});
-// }
+function handleError (res, err, status) {
+  return res.status(status).json({err: err});
+}
 
 function handleSuccess(res, message, status) {
   return res.status(status).json({message: message});
@@ -84,11 +84,9 @@ exports.create = function (req, res) {
   console.log('-------------------------');
 
   var query = Invite.find ({ email: invite.email, _group: invite._group });
-  query.exec(function (err, foundInvitationsArray) {
-    console.log('This is the foundInvitationsArray: ', foundInvitationsArray);
-    console.log('foundInvitationsArray: ', foundInvitationsArray);
-
-    if (!foundInvitationsArray) {
+  query.exec(function (error, foundInvitationsArray) {
+    console.log('This is foundInvitationsArray: ', foundInvitationsArray);
+    if (foundInvitationsArray.length <= 0) {
       console.log('No invite found in the database -- invite will be created.');
       invite.save(createInvite(invite, req, res));
     } else {
@@ -100,6 +98,9 @@ exports.create = function (req, res) {
 
         if (foundInvite._group.toString() === invite._group.toString()) {
           console.log('This user already has an invite created for them for this group');
+          // Display the invite
+          // res.json(error);
+          errorHandler.handle(res, error, 500);
         }
       });
     }
