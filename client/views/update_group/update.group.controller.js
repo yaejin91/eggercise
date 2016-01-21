@@ -45,7 +45,6 @@ angular.module('eggercise')
       GroupService.showGroup(id)
         .then(function (data) {
           vm.group = data;
-
           //getting member id in group's data
           for(var i = 0; i < data._members.length; i++){
             var memberId = data._members[i]._id;
@@ -71,7 +70,7 @@ angular.module('eggercise')
       GroupService.updateGroup(id, vm.formData)
         .then(function (updatedGroup){
           vm.formData = updatedGroup;
-          $location.path('/group')
+          $location.path('/group/show/' + vm.group._id);
         })
         .catch(function(error) {
           vm.error = error;
