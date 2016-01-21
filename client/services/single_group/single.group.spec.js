@@ -2,19 +2,21 @@
   'use strict';
 
   describe('SingleGroupService', function () {
-    var service, DateService, handler, singleGroupData, errorMessage, $log;
-
+    var service, Auth, DateService, handler, singleGroupData, errorMessage, $log;
+    // var fakeUser;
     //Configure module that contains the serivce being tested
     beforeEach(module('eggercise'));
 
-    beforeEach(inject(function (_$log_, _SingleGroupService_, _DateService_) {
+    beforeEach(inject(function (_$log_, _SingleGroupService_, _DateService_, _Auth_) {
       $log = _$log_;
       service = _SingleGroupService_;
       DateService = _DateService_;
+      Auth = _Auth_;
       singleGroupData = [];
 
       // Define an object with functions to handle success and error for our API calls
       // These functions simulate the functions written in controllers when a service is called
+
       handler = {
         success: function (singleGroup) {
           singleGroupData.push(singleGroup);
@@ -22,11 +24,20 @@
         error: function (err) {
           errorMessage = err;
         }
-      };
+      },
+
+      // fakeUser = {
+      //   name: 'leaderPotato',
+      //   email: 'leader@email.com',
+      //   password: 'password',
+      //   exercises: leaderExercises,
+      //   validExercises: leaderExercises
+      // };
 
       // Use the Jasmine spyOn method to setup a callback using our handler mock object
       spyOn(handler, 'success').and.callThrough();
       spyOn(handler, 'error').and.callThrough();
+      // spyOn(Auth, 'getUser').andReturn(fakeUser);
     }));
 
     //***TODO: Make sure to change all these dates so that they are relative to current date (ever green)
@@ -65,7 +76,6 @@
         exercises: potato3Exercises,
         validExercises: potato3Exercises,
         email: 'potato3@email.com'
-
       },
       {
         name: 'potato4',
@@ -77,7 +87,6 @@
 
     //Test service elapsedDay() 
     it('should return number of days elapsed between two dates', function () {
-
       var day5 = DateService.dateToMilli(new Date()) + 432000000;
       
       //Change the date two weeks ago into milliseconds
@@ -160,17 +169,19 @@
     });
 
     //Test youWinOrOwe()
-    it('should calculate how much you owe the leader', function () {
-      var winnersPot = 30;
-      var leader = {email: 'leader@email.com', exercises: 10};
-      var runnerUp = {email: 'runnerUp@email.com', exercises: 9};
-      var you = {email: 'me@email.com', exercises: 8};
-      var groupBet = 10;
+    // it('should calculate how much the leader is owed', function () {
+    //   var groupStartDate = DateService.dateToMilli(new Date()) - twoWeeks;
+    //   var groupEndDate = DateService.dateToMilli(new Date()) + twoWeeks;
+    //   var winnersPot = 30;
+    //   var leader = {email: 'leader@email.com', exercises: 10, validExercisesLength: 10};
+    //   var runnerUp = {email: 'runnerUp@email.com', exercises: 9, validExercisesLength: 9};
+    //   var groupBet = 10;
+    //   var you = Auth.getUser();
 
-      var response = service.youWinOrOwe(winnersPot, leader, runnerUp, groupBet);
+    //   var response = service.youWinOrOwe(winnersPot, leader, runnerUp, groupBet, groupStartDate, groupEndDate);
 
-      expect(response.money).toBeDefined();
-    });
+    //   expect(response.money).toBeDefined();
+    // });
     
   })
 })();
