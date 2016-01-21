@@ -10,6 +10,8 @@ angular.module('eggercise', [
   'ngAnimate',
   'angular-toasty'
 ])
+
+// only display home.js if the user is not logged in
   .config(function ($routeProvider, $locationProvider, $httpProvider) {
     $routeProvider
       .otherwise({
@@ -51,13 +53,14 @@ angular.module('eggercise', [
 
     $rootScope.$on('$locationChangeStart', function (event, next, current) {
       var requestedPath = $location.url();
-      var publicPages = ['/', '/login', '/signup', '/invites/accept/:invite_id'];
+      var publicPages = ['/', '/login', '/invites/accept/:invite_id'];
       var restrictedPage = publicPages.indexOf(requestedPath) === -1;
 
       if (restrictedPage) {
         Auth.isReadyLogged()
         .then(function() {
           $rootScope.unauthorized = false;
+          $location.path('/group');
         })
         .catch(function () {
           $rootScope.unauthorized = true;

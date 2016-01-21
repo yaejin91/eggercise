@@ -1,6 +1,6 @@
 <nav class="navbar navbar-inverse">
   <ul class="nav nav-tabs">
-    <li role="presentation">
+    <li role="presentation" ng-if="!Auth.isLogged()">
       <a href="/">Eggercise</a>
     </li>
     <li role="presentation" ng-if="!Auth.isLogged()">
