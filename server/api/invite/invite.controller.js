@@ -9,9 +9,9 @@ var Group = require('../group/group.model'),
 
 var errorHandler = require('../../error/error-handling');
 
-// function handleError (res, err, status) {
-//   return res.status(status).json({err: err});
-// }
+function handleError (res, err, status) {
+  return res.status(status).json({err: err});
+}
 
 function handleSuccess(res, message, status) {
   return res.status(status).json({message: message});
@@ -71,8 +71,25 @@ exports.create = function (req, res) {
     status: false
   });
 
-  invite.save(createInvite(invite, req, res));
+  // Run a check for an existing invite in the database
+  var query = Invite.find ({ email: invite.email, _group: invite._group });
+  query.exec(function (error, foundInvitationsArray) {
+    console.log('This is foundInvitationsArray: ', foundInvitationsArray);
+    if (foundInvitationsArray.length <= 0) {
+      // If no invites were found for this email address, then create invite
+      invite.save(createInvite(invite, req, res));
+    } else {
+      foundInvitationsArray.forEach(function checkInvitations(foundInvite, index, inviteArray) {
+        if (foundInvite._group.toString() === invite._group.toString()) {
+          // Respond with server error
+          errorHandler.handle(res, error, 500);
+        }
+      });
+    }
+  });
 }
+
+
 
 //Invitee accepts invitation
 exports.acceptInvite = function(req, res) {
