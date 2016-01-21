@@ -19,7 +19,7 @@
       </ul>
     </li>
     <ul class="nav pull-right">
-      <li>
+      <li ng-if="Auth.isLogged()">
         <a href="/" ng-click="Auth.logout()">Logout</a>
       </li>
     </ul>
