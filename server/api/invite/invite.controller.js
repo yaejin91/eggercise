@@ -69,8 +69,36 @@ exports.create = function (req, res) {
     status: false
   });
 
-  invite.save(createInvite(invite, req, res));
+  // Do a check here for the invite in the database
+  console.log('This is invite: ', invite);
+  console.log('-------------------------');
+  console.log('This is invite.name: ', invite.name);
+  console.log('-------------------------');
+  console.log('This is invite.email: ', invite.email);
+  console.log('-------------------------');
+  console.log('This is invite._group: ', invite._group);
+  console.log('-------------------------');
+  console.log('This is invite.status: ', invite.status);
+  console.log('-------------------------');
+
+  var query = Invite.find ({ email: invite.email, _group: invite._group });
+  query.exec(function (err, foundInvitationsArray) {
+    console.log('This is the foundInvitationsArray: ', foundInvitationsArray);
+
+    foundInvitationsArray.forEach(function checkInvitations(foundInvite, index, inviteArray) {
+      console.log('foundInvitationsArray[' + index + '] = ' + foundInvite);
+      console.log(foundInvite._group);
+      console.log(invite._group);
+      if (foundInvite._group.toString() === invite._group.toString()) {
+        console.log('This user already has an invite created for them for this group');
+      }
+    });
+    // else {
+    // invite.save(createInvite(invite, req, res));
+  });
 }
+
+
 
 //Invitee accepts invitation
 exports.acceptInvite = function(req, res) {
