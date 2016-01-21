@@ -12,7 +12,7 @@ body {
   color: white;
   text-align: center;
   height: 400px;
-  background: url('../../assets/images/eggerciseimage.jpg') no-repeat center;
+  background: url('../../assets/images/eggerciseimage.jpg') no-repeat center top;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   background-size: cover;
@@ -138,8 +138,9 @@ body {
 }
 
 .margin-base-vertical {
-  margin: 40px 0;
+  padding-top: 40px;
   text-align: center;
+  margin-top: 0;
 }
 
 
