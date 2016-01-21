@@ -84,17 +84,23 @@ exports.create = function (req, res) {
   var query = Invite.find ({ email: invite.email, _group: invite._group });
   query.exec(function (err, foundInvitationsArray) {
     console.log('This is the foundInvitationsArray: ', foundInvitationsArray);
+    console.log('foundInvitationsArray: ', foundInvitationsArray);
 
-    foundInvitationsArray.forEach(function checkInvitations(foundInvite, index, inviteArray) {
-      console.log('foundInvitationsArray[' + index + '] = ' + foundInvite);
-      console.log(foundInvite._group);
-      console.log(invite._group);
-      if (foundInvite._group.toString() === invite._group.toString()) {
-        console.log('This user already has an invite created for them for this group');
-      }
-    });
-    // else {
-    // invite.save(createInvite(invite, req, res));
+    if (!foundInvitationsArray) {
+      console.log('No invite found in the database -- invite will be created.');
+      invite.save(createInvite(invite, req, res));
+    } else {
+      foundInvitationsArray.forEach(function checkInvitations(foundInvite, index, inviteArray) {
+
+        console.log('foundInvitationsArray[' + index + '] = ' + foundInvite);
+        console.log(foundInvite._group);
+        console.log(invite._group);
+
+        if (foundInvite._group.toString() === invite._group.toString()) {
+          console.log('This user already has an invite created for them for this group');
+        }
+      });
+    }
   });
 }
 
