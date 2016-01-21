@@ -152,6 +152,8 @@ body {
 .navbar {
   background-color: #162955;
   color: white;
+  border-radius: 0;
+  margin-bottom: 0px;
 }
 
 .navbar > li > a {
@@ -232,4 +234,10 @@ body {
     margin-left: auto;
 
   }
+}
+
+.landing-page {
+  width: 100%;
+  padding-right: 0px;
+  padding-left: 0px;
 }
