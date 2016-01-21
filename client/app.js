@@ -56,19 +56,22 @@ angular.module('eggercise', [
       var publicPages = ['/', '/login', '/invites/accept/:invite_id'];
       var restrictedPage = publicPages.indexOf(requestedPath) === -1;
 
-      if (restrictedPage) {
         Auth.isReadyLogged()
         .then(function() {
           $rootScope.unauthorized = false;
-          $location.path('/group');
+          if(requestedPath === publicPages[0]) {
+            event.preventDefault();
+            $location.path('/group');
+          }
         })
         .catch(function () {
           $rootScope.unauthorized = true;
-          event.preventDefault();
-          $rootScope.returnToPath = $location.url();
-          $location.path('/login');
+          if (restrictedPage) {
+            event.preventDefault();
+            $rootScope.returnToPath = $location.url();
+            $location.path('/login');
+          }
         });
-      }
     });
   })
 
