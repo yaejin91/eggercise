@@ -38,7 +38,7 @@ angular.module('eggercise')
 
     vm.notification = function (){
       var noLogs = document.getElementById('noLogs');
-        noLogs.innerHTML = 'No exercise logs found at the moment \u2639 .';
+        noLogs.innerHTML = 'No exercise logs found at the moment \u2639';
         noLogs.style.display = 'block';
     }
 

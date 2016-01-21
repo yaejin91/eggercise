@@ -37,11 +37,14 @@ angular.module('eggercise')
         WorkoutService.logToggle(logPath, date)
           .then(function (data) {
             vm.user = data;
+            vm.ifLogged();
           })
           .catch(function (err) {
             vm.error = err;
             $log.error('Error: ', err);
           })
         }
+
+
     });
   }]);
