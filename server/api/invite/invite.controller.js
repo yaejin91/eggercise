@@ -90,13 +90,16 @@ exports.create = function (req, res) {
 
 //View a single invitation
 exports.showInvite = function (req, res) {
-  console.log('This is req: ', req);
-  console.log('This is res: ', res);
+  console.log('This is req.params: ', req.params);
+  console.log('------------------');
+  console.log('This is req.params.invite_id: ', req.params.invite_id);
+  console.log('------------------');
+  var inviteId = req.params.invite_id;
 }
 
 // //Invitee accepts invitation
 // exports.acceptInvite = function(req, res) {
-//   var inviteId = req.params.invite_id;
+
 //   console.log('This is the inviteId: ', inviteId);
 //   console.log('This is req.params: ', req.params);
 
