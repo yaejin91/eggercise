@@ -88,12 +88,11 @@ exports.create = function (req, res) {
   });
 }
 
-// Show a single invite
-exports.getInvite = function (req, res) {
-  var query = Invite.find ({ id: req.params.invite_id });
-  console.log('query: ', query);
+//View a single invitation
+exports.showInvite = function (req, res) {
+  console.log('This is req: ', req);
+  console.log('This is res: ', res);
 }
-
 
 //Invitee accepts invitation
 exports.acceptInvite = function(req, res) {
@@ -101,9 +100,15 @@ exports.acceptInvite = function(req, res) {
   console.log('This is the inviteId: ', inviteId);
   console.log('This is req.params: ', req.params);
 
+  console.log('This is req: ', req);
+  console.log('------------------');
+  console.log('This is res: ', res);
+  console.log('------------------');
+
   Invite.findById({ _id: inviteId})
     .exec(function (error, foundInvite) {
       console.log('This is the invite that was found: ', foundInvite);
+      res.json(foundInvite);
       if (error) {
         errorHandler.handle(res, 'Invite not found', 404);
       } else if (foundInvite !== null) {

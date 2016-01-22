@@ -33,8 +33,9 @@ angular.module('eggercise')
     //show invite by invite id
     service.showInvite = function (id) {
       var deferred = $q.defer();
-      $http.get('/api/invites/accept' + id)
+      $http.get('/api/invites/accept/' + id)
         .success(function (showInvite) {
+          console.log('This the the showInvite: ', showInvite);
           deferred.resolve(showInvite);
         })
         .error(function (error) {
