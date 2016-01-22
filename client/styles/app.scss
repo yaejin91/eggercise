@@ -25,6 +25,7 @@ body {
 
 .pageforms {
   margin: auto;
+  width: 500px;
   width: 33%;
 }
 
@@ -129,7 +130,7 @@ body {
   height: 60px;
   background: #162955;
   text-align: center;
-  color: #337ab7;
+  color: white;
   position: absolute;
 }
 
@@ -157,8 +158,12 @@ body {
   margin-bottom: 0px;
 }
 
-.navbar > li > a {
-  color: #000;
+// .navbar > li > a {
+//   color: #000;
+// }
+
+.nav-tabs > li > a {
+  color: white;
 }
 
 .nav-tabs {
