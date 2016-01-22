@@ -16,21 +16,21 @@ angular.module('eggercise')
       return deferred.promise;
     }
 
-    service.acceptInvite = function (id) {
-      var deferred = $q.defer();
-      $http.get('/api/invites/accept/' + id)
-        .success(function (showGroup) {
-          console.log('This is id: ', id);
-          console.log('This is showGroup: ', id);
-          deferred.resolve(showGroup);
-        })
-        .error(function (error) {
-          deferred.reject(error);
-        });
-      return deferred.promise;
-    }
+    // service.acceptInvite = function (id) {
+    //   var deferred = $q.defer();
+    //   $http.get('/api/invites/accept/' + id)
+    //     .success(function (showGroup) {
+    //       console.log('This is id: ', id);
+    //       console.log('This is showGroup: ', id);
+    //       deferred.resolve(showGroup);
+    //     })
+    //     .error(function (error) {
+    //       deferred.reject(error);
+    //     });
+    //   return deferred.promise;
+    // }
 
-    //show invite by invite id
+    // Show invite by invite id
     service.showInvite = function (id) {
       var deferred = $q.defer();
       $http.get('/api/invites/accept/' + id)

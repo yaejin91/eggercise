@@ -13,7 +13,7 @@ angular.module('eggercise')
 
     //get invite
     vm.getInvite = function (id) {
-      InviteService.acceptInvite(id)
+      InviteService.showInvite(id)
         .then(function (data) {
           console.log('This is data: ', data);
           vm.invite = data;
