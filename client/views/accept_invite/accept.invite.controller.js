@@ -28,13 +28,13 @@ angular.module('eggercise')
 
     console.log('This is vm: ', vm);
     console.log('This is vm.invite.inviteId: ', vm.invite.inviteId);
-    InviteService.acceptInvite(vm.invite.inviteId)
-    .then(function (group) {
-      vm.group = group;
-      $location.path('/group/show/' + vm.group._id);
-    })
-    .catch(function (error) {
-      console.log(error);
-      vm.error = error;
-    });
+    // InviteService.acceptInvite(vm.invite.inviteId)
+    // .then(function (group) {
+    //   vm.group = group;
+    //   $location.path('/group/show/' + vm.group._id);
+    // })
+    // .catch(function (error) {
+    //   console.log(error);
+    //   vm.error = error;
+    // });
   }]);
