@@ -7,6 +7,14 @@ body {
   font-family: sans-serif;
   margin-bottom: 60px;
 }
+a{
+  cursor: pointer;
+}
+
+
+a, u {
+  text-decoration: none;
+}
 
 .landingpage {
   color: white;
@@ -220,6 +228,12 @@ body {
 #hideButton{
   /*display: none;*/
 }
+
+#delete-group{
+  font-weight: bold;
+  text-decoration: none;
+  color: red;
+}
 .workoutlog {
   text-align: center;
 }
@@ -228,8 +242,23 @@ body {
   font-weight: bold;
 }
 
+#inviteBox{
+  padding-bottom: 20px;
+}
+
+
+#group-title-bar{
+  padding-top: 20px;
+}
+
+#group-name{
+  font-size: 2em;
+  font-weight: bold;
+}
+
 /* Media-Query Landscape phones and down */
-@media (max-width: 480px) {
+/*@media (max-width: 480px) {*/
+@media (max-width: 800px) {
   #changeFontSize{
     font-size: 1.5em;
   }
