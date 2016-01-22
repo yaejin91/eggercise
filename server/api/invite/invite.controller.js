@@ -90,35 +90,23 @@ exports.create = function (req, res) {
 
 //View a single invitation
 exports.showInvite = function (req, res) {
-  console.log('This is req.params: ', req.params);
+  console.log('This is req.params in showInvite (server): ', req.params);
   console.log('------------------');
-  console.log('This is req.params.invite_id: ', req.params.invite_id);
+  console.log('This is req.params.invite_id in showInvite (server): ', req.params.invite_id);
   console.log('------------------');
   var inviteId = req.params.invite_id;
+  console.log('This is inviteId in showInvite (server): ', inviteId);
+  console.log('------------------');
+  Invite.findById({ _id: inviteId})
+  .populate('_group')
+  .exec(function (error, foundInvite) {
+    console.log('This is the invite that was found in acceptInvite (server): ', foundInvite);
+    res.json(foundInvite);
+  });
 }
 
 // //Invitee accepts invitation
 // exports.acceptInvite = function(req, res) {
-
-//   console.log('This is the inviteId: ', inviteId);
-//   console.log('This is req.params: ', req.params);
-
-//   console.log('This is req in acceptInvite (server): ', req);
-//   console.log('------------------');
-//   console.log('This is res in acceptInvite (server): ', res);
-//   console.log('------------------');
-
-//   Invite.findById({ _id: inviteId})
-//     .populate('_group')
-//     .exec(function (error, foundInvite) {
-//       console.log('This is the invite that was found in acceptInvite (server): ', foundInvite);
-//       res.json(foundInvite);
-//     });
-// }
-
-
-
-
       // if (error) {
       //   errorHandler.handle(res, 'Invite not found', 404);
       // } else if (foundInvite !== null) {
