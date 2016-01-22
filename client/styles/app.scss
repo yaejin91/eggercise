@@ -7,6 +7,9 @@ body {
   font-family: sans-serif;
   margin-bottom: 60px;
 }
+a{
+  cursor: pointer;
+}
 
 .landingpage {
   color: white;
@@ -220,6 +223,11 @@ body {
 #hideButton{
   /*display: none;*/
 }
+
+#delete-group{
+  font-weight: bold;
+  text-decoration: none;
+}
 .workoutlog {
   text-align: center;
 }
@@ -228,8 +236,12 @@ body {
   font-weight: bold;
 }
 
+#inviteBox{
+  padding-bottom: 20px;
+}
 /* Media-Query Landscape phones and down */
-@media (max-width: 480px) {
+/*@media (max-width: 480px) {*/
+@media (max-width: 800px) {
   #changeFontSize{
     font-size: 1.5em;
   }

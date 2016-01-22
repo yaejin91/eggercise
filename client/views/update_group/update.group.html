@@ -51,10 +51,14 @@
               </p>
             </div>
             <input type="submit" class="btn btn-primary" value="Update">
-            <a ng-click="back()" class="btn btn-default" id="cancel-button"> Cancel </a>
+            <a href="/group/show/{{vm.group._id}}" class="btn btn-default" id="cancel-button"> Cancel </a>
           </div>
         </div>
       </form>
+      <div id="delete-group">
+        <a ng-controller="DeleteGroupCtrl as delete" ng-click="delete.deleteGroup(vm.group._id)">
+          Delete This Group</a>
+      </div>
     </div>
   </div>
 

@@ -22,10 +22,6 @@
                     <div class="glyphicon glyphicon-pencil small-glyph"></div>
                    </button>
                 </a>
-              <!-- Delete Group Button -->
-              <button ng-controller="DeleteGroupCtrl as delete" class="btn btn-danger" ng-click="delete.deleteGroup(vm.group._id)">
-                <div class="glyphicon glyphicon-remove small-glyph"></div>
-              </button>
             </div>
         </div>
       </div>
@@ -132,7 +128,7 @@
   <h3>Invite Your Friends!</h3>
   <hr>
   <toasty></toasty>
-  <div ng-controller="InviteCtrl as invite" class="col-xs-12">
+  <div ng-controller="InviteCtrl as invite" class="col-xs-12" id="inviteBox">
     <form role="form" class="form-inline" ng-submit="invite.createInvite(invite.formData)">
       <div class="form-group">
         <label for="exampleInputName2">Name</label>
