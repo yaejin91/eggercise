@@ -7,6 +7,14 @@ body {
   font-family: sans-serif;
   margin-bottom: 60px;
 }
+a{
+  cursor: pointer;
+}
+
+
+a, u {
+  text-decoration: none;
+}
 
 .landingpage {
   color: white;
@@ -40,11 +48,11 @@ body {
   height: 120px;
   width: 300px;
   padding: 20px;
-  background-color: white;
+  background-color: #4F628E;
 
   /* outer shadows  (note the rgba is red, green, blue, alpha) */
-  -webkit-box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.4);
-  -moz-box-shadow: 0px 1px 6px rgba(23, 69, 88, .5);
+  // -webkit-box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.4);
+  // -moz-box-shadow: 0px 1px 6px rgba(23, 69, 88, .5);
 
   /* rounded corners */
   -webkit-border-radius: 12px;
@@ -52,9 +60,9 @@ body {
   border-radius: 7px;
 
   /* gradients */
-  background: -webkit-gradient(linear, left top, left bottom,
-  color-stop(0%, white), color-stop(15%, white), color-stop(100%, #2E4272));
-  background: -moz-linear-gradient(top, white 0%, white 55%, #2E4272 130%);
+  // background: -webkit-gradient(linear, left top, left bottom,
+  // color-stop(0%, white), color-stop(15%, white), color-stop(100%, #2E4272));
+  // background: -moz-linear-gradient(top, white 0%, white 55%, #2E4272 130%);
 }
 
 .logadd {
@@ -62,11 +70,11 @@ body {
   height: 80px;
   // width: 300px;
   // padding: 20px;
-  background-color: white;
+  background-color: #4F628E;
 
   /* outer shadows  (note the rgba is red, green, blue, alpha) */
-  -webkit-box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.4);
-  -moz-box-shadow: 0px 1px 6px rgba(23, 69, 88, .5);
+  // -webkit-box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.4);
+  // -moz-box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.4);
 
   /* rounded corners */
   -webkit-border-radius: 12px;
@@ -74,9 +82,9 @@ body {
   border-radius: 7px;
 
   /* gradients */
-  background: -webkit-gradient(linear, left top, left bottom,
-  color-stop(0%, white), color-stop(15%, white), color-stop(100%, #2E4272));
-  background: -moz-linear-gradient(top, white 0%, white 55%, #2E4272 130%);
+  // background: -webkit-gradient(linear, left top, left bottom,
+  // color-stop(0%, white), color-stop(15%, white), color-stop(100%, #2E4272));
+  // background: -moz-linear-gradient(top, white 0%, white 55%, #2E4272 130%);
 }
 
 .loglist {
@@ -220,6 +228,12 @@ body {
 #hideButton{
   /*display: none;*/
 }
+
+#delete-group{
+  font-weight: bold;
+  text-decoration: none;
+  color: red;
+}
 .workoutlog {
   text-align: center;
 }
@@ -228,8 +242,23 @@ body {
   font-weight: bold;
 }
 
+#inviteBox{
+  padding-bottom: 20px;
+}
+
+
+#group-title-bar{
+  padding-top: 20px;
+}
+
+#group-name{
+  font-size: 2em;
+  font-weight: bold;
+}
+
 /* Media-Query Landscape phones and down */
-@media (max-width: 480px) {
+/*@media (max-width: 480px) {*/
+@media (max-width: 800px) {
   #changeFontSize{
     font-size: 1.5em;
   }
