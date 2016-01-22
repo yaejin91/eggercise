@@ -112,38 +112,17 @@ exports.showInvite = function (req, res) {
   });
 }
 
-// //Invitee accepts invitation
-// exports.acceptInvite = function(req, res) {
-      // if (error) {
-      //   errorHandler.handle(res, 'Invite not found', 404);
-      // } else if (foundInvite !== null) {
-      //   User.findOne({ email: foundInvite.email}, function (error, user) {
-      //     console.log('This is error: ', error);
-      //     console.log('This is user: ', user);
-      //     if (error) {
-      //       errorHandler.handle(res, 'User not found', 404);
-          // } else {
-          //   user._groups.push(foundInvite._group);
-          //   user.save(function (error, savedUser) {
-          //     if (error) {
-          //       errorHandler.handle(res, error, 500);
-          //     } else {
-          //       Group.findById( {_id: foundInvite._group}, function (error, group) {
-          //         group._members.push(user._id);
-          //         group.save(function (error, savedGroup) {
-          //           if (error) {
-          //             errorHandler.handle(res, error, 500);
-          //           } else {
-          //             res.status(200).json(group);
-          //           }
-          //         });
-          //       })
-          //     }
-            // });
-          // }
-        // });
+//Invitee accepts invitation
+exports.acceptInvite = function(req, res) {
+  console.log('This is req.params in acceptInvite controller (server): ', req.params);
+  console.log('------------------');
+  console.log('This is res in acceptInvite controller (server): ', res);
+  console.log('------------------');
 
-      // } else {
-      //   res.status(404).json({message: 'invite not found'});
-      // }
-
+  // var user = new User ({
+  //   name: req.body.name,
+  //   email: req.body.email,
+  //   _groups: req.body._group
+  // });
+  // console.log('This is user in acceptInvite controller (server): ', user);
+}

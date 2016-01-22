@@ -16,20 +16,6 @@ angular.module('eggercise')
       return deferred.promise;
     }
 
-    // service.acceptInvite = function (id) {
-    //   var deferred = $q.defer();
-    //   $http.get('/api/invites/accept/' + id)
-    //     .success(function (showGroup) {
-    //       console.log('This is id: ', id);
-    //       console.log('This is showGroup: ', id);
-    //       deferred.resolve(showGroup);
-    //     })
-    //     .error(function (error) {
-    //       deferred.reject(error);
-    //     });
-    //   return deferred.promise;
-    // }
-
     // Show invite by invite id
     service.showInvite = function (id) {
       var deferred = $q.defer();
@@ -43,5 +29,21 @@ angular.module('eggercise')
         });
         return deferred.promise;
     };
+
+    // Accept invitation
+    service.acceptInvite = function (id) {
+      var deferred = $q.defer();
+      $http.post('/api/invites/accept/' + id)
+        .success(function (acceptedInvitation) {
+          console.log('This is id: ', id);
+          console.log('This is acceptedInvitation: ', id);
+          deferred.resolve(acceptedInvitation);
+        })
+        .error(function (error) {
+          deferred.reject(error);
+        });
+      return deferred.promise;
+    }
+
     return service;
   });

@@ -10,6 +10,8 @@ angular.module('eggercise')
     vm.invite = {};
     console.log('This is $routeParams: ', $routeParams);
     vm.invite.inviteId = $routeParams.invite_id;
+    vm.newUser = {};
+    vm.group = groupId;
 
     //get invite
     vm.getInvite = function (id) {
@@ -25,16 +27,16 @@ angular.module('eggercise')
     }
     vm.getInvite(vm.invite.inviteId);
 
-
-    console.log('This is vm: ', vm);
-    console.log('This is vm.invite.inviteId: ', vm.invite.inviteId);
-    // InviteService.acceptInvite(vm.invite.inviteId)
-    // .then(function (group) {
-    //   vm.group = group;
-    //   $location.path('/group/show/' + vm.group._id);
-    // })
-    // .catch(function (error) {
-    //   console.log(error);
-    //   vm.error = error;
-    // });
+    vm.acceptInvite = function (id) {
+      InviteService.acceptInvite(id)
+      .then(function (data) {
+        console.log('This is data: ', data);
+        vm.newUser = data;
+        console.log('This is newUser: ', newUser);
+        $location.path('/group/show/' + vm.group);
+      })
+      .catch(function (error) {
+        vm.error = error;
+      })
+    }
   }]);
