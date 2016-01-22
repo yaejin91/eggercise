@@ -94,14 +94,21 @@ exports.showInvite = function (req, res) {
   console.log('------------------');
   console.log('This is req.params.invite_id in showInvite (server): ', req.params.invite_id);
   console.log('------------------');
+
   var inviteId = req.params.invite_id;
   console.log('This is inviteId in showInvite (server): ', inviteId);
   console.log('------------------');
-  Invite.findById({ _id: inviteId})
+
+  Invite.findOne({ _id: inviteId})
   .populate('_group')
   .exec(function (error, foundInvite) {
+    console.log('This is the error that was found in acceptInvite (server): ', error);
     console.log('This is the invite that was found in acceptInvite (server): ', foundInvite);
-    res.json(foundInvite);
+    if (!foundInvite && error === null) {
+      errorHandler.handle(res, 'Invite not found', 404);
+    } else if (foundInvite) {
+      res.json(foundInvite);
+    }
   });
 }
 
