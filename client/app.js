@@ -59,9 +59,11 @@ angular.module('eggercise', [
       !Auth.isReadyLogged()
       .then(function() {
         $rootScope.unauthorized = true;
-        if (requestedPath === publicPages[2]) {
-          $location.path(publicPages[2])
-        }
+        publicPages.forEach(function(publicPage, index, publicPages) {
+          if (requestedPath === publicPage) {
+            $location.path(publicPage)
+          }
+        });
       })
 
 
