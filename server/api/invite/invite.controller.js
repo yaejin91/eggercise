@@ -88,6 +88,11 @@ exports.create = function (req, res) {
   });
 }
 
+// Show a single invite
+exports.getInvite = function (req, res) {
+  var query = Invite.find ({ id: req.params.invite_id });
+  console.log('query: ', query);
+}
 
 
 //Invitee accepts invitation
