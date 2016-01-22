@@ -56,36 +56,20 @@ angular.module('eggercise', [
       var publicPages = [/\//, /\/login/, /\/invites\/accept\/S+$/];
       var restrictedPage = publicPages.indexOf(requestedPath) === -1;
 
-      !Auth.isReadyLogged()
+      Auth.isReadyLogged()
       .then(function() {
+        $rootScope.unauthorized = false;
+        event.preventDefault();
+        $location.path('/group');
+      })
+      .catch(function () {
         $rootScope.unauthorized = true;
         publicPages.forEach(function(publicPage, index, publicPages) {
           if (requestedPath === publicPage) {
             $location.path(publicPage)
           }
-        });
+        })
       })
-
-
-        // Auth.isReadyLogged()
-        // .then(function() {
-        //   $rootScope.unauthorized = false;
-        //   if(requestedPath === publicPages[0]) {
-        //     event.preventDefault();
-        //     $location.path('/group');
-        //   }
-        // })
-        // .catch(function () {
-        //   $rootScope.unauthorized = true;
-        //   if (requestedPath === publicPages[2]) {
-        //     $location.path(publicPages[2]);
-        //   }
-        //   else if (restrictedPage) {
-        //     event.preventDefault();
-        //     $rootScope.returnToPath = $location.url();
-        //     $location.path('/');
-        //   }
-        // });
     });
   })
 
