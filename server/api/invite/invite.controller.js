@@ -88,36 +88,42 @@ exports.create = function (req, res) {
   });
 }
 
-// //View a single invitation
-// exports.showInvite = function (req, res) {
-//   console.log('This is req: ', req);
-//   console.log('This is res: ', res);
+//View a single invitation
+exports.showInvite = function (req, res) {
+  console.log('This is req: ', req);
+  console.log('This is res: ', res);
+}
+
+// //Invitee accepts invitation
+// exports.acceptInvite = function(req, res) {
+//   var inviteId = req.params.invite_id;
+//   console.log('This is the inviteId: ', inviteId);
+//   console.log('This is req.params: ', req.params);
+
+//   console.log('This is req in acceptInvite (server): ', req);
+//   console.log('------------------');
+//   console.log('This is res in acceptInvite (server): ', res);
+//   console.log('------------------');
+
+//   Invite.findById({ _id: inviteId})
+//     .populate('_group')
+//     .exec(function (error, foundInvite) {
+//       console.log('This is the invite that was found in acceptInvite (server): ', foundInvite);
+//       res.json(foundInvite);
+//     });
 // }
 
-//Invitee accepts invitation
-exports.acceptInvite = function(req, res) {
-  var inviteId = req.params.invite_id;
-  console.log('This is the inviteId: ', inviteId);
-  console.log('This is req.params: ', req.params);
 
-  console.log('This is req: ', req);
-  console.log('------------------');
-  console.log('This is res: ', res);
-  console.log('------------------');
 
-  Invite.findById({ _id: inviteId})
-    .populate('_group')
-    .exec(function (error, foundInvite) {
-      console.log('This is the invite that was found: ', foundInvite);
-      res.json(foundInvite);
-      if (error) {
-        errorHandler.handle(res, 'Invite not found', 404);
-      } else if (foundInvite !== null) {
-        User.findOne({ email: foundInvite.email}, function (error, user) {
-          console.log('This is error: ', error);
-          console.log('This is user: ', user);
-          if (error) {
-            errorHandler.handle(res, 'User not found', 404);
+
+      // if (error) {
+      //   errorHandler.handle(res, 'Invite not found', 404);
+      // } else if (foundInvite !== null) {
+      //   User.findOne({ email: foundInvite.email}, function (error, user) {
+      //     console.log('This is error: ', error);
+      //     console.log('This is user: ', user);
+      //     if (error) {
+      //       errorHandler.handle(res, 'User not found', 404);
           // } else {
           //   user._groups.push(foundInvite._group);
           //   user.save(function (error, savedUser) {
@@ -136,10 +142,10 @@ exports.acceptInvite = function(req, res) {
           //       })
           //     }
             // });
-          }
-        });
-      } else {
-        res.status(404).json({message: 'invite not found'});
-      }
-    });
-}
+          // }
+        // });
+
+      // } else {
+      //   res.status(404).json({message: 'invite not found'});
+      // }
+
