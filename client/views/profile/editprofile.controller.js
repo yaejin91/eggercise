@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('eggercise')
-  .controller('ProfileCtrl', function (EditProfile, $routeParams, $rootScope, $cookieStore, $log, $location, Auth) {
+  .controller('ProfileCtrl', ['EditProfile', '$routeParams', '$rootScope', '$cookieStore', '$log', '$location', 'Auth', 'ErrorService', function (EditProfile, $routeParams, $rootScope, $cookieStore, $log, $location, Auth, ErrorService) {
 
     var vm = this;
     vm.user = {};
@@ -24,9 +24,8 @@ angular.module('eggercise')
           $location.path('/');
         })
       .catch(function (err) {
-        vm.error = err;
-        $log.error('Error: ', err);
+        ErrorService.errorToasty(err);
       });
     }
    });
-});
+}]);
