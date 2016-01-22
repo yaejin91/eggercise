@@ -149,7 +149,7 @@ describe('Group', function() {
     });
 
     //view single member page (positive)
-    fit('should show a single group', function (done) {
+    it('should show a single group', function (done) {
       var group_id = group._id;
       agent
       .get('/api/groups/' + group_id)
