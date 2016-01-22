@@ -8,7 +8,7 @@ var config = require('../config/environment');
 var User = require('../api/user/user.model');
 var validateJwt = expressJwt({ secret: config.secrets.session });
 
-var errorHandler = require('../../error/error-handling');
+var errorHandler = require('../error/error-handling');
 
 /**
  * Attach the user object to the request if authenticated
