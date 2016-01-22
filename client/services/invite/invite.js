@@ -8,7 +8,6 @@ angular.module('eggercise')
       var deferred = $q.defer();
       $http.post('/api/invites/create', formData)
         .success(function (returnedInvite) {
-          formData = {};
           deferred.resolve(returnedInvite);
         })
         .error(function (error) {

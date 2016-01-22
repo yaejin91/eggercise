@@ -5,11 +5,14 @@ angular.module('eggercise', [
   'ngCookies',
   'ngResource',
   'ngSanitize',
+  'ngMessages',
   'ui.bootstrap',
   'ngAnimate',
+  'angular-toasty'
 ])
-  .config(function ($routeProvider, $locationProvider, $httpProvider) {
 
+// only display home.js if the user is not logged in
+  .config(function ($routeProvider, $locationProvider, $httpProvider) {
     $routeProvider
       .otherwise({
         redirectTo: '/'
@@ -32,42 +35,43 @@ angular.module('eggercise', [
       },
 
       responseError: function (response) {
-        console.log('response.status: ', response.status);
         if (response.status === 401) {
-          console.log('responseError going to login');
           $location.path('/login');
           $cookieStore.remove('token');
           return $q.reject(response);
         }
-        else {
-          $location.path('/');
+         else {
           return $q.reject(response);
         }
       }
-
     };
   })
+
   .run(function ($rootScope, $location, Auth) {
 
     $rootScope.Auth = Auth;
 
     $rootScope.$on('$locationChangeStart', function (event, next, current) {
       var requestedPath = $location.url();
-      var publicPages = ['/', '/login', '/signup'];
+      var publicPages = ['/', '/login', '/invites/accept/:invite_id'];
       var restrictedPage = publicPages.indexOf(requestedPath) === -1;
 
-      if (restrictedPage) {
         Auth.isReadyLogged()
         .then(function() {
           $rootScope.unauthorized = false;
+          if(requestedPath === publicPages[0]) {
+            event.preventDefault();
+            $location.path('/group');
+          }
         })
         .catch(function () {
           $rootScope.unauthorized = true;
-          event.preventDefault();
-          $rootScope.returnToPath = $location.url();
-          $location.path('/login');
+          if (restrictedPage) {
+            event.preventDefault();
+            $rootScope.returnToPath = $location.url();
+            $location.path('/login');
+          }
         });
-      }
     });
   })
 

@@ -1,11 +1,11 @@
 <!-- Modal for updating a new group-->
 <div ng-init="vm.getGroup(vm.group_id)"></div>
-<div class="container">
-  <h2> Update your group's information </h2>
-  <h2> {{vm.group.name}} </h2>
+<div class="container  modifyWidth">
+  <h2> Update your group: {{vm.group.name}} </h2>
   <div class="row">
     <div class="col-xs-12">
       <form role="form" ng-submit="vm.updateGroup(vm.group_id, vm.formData)">
+
         <div class="row">
           <div class="input-group col-md-4">
             <div>
@@ -23,70 +23,70 @@
             <div>
               Start Date
               <p class="input-group">
-              <input ng-model="vm.formData.start" type="text" 
-              datepicker-popup="mediumDate" 
-              is-open="vm.startDatePickerIsOpen" 
+              <input ng-model="vm.formData.start" type="text"
+              datepicker-popup="mediumDate"
+              is-open="vm.startDatePickerIsOpen"
               ng-click="vm.valuationDatePickerOpen()"
               class="form-control"/>
               <span class="input-group-btn">
-                <button type="button" class="btn btn-default" ng-click="vm.valuationDatePickerOpen($event, 'start')">
+                <button type="button" class="btn btn-default form-icon" ng-click="vm.valuationDatePickerOpen($event, 'start')">
                   <i id="start-date-glyph" class="glyphicon glyphicon-calendar"></i>
                 </button>
               </span>
               </p>
             </div>
-
             <div>
               End Date
               <p class="input-group">
-              <input ng-model="vm.formData.end" type="text" 
-              datepicker-popup="mediumDate" 
-              is-open="vm.endDatePickerIsOpen" 
+              <input ng-model="vm.formData.end" type="text"
+              datepicker-popup="mediumDate"
+              is-open="vm.endDatePickerIsOpen"
               ng-click="vm.valuationDatePickerOpen()"
               class="form-control"/>
               <span class="input-group-btn">
-                <button type="button" class="btn btn-default" ng-click="vm.valuationDatePickerOpen($event, 'end')">
+                <button type="button" class="btn btn-default form-icon" ng-click="vm.valuationDatePickerOpen($event, 'end')">
                   <i class="glyphicon glyphicon-calendar"></i>
                 </button>
               </span>
               </p>
             </div>
-
             <input type="submit" class="btn btn-primary" value="Update">
-            <a href="/group" class="btn btn-default">Cancel </a>
+            <a href="/group/show/{{vm.group._id}}" class="btn btn-default" id="cancel-button"> Cancel </a>
           </div>
         </div>
       </form>
     </div>
   </div>
 
-
-  <div class="row">
-    <div>
-      <h2>Group Members</h2>
+  <div class="col-md-12">
+    <h2>Group Members</h2>
       <hr>
-      <div class="col-md-12">
+      <span id="ifAdmin"></span>
+    <div>
+      <div>
         <div ng-repeat="members in vm.group._members">
-          <div class="col-md-10">
+          <div class="col-md-10 fix-margin">
             <div>
-              <p>{{members.name}}</p>
+              <div>
+                <div id="delete-member" ng-disabled="hideButton">
+                    {{members.name}}
+                  <!-- <button ng-controller="DeleteMemberCtrl as delete" class="btn btn-danger" ng-click="delete.deleteMember(vm.memberId)">
+                    <div class="glyphicon glyphicon-remove small-glyph"></div>
+                  </button> -->
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div ng-controller="InviteCtrl as invite" class="col-xs-12">
-      <form role="form" ng-submit="invite.createInvite(invite.formData)">
-        <div class="row">
-          <div class="input-group col-md-4">
-            <input ng-model="invite.formData.email" type="text" placeholder="enter an email to invite a member" class="form-control">
-            <span class="input-group-btn">
-              <input type="submit" class="btn btn-primary" value="Add">
-            </span>
-          </div>
-        </div>
-      </form>
-      <div id="sentInvite"></div>
-    </div>
   </div>
+
+  <hr>
+  <div id="delete-group">
+    <a ng-controller="DeleteGroupCtrl as delete" ng-click="delete.deleteGroup(vm.group._id)">
+      <p id="delete-group"> Click Here To Delete This Group<p>
+    </a>
+  </div>
+
 </div>

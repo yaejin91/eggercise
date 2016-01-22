@@ -13,7 +13,9 @@ angular.module('eggercise')
     vm.daysDifference;
     vm.daysDifferenceAbsolute;
     vm.owe;
+    vm.winnersPot;
     vm.oweAbsolute;
+    vm.authUserId;
 
     angular.extend(vm, {
 
@@ -21,22 +23,31 @@ angular.module('eggercise')
 
       //show Group
       showGroup: function (id) {
-        GroupService.showGroup(id)
-          .then(function (data) {
-            vm.startDate = DateService.getFullDate(data.start);
-            vm.endDate = DateService.getFullDate(data.end);
-            vm.totaldays = DateService.daysBetween(data.start, data.end);
-            vm.daysElapsed = SingleGroupService.elapsedDay(data.start, data.end);
-            vm.group = data;
+        Auth.getUserNow()
+        .then(function (data){
+          vm.authUserId = data._id;
 
-            //Execute moneyOwed()
-            vm.moneyOwed(id);
+          //existing showGroup logic
+          GroupService.showGroup(id)
+            .then(function (data) {
+              vm.startDate = DateService.getFullDate(data.start);
+              vm.endDate = DateService.getFullDate(data.end);
+              vm.totaldays = DateService.daysBetween(data.start, data.end);
+              vm.daysElapsed = SingleGroupService.elapsedDay(data.start, data.end);
+              vm.group = data;
 
-          })
-          .catch(function (err) {
-            vm.error = err;
-            $log.error('Error: ', err);
-          });
+              //Execute moneyOwed()
+              vm.moneyOwed(id);
+
+            })
+            .catch(function (err) {
+              vm.error = err;
+              $log.error('Error: ', err);
+            });
+        })
+        .catch(function (error){
+          return error;
+        })
       },
 
       moneyOwed: function (id) {
@@ -49,8 +60,8 @@ angular.module('eggercise')
             leaderAndRunnerUpArray = SingleGroupService.assignLeader(vm.membersArray, vm.startDate, vm.endDate);
             var leader = leaderAndRunnerUpArray[0];
             var runnerUp = leaderAndRunnerUpArray[1];
-            var winnersPot = SingleGroupService.potCalculation(vm.membersArray, leader, runnerUp, vm.group.bet);
-            potAndDaysDifference = SingleGroupService.youWinOrOwe(winnersPot, leader, runnerUp, vm.group.bet);
+            vm.winnersPot = SingleGroupService.potCalculation(vm.membersArray, leader, runnerUp, vm.group.bet);
+            potAndDaysDifference = SingleGroupService.youWinOrOwe(vm.winnersPot, leader, runnerUp, vm.group.bet, vm.startDate, vm.endDate);
             vm.daysDifference = potAndDaysDifference.days;
             vm.daysDifferenceAbsolute = Math.abs(vm.daysDifference);
             vm.owe = potAndDaysDifference.money;

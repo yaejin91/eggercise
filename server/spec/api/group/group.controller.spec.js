@@ -3,6 +3,7 @@
 //packages and modules required
 var request = require('supertest'),
   app = require('../../../server'),
+  err = require('../../../error/error-handling'),
   agent = request.agent(app);
 
 //model
@@ -16,7 +17,6 @@ var auth = {};
 var creator;
 
 describe('Group', function() {
-
   beforeAll(function (done) {
     User.create({
       name: 'loginDummy',
@@ -63,63 +63,13 @@ describe('Group', function() {
     });
   });
 
-  describe('with data (for a different logged in user)', function() {
-    var group;
-
-    // Save a different user id to the creator id for the group
-    beforeEach(function (done) {
-      Group.create({
-        name: 'testGroup',
-        email: 'testGroup@test.com',
-        bet: 100,
-        start:'12-01-2015',
-        end:'12-31-2015',
-        _creator:'5669f29f583f0b9f462f944c'
-      }, function (error, newGroup) {
-        if (error) {
-          done.fail(error);
-        } else {
-          group = newGroup;
-          done();
-        }
-      });
-    });
-
-    afterEach(function (done) {
-      Group.remove({_id: group._id}, function (error, removedGroup) {
-        if (error) {
-          done.fail(error);
-        } else {
-          done();
-        }
-      });
-    });
-
-    // Error handling: no groups associated with logged in user
-    it('should return no groups for this user', function (done) {
-      agent
-      .get('/api/groups')
-      .set('Authorization', 'Bearer ' + auth.token)
-      .expect('Content-Type', /json/)
-      .expect(200)
-      .end(function (error, res) {
-        if(error) {
-          done.fail(error);
-        } else {
-          expect(res.body.length).toEqual(0);
-          done();
-        }
-      });
-    });
-  });
-
   describe('with data', function() {
     var group;
 
     beforeEach(function (done) {
       Group.create({
+        _members:['5669f29f583f0b9f462f944c'],
         name: 'testGroup',
-        email: 'testGroup@test.com',
         bet: 100,
         start:'12-01-2015',
         end:'12-31-2015',
@@ -129,15 +79,14 @@ describe('Group', function() {
         if (error) {
           done.fail(error);
         } else {
-          console.log(newGroup);
           group = newGroup;
-          creator._groups.push(group)
-          creator.save()
-          User.findOne({_id: creator._id})
-          .populate('_groups')
-          .exec(function (error, foundUser) {
+          console.log('group in beforeEach: ',group);
+          Group.findOne({_id: group._id})
+          .end(function () {
+            console.log('reached callback!');
+            done();
+
           })
-          done();
         }
       });
     });
@@ -152,26 +101,6 @@ describe('Group', function() {
       });
     });
 
-    // View all groups (success)
-    fit('should return all groups for logged in user', function (done) {
-      agent
-      .get('/api/groups')
-      .set('Authorization', 'Bearer ' + auth.token)
-      .expect('Content-Type', /json/)
-      .expect(200)
-      .end(function (error, res) {
-        if(error) {
-          done.fail(error);
-        } else {
-          console.log('res.body: ', res.body);
-          expect(res.status).toBe(200);
-          expect(res.body.length).toEqual(1);
-          expect(res.body[0].name).toEqual('testGroup');
-          expect(creator._groups[0]).toEqual(group._id);
-          done();
-        }
-      });
-    });
 
     it('should create a new group', function (done) {
       var creatorId = creator._id;
@@ -199,6 +128,25 @@ describe('Group', function() {
         }
       });
     });
+    // View all groups (success)
+    it('should return all groups for logged in user', function (done) {
+      agent
+      .get('/api/groups')
+      .set('Authorization', 'Bearer ' + auth.token)
+      .expect('Content-Type', /json/)
+      .expect(200)
+      .end(function (error, res) {
+        if(error) {
+          done.fail(error);
+        } else {
+          expect(res.status).toBe(200);
+          expect(res.body.length).toEqual(1);
+          expect(res.body[0].name).toEqual('testGroup');
+          expect(creator._groups[0]).toEqual(group._id);
+          done();
+        }
+      });
+    });
 
     //view single member page (positive)
     it('should show a single group', function (done) {
@@ -206,7 +154,9 @@ describe('Group', function() {
       agent
       .get('/api/groups/' + group_id)
       .set('Authorization', 'Bearer ' + auth.token)
+      .expect(200)
       .end(function (error, res) {
+        console.log('I reached the callback');
         if (error) {
           done.fail(error);
         } else {

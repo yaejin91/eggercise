@@ -7,6 +7,8 @@ var Group = require('../group/group.model'),
   Invite = require('./invite.model'),
   EmailService = require('../../email/email.service');
 
+var errorHandler = require('../../error/error-handling');
+
 function handleError (res, err, status) {
   return res.status(status).json({err: err});
 }
@@ -15,75 +17,102 @@ function handleSuccess(res, message, status) {
   return res.status(status).json({message: message});
 }
 
-function generateInvitation (id) {
-  var emailBody = "You've been invited, please join by clicking on the link to accept your invitation."
-  var emailLink = "http://www.eggercise.com/invites/accept/" + id;
-  return emailBody + ' ' + emailLink;
+function generateInvitation (invitedUserName, groupCreator, id) {
+  var emailBody = "Hello " + invitedUserName + ", you've been invited by " + groupCreator + " to join the Eggercise app! Please join by clicking on the link to accept your invitation."
+  var localBaseUrl = "localhost:3000";
+  var eggerciseBaseUrl = "https://www.eggercise.com"
+  var fullUrl = localBaseUrl + "/invites/accept/" + id;
+  return emailBody + " " + fullUrl;
+}
+
+function createInvite (savedInvite, req, res) {
+  var creatorId = req.user._id;
+  var groupId = req.body._group;
+  var groupCreator = req.user;
+  var groupCreatorName = groupCreator.name;
+  var invitedUserName = req.body.name;
+
+  if (savedInvite) {
+    var subject = "You've been invited to join eggercise!"
+    var emailText = generateInvitation(invitedUserName, groupCreatorName, savedInvite._id);
+    var emailTo = savedInvite.email;
+
+    EmailService.send(emailTo, subject, emailText, sendInvite(savedInvite, req, res));
+  } else {
+    errorHandler.handle(res, 'Did not create the invite', 422);
+  }
+}
+
+function sendInvite (savedInvite, req, res) {
+  if (res.json) {
+    savedInvite.sent_at = Date.now();
+    var returnedPromise = savedInvite.save();
+    renderInvite(returnedPromise, savedInvite, res);
+  } else {
+    console.log('Error for failed send: ', err);
+    res.json(err);
+  }
+}
+
+function renderInvite (returnedPromise, sentInvite, res) {
+  if (!returnedPromise) {
+    console.log('The invitation did not save successfully.');
+  } else {
+    res.json(sentInvite);
+  }
 }
 
 //Creates a new invite in the DB
 exports.create = function (req, res) {
-  var creatorId = req.user._id;
-  var groupId = req.body._group;
-
-  var groupCreator = req.user;
-
   var invite = new Invite ({
+    name: req.body.name,
     email: req.body.email,
-    _group: groupId,
+    _group: req.body._group,
     status: false
   });
-  invite.save(function (error, savedInvite) {
-    if (savedInvite) {
-      var subject = "You've been invited to join eggercise!"
-      var emailText = generateInvitation(savedInvite._id);
-      var emailTo = savedInvite.email;
 
-      console.log('This is the emailText: ', emailText);
-
-      EmailService.send(emailTo, subject, emailText, function(err, json) {
-        if (json) {
-          savedInvite.sent_at = Date.now();
-          savedInvite.save(function (error, sentInvite) {
-            if (error) {
-              console.log('The invitation did not save successfully.');
-            } else {
-              res.json(sentInvite);
-            }
-          });
-        } else {
-          console.log('Error for failed send: ', err);
-          res.json(err);
-        }
-      })
+  // Run a check for an existing invite in the database
+  var query = Invite.find ({ email: invite.email, _group: invite._group });
+  query.exec(function (error, foundInvitationsArray) {
+    if (foundInvitationsArray.length <= 0) {
+      // If no invites were found for this email address, then create invite
+      invite.save(createInvite(invite, req, res));
     } else {
-      return handleError(res, 'Did not create the invite', 422);
+      foundInvitationsArray.forEach(function checkInvitations(foundInvite, index, inviteArray) {
+        if (foundInvite._group.toString() === invite._group.toString()) {
+          // Respond with server error
+          errorHandler.handle(res, error, 500);
+        }
+      });
     }
   });
 }
 
+
+
 //Invitee accepts invitation
 exports.acceptInvite = function(req, res) {
   var inviteId = req.params.invite_id;
+
   Invite.findById({ _id: inviteId})
     .exec(function (error, invite) {
       if (error) {
-        return handleError(res, error);
+        errorHandler.handle(res, 'Invite not found', 404);
       } else if (invite != null) {
         User.findOne({ email: invite.email}, function (error, user) {
           if (error) {
-            return handleError(res, error);
+            errorHandler.handle(res, 'User not found', 404);
           } else {
             user._groups.push(invite._group);
             user.save(function (error, savedUser) {
               if (error) {
-                return handleError(res, error);
+                errorHandler.handle(res, error, 500);
               } else {
                 Group.findById( {_id: invite._group}, function (error, group) {
                   group._members.push(user._id);
                   group.save(function (error, savedGroup) {
                     if (error) {
-                      return handleError(res, error);
+                      errorHandler.handle(res, error, 500);
                     } else {
                       res.status(200).json(group);
                     }
