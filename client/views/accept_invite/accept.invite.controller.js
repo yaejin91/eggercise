@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('eggercise')
-  .controller('AcceptInviteCtrl', ['$scope', '$location', '$log', '$routeParams', 'InviteService', function ($scope, $location, $log, $routeParams,InviteService) {
+  .controller('AcceptInviteCtrl', ['$scope', '$location', '$log', '$routeParams', 'InviteService', 'ErrorService', function ($scope, $location, $log, $routeParams, ErrorService) {
     if ($scope.unauthorized) {
       return;
     }
@@ -14,7 +14,6 @@ angular.module('eggercise')
       $location.path('/group/show/' + vm.group._id);
     })
     .catch(function (error) {
-      console.log(error);
-      vm.error = error;
+      ErrorService.errorToasty(error);
     });
   }]);
