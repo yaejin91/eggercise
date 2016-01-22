@@ -93,9 +93,16 @@
     <div class="col-xs-10" >
       <div>
         <p>
-          <a href="/viewLog/{{member._id}}">
-          {{member.name}}
-          </a>
+          <span ng-if="vm.authUserId === member._id">
+            <a href="/log">{{member.name}} (You) </a>
+          </span>
+        </p>
+        <p>
+          <span ng-if="vm.authUserId != member._id">
+            <a href="/viewLog/{{member._id}}">
+            {{member.name}}
+            </a>
+          </span>
         </p>
       </div>
     </div>
