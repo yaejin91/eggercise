@@ -26,7 +26,7 @@
               <input ng-model="vm.formData.start" type="text"
               datepicker-popup="mediumDate"
               is-open="vm.startDatePickerIsOpen"
-              ng-click="vm.valuationDatePickerOpen()"
+              ng-click="vm.valuationDatePickerOpen()" ng-disabled="true"
               class="form-control"/>
               <span class="input-group-btn">
                 <button type="button" class="btn btn-default form-icon" ng-click="vm.valuationDatePickerOpen($event, 'start')">
@@ -41,7 +41,7 @@
               <input ng-model="vm.formData.end" type="text"
               datepicker-popup="mediumDate"
               is-open="vm.endDatePickerIsOpen"
-              ng-click="vm.valuationDatePickerOpen()"
+              ng-click="vm.valuationDatePickerOpen()" ng-disabled="true"
               class="form-control"/>
               <span class="input-group-btn">
                 <button type="button" class="btn btn-default form-icon" ng-click="vm.valuationDatePickerOpen($event, 'end')">
