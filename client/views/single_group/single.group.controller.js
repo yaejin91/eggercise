@@ -45,8 +45,8 @@ angular.module('eggercise')
             });
         })
         .catch(function (error){
-          return error;
-        })
+          ErrorService.errorToasty(error);
+        });
       },
 
       moneyOwed: function (id) {
