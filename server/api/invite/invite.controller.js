@@ -106,6 +106,7 @@ exports.acceptInvite = function(req, res) {
   console.log('------------------');
 
   Invite.findById({ _id: inviteId})
+    .populate('_group')
     .exec(function (error, foundInvite) {
       console.log('This is the invite that was found: ', foundInvite);
       res.json(foundInvite);
