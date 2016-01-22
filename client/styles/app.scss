@@ -12,7 +12,7 @@ body {
   color: white;
   text-align: center;
   height: 400px;
-  background: url('../../assets/images/eggerciseimage.jpg') no-repeat center;
+  background: url('../../assets/images/eggerciseimage.jpg') no-repeat center top;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   background-size: cover;
@@ -25,6 +25,7 @@ body {
 
 .pageforms {
   margin: auto;
+  width: 500px;
   width: 33%;
 }
 
@@ -129,7 +130,7 @@ body {
   height: 60px;
   background: #162955;
   text-align: center;
-  color: #337ab7;
+  color: white;
   position: absolute;
 }
 
@@ -138,8 +139,9 @@ body {
 }
 
 .margin-base-vertical {
-  margin: 40px 0;
+  padding-top: 40px;
   text-align: center;
+  margin-top: 0;
 }
 
 
@@ -152,10 +154,16 @@ body {
 .navbar {
   background-color: #162955;
   color: white;
+  border-radius: 0;
+  margin-bottom: 0px;
 }
 
-.navbar > li > a {
-  color: #000;
+// .navbar > li > a {
+//   color: #000;
+// }
+
+.nav-tabs > li > a {
+  color: white;
 }
 
 .nav-tabs {
@@ -232,4 +240,10 @@ body {
     margin-left: auto;
 
   }
+}
+
+.landing-page {
+  width: 100%;
+  padding-right: 0px;
+  padding-left: 0px;
 }
