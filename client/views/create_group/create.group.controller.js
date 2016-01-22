@@ -33,8 +33,6 @@ angular.module('eggercise')
                 $location.path('/group');
               })
               .catch(function (err) {
-                // vm.error = err;
-                // $log.error('Error: ', err);
                 ErrorService.errorToasty(err);
               });
           }
