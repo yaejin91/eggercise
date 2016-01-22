@@ -88,11 +88,11 @@ exports.create = function (req, res) {
   });
 }
 
-//View a single invitation
-exports.showInvite = function (req, res) {
-  console.log('This is req: ', req);
-  console.log('This is res: ', res);
-}
+// //View a single invitation
+// exports.showInvite = function (req, res) {
+//   console.log('This is req: ', req);
+//   console.log('This is res: ', res);
+// }
 
 //Invitee accepts invitation
 exports.acceptInvite = function(req, res) {
