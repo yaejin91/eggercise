@@ -53,20 +53,20 @@ angular.module('eggercise', [
 
     $rootScope.$on('$locationChangeStart', function (event, next, current) {
       var requestedPath = $location.url();
-      var publicPages = [/\//, /\/login/, /\/invites\/accept\/S+$/];
+      var publicPages = [/\//, /\/login/, /\/invites\/accept\/$/];
       var restrictedPage = publicPages.indexOf(requestedPath) === -1;
 
-      Auth.isReadyLogged()
+      !Auth.isReadyLogged()
       .then(function() {
-        $rootScope.unauthorized = false;
-      })
-      .catch(function () {
         $rootScope.unauthorized = true;
         publicPages.forEach(function(publicPage, index, publicPages) {
           if (requestedPath === publicPage) {
             $location.path(publicPage)
           }
         })
+      })
+      .catch(function () {
+        $rootScope.unauthorized = false;
       })
     });
   })

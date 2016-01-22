@@ -20,6 +20,8 @@ angular.module('eggercise')
       var deferred = $q.defer();
       $http.get('/api/invites/accept/' + id)
         .success(function (showGroup) {
+          console.log('This is id: ', id);
+          console.log('This is showGroup: ', id);
           deferred.resolve(showGroup);
         })
         .error(function (error) {

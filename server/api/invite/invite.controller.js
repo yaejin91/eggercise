@@ -93,22 +93,25 @@ exports.create = function (req, res) {
 //Invitee accepts invitation
 exports.acceptInvite = function(req, res) {
   var inviteId = req.params.invite_id;
+  console.log('This is the inviteId: ', inviteId);
+  console.log('This is req.params: ', req.params);
 
   Invite.findById({ _id: inviteId})
-    .exec(function (error, invite) {
+    .exec(function (error, foundInvite) {
+      console.log('This is the invite that was found: ', foundInvite);
       if (error) {
         errorHandler.handle(res, 'Invite not found', 404);
-      } else if (invite != null) {
-        User.findOne({ email: invite.email}, function (error, user) {
+      } else if (foundInvite !== null) {
+        User.findOne({ email: foundInvite.email}, function (error, user) {
           if (error) {
             errorHandler.handle(res, 'User not found', 404);
           } else {
-            user._groups.push(invite._group);
+            user._groups.push(foundInvite._group);
             user.save(function (error, savedUser) {
               if (error) {
                 errorHandler.handle(res, error, 500);
               } else {
-                Group.findById( {_id: invite._group}, function (error, group) {
+                Group.findById( {_id: foundInvite._group}, function (error, group) {
                   group._members.push(user._id);
                   group.save(function (error, savedGroup) {
                     if (error) {
