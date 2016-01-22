@@ -11,6 +11,11 @@ a{
   cursor: pointer;
 }
 
+
+a, u {
+  text-decoration: none;
+}
+
 .landingpage {
   color: white;
   text-align: center;
@@ -227,6 +232,7 @@ a{
 #delete-group{
   font-weight: bold;
   text-decoration: none;
+  color: red;
 }
 .workoutlog {
   text-align: center;
@@ -239,6 +245,17 @@ a{
 #inviteBox{
   padding-bottom: 20px;
 }
+
+
+#group-title-bar{
+  padding-top: 20px;
+}
+
+#group-name{
+  font-size: 2em;
+  font-weight: bold;
+}
+
 /* Media-Query Landscape phones and down */
 /*@media (max-width: 480px) {*/
 @media (max-width: 800px) {

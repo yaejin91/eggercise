@@ -1,6 +1,15 @@
 <div class="container modifyWidth">
 <div ng-init="vm.showGroup(vm.group_id)">
-  <h1>{{ vm.group.name }}</h1>
+  <div class="row">
+    <div class="col-xs-2" id="group-title-bar">
+      <p id="group-name">{{ vm.group.name }}
+        <a id="update-button" href="/group/updateGroup?group_id={{vm.group._id}}">
+          <span ng-if="vm.group._creator === vm.authUserId" class="glyphicon glyphicon-pencil small-glyph"></span>
+        </a> 
+      </p>
+    </div>
+  </div>
+
   <div class="col-xs-12">
     {{vm.group.description}}
   </div>
@@ -8,21 +17,9 @@
     <div class="col-xs-12">
       <div class="panel panel-default">
         <div class="panel-body">
-            <div id="group-info">
-              {{vm.startDate}} to {{vm.endDate}} - ${{vm.group.bet}} Bet
-            </div>
-
-
-
-            <!-- if check to see if user logged in is creator of the group -->
-            <div class="col-xs-4" ng-if="vm.group._creator === vm.authUserId">
-              <!-- Update Group Button -->
-                <a id="update-button" href="/group/updateGroup?group_id={{vm.group._id}}">
-                  <button class="btn btn-info">
-                    <div class="glyphicon glyphicon-pencil small-glyph"></div>
-                   </button>
-                </a>
-            </div>
+          <div id="group-info">
+            {{vm.startDate}} to {{vm.endDate}} - ${{vm.group.bet}} Bet
+          </div>
         </div>
       </div>
     </div>
