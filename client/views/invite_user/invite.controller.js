@@ -12,7 +12,6 @@ angular.module('eggercise')
     });
 
     vm.flashMessage = function(message, data) {
-      console.log('This is data._group: ', data._group);
       if (message === 'error') {
         toasty[message]({
           title: 'Failure',
@@ -20,7 +19,6 @@ angular.module('eggercise')
           theme: 'material'
         })
       } else {
-        console.log('This is data._group: ', data._group);
         if (data._group !== null) {
           GroupService.showGroup(data._group)
           .then(function (group) {
@@ -44,6 +42,9 @@ angular.module('eggercise')
       })
       .catch(function (error){
         vm.flashMessage('error', vm.formData)
-      })
+      });
+      vm.formData = {};
     }
+
+
   }]);
