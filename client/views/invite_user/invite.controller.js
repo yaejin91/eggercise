@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('eggercise')
-  .controller('InviteCtrl', ['$location', '$log', '$routeParams', '$window', 'InviteService', 'toasty', 'GroupService', function ($location, $log, $routeParams, $window, InviteService, toasty, GroupService) {
+  .controller('InviteCtrl', ['$location', '$log', '$routeParams', '$window', 'InviteService', 'toasty', 'GroupService', 'ErrorService', function ($location, $log, $routeParams, $window, InviteService, toasty, GroupService, ErrorService) {
 
     var vm = this;
     vm.formData = {};
@@ -41,7 +41,7 @@ angular.module('eggercise')
         vm.flashMessage('success', foundInvite);
       })
       .catch(function (error){
-        vm.flashMessage('error', vm.formData)
+        ErrorService.errorToasty(error);
       });
       vm.formData = {};
     }
