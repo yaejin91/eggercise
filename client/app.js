@@ -59,8 +59,6 @@ angular.module('eggercise', [
       Auth.isReadyLogged()
       .then(function() {
         $rootScope.unauthorized = false;
-        event.preventDefault();
-        $location.path('/group');
       })
       .catch(function () {
         $rootScope.unauthorized = true;
