@@ -11,7 +11,6 @@ angular.module('eggercise')
     console.log('This is $routeParams: ', $routeParams);
     vm.invite.inviteId = $routeParams.invite_id;
     vm.newUser = {};
-    vm.group = groupId;
 
     //get invite
     vm.getInvite = function (id) {

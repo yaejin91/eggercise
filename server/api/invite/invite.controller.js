@@ -90,14 +90,7 @@ exports.create = function (req, res) {
 
 //View a single invitation
 exports.showInvite = function (req, res) {
-  console.log('This is req.params in showInvite (server): ', req.params);
-  console.log('------------------');
-  console.log('This is req.params.invite_id in showInvite (server): ', req.params.invite_id);
-  console.log('------------------');
-
   var inviteId = req.params.invite_id;
-  console.log('This is inviteId in showInvite (server): ', inviteId);
-  console.log('------------------');
 
   Invite.findOne({ _id: inviteId})
   .populate('_group')

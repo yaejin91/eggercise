@@ -9,11 +9,11 @@
         <p class="landingtext">Eggercise lets you compete against friends to see who can exercise the most! Money's on the line, so get yo' ass to the gym!</p>
 
         <p> You have been invited to join:</p>
-        <p> Group Name: {{ vm.invite._group.name }} </p>
-        <p> Email Address: {{ vm.invite.email }} </p>
 
         <div class="pageforms modifyWidth">
           <form class="form-signin" ng-controller="SignupCtrl as signup" ng-submit="signup.signup()">
+            <p> Group Name: {{ vm.invite._group.name }} </p>
+            <p> Email Address: {{ vm.invite.email }} </p>
             <label for="inputName" class="sr-only">Name</label>
             <input type="name" id="inputName" ng-model="signup.user.name" class="form-control" placeholder="Name" required autofocus>
             <label for="inputPassword" class="sr-only">Password</label>
