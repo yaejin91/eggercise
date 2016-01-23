@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('eggercise')
-  .controller('DeleteMemberCtrl', ['$location', '$log', '$routeParams', 'DeleteMemberService', function ($location, $log, $routeParams, DeleteMemberService) {
+  .controller('DeleteMemberCtrl', ['$location', '$log', '$routeParams', 'DeleteMemberService', 'ErrorService', function ($location, $log, $routeParams, DeleteMemberService, ErrorService) {
 
     var vm = this;
 
@@ -17,7 +17,7 @@ angular.module('eggercise')
         $location.path('/group')
       })
       .catch(function (error){
-        vm.error = error;
-      })
+        ErrorService.errorToasty(error);
+      });
     }
   }]);

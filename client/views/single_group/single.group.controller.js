@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('eggercise')
-  .controller('ShowGroupCtrl', ['$rootScope', '$location', '$log', '$routeParams', 'GroupService', 'Auth', 'DateService', 'SingleGroupService', function ($rootScope, $location, $log, $routeParams, GroupService, Auth, DateService, SingleGroupService) {
+  .controller('ShowGroupCtrl', ['$rootScope', '$location', '$log', '$routeParams', 'GroupService', 'Auth', 'DateService', 'SingleGroupService', 'ErrorService', function ($rootScope, $location, $log, $routeParams, GroupService, Auth, DateService, SingleGroupService, ErrorService) {
     var vm = this;
     vm.group = {};
     vm.membersArray = [];
@@ -41,13 +41,12 @@ angular.module('eggercise')
 
             })
             .catch(function (err) {
-              vm.error = err;
-              $log.error('Error: ', err);
+              ErrorService.errorToasty(err);
             });
         })
         .catch(function (error){
-          return error;
-        })
+          ErrorService.errorToasty(error);
+        });
       },
 
       moneyOwed: function (id) {
@@ -70,8 +69,7 @@ angular.module('eggercise')
             vm.group = data;
           })
           .catch(function (err) {
-            vm.error = err;
-            $log.error('Error: ', err);
+            ErrorService.errorToasty(err);
           });
       }
     });
