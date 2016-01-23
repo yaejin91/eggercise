@@ -15,7 +15,7 @@ exports.showAllGroups = function (req, res) {
     .populate('_groups')
     .exec(function (error, foundUser) {
     if (error) {
-      errorHandler.handle(res, error, 500);
+      errorHandler.handle(res, error, 404);
     } else if (foundUser) {
       res.json(foundUser._groups);
     }
@@ -40,7 +40,7 @@ exports.create = function (req, res) {
     if (data) {
       User.findOne({_id: creatorId}, function (error, creator){
         if (error) {
-          errorHandler.handle(res, error, 500);
+          errorHandler.handle(res, error, 404);
         } else {
           var id = mongoose.Types.ObjectId(creator._id);
           creator._groups.push(data._id);
@@ -73,7 +73,7 @@ exports.showGroup = function (req, res) {
       groupCreatorId = group._creator.toString();
 
       if (error) {
-        errorHandler.handle(res, error, 500);
+        errorHandler.handle(res, error, 404);
       } else if (group) {
         // store the member group ids in an array
         for (var i = 0; i < group._members.length; i++) {
@@ -131,7 +131,7 @@ exports.update = function (req, res){
 
   Group.findByIdAndUpdate(groupId, update, options, function (error, updatedGroup) {
     if (error) {
-      errorHandler.handle(res, error, 500);
+      errorHandler.handle(res, error, 422);
       return;
     }
     res.status(200).json(updatedGroup);
@@ -154,6 +154,3 @@ exports.showGroupLeaderboard = function (req, res){
     }
   })
 };
-
-
-

@@ -2,9 +2,6 @@
 
 angular.module('eggercise')
   .controller('AcceptInviteCtrl', ['$scope', '$location', '$log', '$routeParams', 'InviteService', function ($scope, $location, $log, $routeParams,InviteService) {
-    // if ($scope.unauthorized) {
-    //   return;
-    // }
 
     var vm = this;
     vm.invite = {};
@@ -21,7 +18,7 @@ angular.module('eggercise')
           console.log('This is vm.invite: ', vm.invite)
         })
         .catch(function (error) {
-          vm.error = error;
+          ErrorService.errorToasty(error);
         });
     }
     vm.getInvite(vm.invite.inviteId);
@@ -35,7 +32,7 @@ angular.module('eggercise')
         $location.path('/group/show/' + vm.group);
       })
       .catch(function (error) {
-        vm.error = error;
+        ErrorService.errorToasty(error);
       })
     }
   }]);

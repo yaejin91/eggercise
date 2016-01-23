@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('eggercise')
-  .controller('WorkoutCtrl', ['WorkoutService', '$routeParams', '$log', '$location', function (WorkoutService, $routeParams, $log, $location) {
+  .controller('WorkoutCtrl', ['WorkoutService', '$routeParams', '$log', '$location', 'ErrorService', function (WorkoutService, $routeParams, $log, $location, ErrorService) {
 
     var vm = this;
     vm.user = {};
@@ -26,8 +26,7 @@ angular.module('eggercise')
             $location.path('/log');
           })
           .catch(function (err) {
-            vm.error = err;
-            $log.error('Error: ',err);
+            ErrorService.errorToasty(err);
           });
       },
 
@@ -40,11 +39,8 @@ angular.module('eggercise')
             vm.ifLogged();
           })
           .catch(function (err) {
-            vm.error = err;
-            $log.error('Error: ', err);
-          })
+            ErrorService.errorToasty(err);
+          });
         }
-
-
     });
   }]);

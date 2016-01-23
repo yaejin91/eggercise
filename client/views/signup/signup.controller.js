@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('eggercise')
-  .controller('SignupCtrl', ['$location', 'Auth', function ($location, Auth) {
+  .controller('SignupCtrl', ['$location', 'Auth', 'ErrorService', function ($location, Auth, ErrorService) {
 
     var vm = this;
 
@@ -18,8 +18,8 @@ angular.module('eggercise')
             $location.path('/group');
           })
           .catch(function (err) {
-            vm.error = err;
             $location.path('/signup');
+            ErrorService.errorToasty(err);
           });
       }
 
