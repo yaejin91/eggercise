@@ -23,57 +23,12 @@ angular.module('eggercise')
         });
     }
 
-
-//Invitee accepts invitation
-// exports.acceptInvite = function(req, res) {
-//   var inviteId = req.params.invite_id;
-
-//   Invite.findById({ _id: inviteId})
-//     .exec(function (error, invite) {
-//       if (error) {
-//         errorHandler.handle(res, 'Invite not found', 404);
-//       } else if (invite != null) {
-//         User.findOne({ email: invite.email}, function (error, user) {
-//           if (error) {
-//             errorHandler.handle(res, 'User not found', 404);
-//           } else {
-//             user._groups.push(invite._group);
-//             user.save(function (error, savedUser) {
-//               if (error) {
-//                 errorHandler.handle(res, error, 500);
-//               } else {
-//                 Group.findById( {_id: invite._group}, function (error, group) {
-//                   group._members.push(user._id);
-//                   group.save(function (error, savedGroup) {
-//                     if (error) {
-//                       errorHandler.handle(res, error, 500);
-//                     } else {
-//                       res.status(200).json(group);
-//                     }
-//                   });
-//                 })
-//               }
-//             });
-//           }
-//         });
-//       } else {
-//         res.status(404).json({message: 'invite not found'});
-//       }
-//     });
-
-
     vm.acceptInvite = function (newUser) {
       newUser.name = vm.newUser.name;
       newUser.password = vm.newUser.password;
-      console.log('This is vm.group_id', vm.group_id);
-      console.log('This is vm.invite_id', vm.invite_id);
-      // InviteService.acceptInvite(vm.invite_id, newUser)
       Auth.signupForInvite(vm.invite_id, vm.group_id, newUser)
       .then(function (data) {
-        console.log('This is data: ', data);
-        console.log('This is newUser: ', newUser);
         GroupService.showGroup(vm.group_id);
-        // $location.path('/group/show/' + vm.group_id);
       })
       .catch(function (error) {
         ErrorService.errorToasty(error);
