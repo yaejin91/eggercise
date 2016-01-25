@@ -11,17 +11,12 @@ angular.module('eggercise')
 
     //get invite
     vm.getInvite = function (id) {
-      console.log('This is the id from the getInvite view: ', id);
       InviteService.showInvite(id)
         .then(function (data) {
-          console.log('This is data from the getInvite view: ', data);
           vm.invite = data;
           vm.group_id = vm.invite._group._id;
           vm.newUser.group = vm.invite._group._id;
           vm.newUser.email = vm.invite.email;
-          console.log('This is vm.invite from the getInvite view: ', vm.invite);
-          console.log('This is vm.group_id from the getInvite view: ', vm.group_id);
-          console.log('This is vm.newUser: ', vm.newUser);
         })
         .catch(function (error) {
           ErrorService.errorToasty(error);
@@ -68,8 +63,6 @@ angular.module('eggercise')
 
 
     vm.acceptInvite = function (newUser) {
-      console.log('This is newUser from the acceptInvite view:', newUser);
-      console.log('This is vm.newUser from the acceptInvite view: ', vm.newUser);
       newUser.name = vm.newUser.name;
       newUser.password = vm.newUser.password;
       InviteService.acceptInvite(vm.invite_id, newUser)

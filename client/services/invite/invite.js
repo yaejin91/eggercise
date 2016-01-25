@@ -21,7 +21,6 @@ angular.module('eggercise')
       var deferred = $q.defer();
       $http.get('/api/invites/accept/' + id)
         .success(function (showInvite) {
-          console.log('This the the showInvite: ', showInvite);
           deferred.resolve(showInvite);
         })
         .error(function (error) {
@@ -32,11 +31,9 @@ angular.module('eggercise')
 
     // Accept invitation
     service.acceptInvite = function (id, newUser) {
-      console.log('This is newUser in acceptInvite (services): ', newUser);
       var deferred = $q.defer();
       $http.post('/api/invites/accept/' + id, newUser)
         .success(function (acceptedInvitation) {
-          console.log('This is acceptedInvitation: ', acceptedInvitation);
           deferred.resolve(acceptedInvitation);
         })
         .error(function (error) {

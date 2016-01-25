@@ -95,8 +95,6 @@ exports.showInvite = function (req, res) {
   Invite.findOne({ _id: inviteId})
   .populate('_group')
   .exec(function (error, foundInvite) {
-    console.log('This is the error that was found in acceptInvite (server): ', error);
-    console.log('This is the invite that was found in acceptInvite (server): ', foundInvite);
     if (!foundInvite && error === null) {
       errorHandler.handle(res, 'Invite not found', 404);
     } else if (foundInvite) {
@@ -108,30 +106,14 @@ exports.showInvite = function (req, res) {
 //Invitee accepts invitation
 exports.acceptInvite = function(req, res) {
   var newUser = req.body;
-  console.log('This is newUser in acceptInvite controller (server): ', newUser);
-  console.log('------------------');
 
-  // User.findOne({email: newUser.email})
-  // .exec(function(error, foundUser) {
-  //   if (foundUser) {
-  //     console.log('There was a user found in the database');
-  //   } else if (foundUser) {
-  //     console.log('This user was not found. A new user account will be created.');
-
-    User.create(req.body, function (error, user) {
-      if (error) { errorHandler.handle(res, error, 500); }
-      res.status(201).json({
-        user: _.omit(user.toObject(), ['passwordHash', 'salt']),
-        token: authService.signToken(user._id)
-      });
+  User.create(req.body, function (error, user) {
+    if (error) { errorHandler.handle(res, error, 500); }
+    res.status(201).json({
+      user: _.omit(user.toObject(), ['passwordHash', 'salt']),
+      token: authService.signToken(user._id)
     });
-  }
+  });
 
 
-  // var user = new User ({
-  //   name: req.body.name,
-  //   email: req.body.email,
-  //   _groups: req.body._group
-  // });
-  // console.log('This is user in acceptInvite controller (server): ', user);
-
+}
