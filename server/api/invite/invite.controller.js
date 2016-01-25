@@ -93,27 +93,37 @@ exports.showInvite = function (req, res) {
   var inviteId = req.params.invite_id;
 
   Invite.findOne({ _id: inviteId})
-  .populate('_group')
-  .exec(function (error, foundInvite) {
-    if (!foundInvite && error === null) {
-      errorHandler.handle(res, 'Invite not found', 404);
-    } else if (foundInvite) {
-      res.json(foundInvite);
-    }
-  });
+    .populate('_group')
+    .exec(function (error, foundInvite) {
+      if (!foundInvite && error === null) {
+        errorHandler.handle(res, 'Invite not found', 404);
+      } else if (foundInvite) {
+        res.json(foundInvite);
+      }
+    });
 }
 
 //Invitee accepts invitation
 exports.acceptInvite = function(req, res) {
   var newUser = req.body;
+  console.log("newUser", newUser);
 
   User.create(req.body, function (error, user) {
-    if (error) { errorHandler.handle(res, error, 500); }
-    res.status(201).json({
-      user: _.omit(user.toObject(), ['passwordHash', 'salt']),
-      token: authService.signToken(user._id)
-    });
+    console.log(user);
+    if (error) {
+      errorHandler.handle(res, error, 500);
+    } else {
+      User.findOne({_id: user._id})
+        .populate('_groups')
+        .exec(function (error, foundInvitee) {
+          if (error) {
+            errorHandler.handle(res, error, 404);
+          }
+        })
+        res.status(201).json({
+          user: _.omit(user.toObject(), ['passwordHash', 'salt']),
+          token: authService.signToken(user._id)
+        });
+    }
   });
-
-
 }

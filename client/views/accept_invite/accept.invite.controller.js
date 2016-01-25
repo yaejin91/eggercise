@@ -65,7 +65,7 @@ angular.module('eggercise')
     vm.acceptInvite = function (newUser) {
       newUser.name = vm.newUser.name;
       newUser.password = vm.newUser.password;
-      InviteService.acceptInvite(vm.invite_id, newUser)
+      // InviteService.acceptInvite(vm.invite_id, newUser)
       Auth.signupForInvite(vm.invite_id, newUser)
       .then(function (data) {
         console.log('This is data: ', data);
