@@ -11,9 +11,9 @@
         <p> You have been invited to join:</p>
 
         <div class="pageforms modifyWidth">
-          <form class="form-signin" ng-controller="AcceptInviteCtrl as acceptInvite" ng-submit="acceptInvite.acceptInvite(vm.invite_id)">
-            <p> Group Name: {{ vm.invite._group.name }} </p>
-            <p> Email Address: {{ vm.invite.email }} </p>
+          <form class="form-signin" ng-controller="AcceptInviteCtrl as acceptInvite" ng-submit="acceptInvite.acceptInvite(vm.group_id)">
+            <p ng-model="acceptInvite.newUser.group_id"> Group Name: {{ vm.invite._group.name }}</p>
+            <p ng-model="acceptInvite.newUser.email"> Email Address: {{ vm.invite.email }} </p>
             <label for="inputName" class="sr-only">Name</label>
             <input type="name" id="inputName" ng-model="acceptInvite.newUser.name" class="form-control" placeholder="Name" required autofocus>
             <label for="inputPassword" class="sr-only">Password</label>

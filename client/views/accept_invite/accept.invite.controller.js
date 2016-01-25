@@ -5,18 +5,20 @@ angular.module('eggercise')
 
     var vm = this;
     vm.invite = {};
-    console.log('This is $routeParams: ', $routeParams);
     vm.invite_id = $routeParams.invite_id;
     vm.newUser = {};
+    vm.group_id;
 
     //get invite
     vm.getInvite = function (id) {
       console.log('This is the id from the getInvite view: ', id);
       InviteService.showInvite(id)
         .then(function (data) {
-          console.log('This is data: ', data);
+          console.log('This is data from the getInvite view: ', data);
           vm.invite = data;
-          console.log('This is vm.invite: ', vm.invite)
+          vm.group_id = vm.invite._group._id;
+          console.log('This is vm.invite from the getInvite view: ', vm.invite);
+          console.log('This is vm.group_id from the getInvite view: ', vm.group_id);
         })
         .catch(function (error) {
           ErrorService.errorToasty(error);
