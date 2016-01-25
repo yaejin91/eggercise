@@ -39,7 +39,7 @@ angular.module('eggercise')
           .then(function (data) {
             for(var i = 0; i < data.exercises.length; i++){
               vm.date = data.exercises[i];
-              console.log('Good Job!!! You logged an exercise on ', vm.date);
+              // console.log('Good Job!!! You logged an exercise on ', vm.date);.
             }
             vm.user = data;
           })
