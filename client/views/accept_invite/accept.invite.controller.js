@@ -15,7 +15,7 @@ angular.module('eggercise')
         .then(function (data) {
           vm.invite = data;
           vm.group_id = vm.invite._group._id;
-          vm.newUser.group = vm.invite._group._id;
+          vm.newUser.group = vm.invite._group;
           vm.newUser.email = vm.invite.email;
         })
         .catch(function (error) {

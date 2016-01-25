@@ -1,7 +1,8 @@
 'use strict';
 
-var _ = require('lodash');
-var authService = require('../../auth/auth.service');
+var _ = require('lodash'),
+authService = require('../../auth/auth.service'),
+  mongoose = require('mongoose');
 var Group = require('../group/group.model'),
   User = require('../user/user.model'),
   Invite = require('./invite.model'),
@@ -71,6 +72,7 @@ exports.create = function (req, res) {
     status: false
   });
 
+  console.log("this is the create controller server side john: ", invite._group);
   // Run a check for an existing invite in the database
   var query = Invite.find ({ email: invite.email, _group: invite._group });
   query.exec(function (error, foundInvitationsArray) {
@@ -95,6 +97,7 @@ exports.showInvite = function (req, res) {
   Invite.findOne({ _id: inviteId})
     .populate('_group')
     .exec(function (error, foundInvite) {
+      console.log('This is the foundInvite:', foundInvite);
       if (!foundInvite && error === null) {
         errorHandler.handle(res, 'Invite not found', 404);
       } else if (foundInvite) {
@@ -107,9 +110,10 @@ exports.showInvite = function (req, res) {
 exports.acceptInvite = function(req, res) {
   var newUser = req.body;
   console.log("newUser", newUser);
+  var groupId = newUser.group._id;
+  console.log('This is the groupId:', groupId);
 
-  User.create(req.body, function (error, user) {
-    console.log(user);
+  User.create(newUser, function (error, user) {
     if (error) {
       errorHandler.handle(res, error, 500);
     } else {
@@ -119,11 +123,16 @@ exports.acceptInvite = function(req, res) {
           if (error) {
             errorHandler.handle(res, error, 404);
           }
+            user._groups.push(newUser.group);
+            user.save();
+            console.log('This is user in create function:', user);
+            console.log('This is foundInvitee:', foundInvitee);
+            res.json(foundInvitee);
         })
-        res.status(201).json({
-          user: _.omit(user.toObject(), ['passwordHash', 'salt']),
-          token: authService.signToken(user._id)
-        });
+        // res.status(201).json({
+        //   user: _.omit(user.toObject(), ['passwordHash', 'salt']),
+        //   token: authService.signToken(user._id)
+        // });
     }
   });
 }
