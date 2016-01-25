@@ -24,6 +24,7 @@ angular.module('eggercise')
     vm.getInvite(vm.invite.inviteId);
 
     vm.acceptInvite = function (id) {
+      console.log('This is the id from the view: ', id);
       InviteService.acceptInvite(id)
       .then(function (data) {
         console.log('This is data: ', data);

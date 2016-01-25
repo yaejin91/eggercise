@@ -36,7 +36,7 @@ angular.module('eggercise')
       $http.post('/api/invites/accept/' + id)
         .success(function (acceptedInvitation) {
           console.log('This is id: ', id);
-          console.log('This is acceptedInvitation: ', id);
+          console.log('This is acceptedInvitation: ', acceptedInvitation);
           deferred.resolve(acceptedInvitation);
         })
         .error(function (error) {
