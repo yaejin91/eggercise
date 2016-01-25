@@ -31,10 +31,10 @@ angular.module('eggercise')
     };
 
     // Accept invitation
-    service.acceptInvite = function (newUser) {
+    service.acceptInvite = function (id, newUser) {
       console.log('This is newUser in acceptInvite (services): ', newUser);
       var deferred = $q.defer();
-      $http.post('/api/invites/accept', newUser)
+      $http.post('/api/invites/accept/' + id, newUser)
         .success(function (acceptedInvitation) {
           console.log('This is acceptedInvitation: ', acceptedInvitation);
           deferred.resolve(acceptedInvitation);

@@ -111,14 +111,21 @@ exports.acceptInvite = function(req, res) {
   console.log('This is newUser in acceptInvite controller (server): ', newUser);
   console.log('------------------');
 
-  User.findOne({email: newUser.email})
-  .exec(function(error, foundUser) {
-    if (foundUser) {
-      console.log('There was a user found in the database');
-    } else if (foundUser) {
-      console.log('This user was not found. A new user account will be created.');
-    }
-  })
+  // User.findOne({email: newUser.email})
+  // .exec(function(error, foundUser) {
+  //   if (foundUser) {
+  //     console.log('There was a user found in the database');
+  //   } else if (foundUser) {
+  //     console.log('This user was not found. A new user account will be created.');
+
+    User.create(req.body, function (error, user) {
+      if (error) { errorHandler.handle(res, error, 500); }
+      res.status(201).json({
+        user: _.omit(user.toObject(), ['passwordHash', 'salt']),
+        token: authService.signToken(user._id)
+      });
+    });
+  }
 
 
   // var user = new User ({
@@ -127,4 +134,4 @@ exports.acceptInvite = function(req, res) {
   //   _groups: req.body._group
   // });
   // console.log('This is user in acceptInvite controller (server): ', user);
-}
+

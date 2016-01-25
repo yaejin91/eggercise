@@ -25,10 +25,26 @@ angular.module('eggercise')
      * @returns {promise}
      */
     this.signup = function (user) {
-      console.log('This is user in the signup in the auth service: ', user);
       var deferred = $q.defer();
       $http.post('/api/users', user)
         .then(function (res) {
+          _user = res.data.user;
+          $cookieStore.put('token', res.data.token);
+          deferred.resolve();
+        })
+        .catch(function (err) {
+          deferred.reject(err.data);
+        });
+      return deferred.promise;
+    };
+
+    this.signupForInvite = function (id, user) {
+      console.log('This is user in the signup in the auth service: ', user);
+      var deferred = $q.defer();
+      console.log('Did it reach 44?');
+      $http.post('/api/invites/accept/' + id, user)
+        .then(function (res) {
+          console.log('Did it reach 47?');
           _user = res.data.user;
           $cookieStore.put('token', res.data.token);
           deferred.resolve();
