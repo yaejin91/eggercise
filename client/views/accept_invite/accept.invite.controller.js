@@ -6,11 +6,12 @@ angular.module('eggercise')
     var vm = this;
     vm.invite = {};
     console.log('This is $routeParams: ', $routeParams);
-    vm.invite.inviteId = $routeParams.invite_id;
+    vm.invite_id = $routeParams.invite_id;
     vm.newUser = {};
 
     //get invite
     vm.getInvite = function (id) {
+      console.log('This is the id from the getInvite view: ', id);
       InviteService.showInvite(id)
         .then(function (data) {
           console.log('This is data: ', data);
@@ -21,7 +22,6 @@ angular.module('eggercise')
           ErrorService.errorToasty(error);
         });
     }
-    vm.getInvite(vm.invite.inviteId);
 
     vm.acceptInvite = function (id) {
       console.log('This is the id from the view: ', id);
