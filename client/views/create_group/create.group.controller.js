@@ -1,12 +1,10 @@
 'use strict';
 
 angular.module('eggercise')
-  .controller('CreateGroupCtrl', ['$location', '$log', '$routeParams', 'GroupService', function ($location, $log, $routeParams, GroupService) {
-
-        var vm = this;
-        vm.groups = [];
-        vm.formData = {};
-
+  .controller('CreateGroupCtrl', ['$location', '$log', '$routeParams', 'GroupService', 'ErrorService', function ($location, $log, $routeParams, GroupService, ErrorService) {
+    var vm = this;
+    vm.groups = [];
+    vm.formData = {};
     vm.startDatePickerIsOpen = false;
     vm.endDatePickerIsOpen = false;
 
@@ -35,8 +33,7 @@ angular.module('eggercise')
                 $location.path('/group');
               })
               .catch(function (err) {
-                vm.error = err;
-                $log.error('Error: ', err);
+                ErrorService.errorToasty(err);
               });
           }
         });

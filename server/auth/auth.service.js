@@ -8,6 +8,8 @@ var config = require('../config/environment');
 var User = require('../api/user/user.model');
 var validateJwt = expressJwt({ secret: config.secrets.session });
 
+var errorHandler = require('../error/error-handling');
+
 /**
  * Attach the user object to the request if authenticated
  * Otherwise returns 403
@@ -18,7 +20,8 @@ exports.isAuthenticated = function () {
     .use(function (req, res, next) {
       User.findById(req.user._id, function (err, user) {
         if (err) { return next(err); }
-        if (!user) { return res.send(401); }
+        // if (!user) { return res.status(401); }
+        if (!user) { return errorHandler.handle(res, 'Unauthorized', 401); }
         req.user = user;
         next();
       });

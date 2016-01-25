@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('eggercise')
-  .controller('GroupCtrl', ['$location', '$log', '$routeParams', 'GroupService', function ($location, $log, $routeParams,GroupService) {
+  .controller('GroupCtrl', ['$location', '$log', '$routeParams', 'GroupService', 'ErrorService', function ($location, $log, $routeParams, GroupService, ErrorService) {
     var vm = this;
     vm.formData = {};
     vm.groups =[];
@@ -22,7 +22,7 @@ angular.module('eggercise')
         }
       })
       .catch(function (error){
-        console.log('showAllGroups err:' + error);
+        ErrorService.errorToasty(error);
       })
     }
   }]);

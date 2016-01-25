@@ -1,10 +1,12 @@
 <div class="container">
-  <div class="pageforms loglist modifyWidth " ng-init="vm.showLogs()">
-      <h2> Current Logs: </h2>
-      <span id ="noLogs"></span>
-      </hr>
-      <div ng-repeat="log in vm.logs">
-        <p class="loggedDates">{{log}}</p>
+  <div class="pageforms modifyWidth row" ng-init="vm.showLogs()">
+      <h2 class="margin-base-vertical">Current Logs</h2>
+      <div class="row loglist">
+        <span id ="noLogs"></span>
+        </hr>
+        <div ng-repeat="log in vm.logs">
+          <p class="loggedDates">{{log}}</p>
+        </div>
       </div>
   </div>
 </div>

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('eggercise')
-  .controller('ViewLogCtrl', ['$location', '$log', '$routeParams', 'ViewLogService', 'GroupService', function ($location, $log, $routeParams, ViewLogService, GroupService) {
+  .controller('ViewLogCtrl', ['$location', '$log', '$routeParams', 'ViewLogService', 'GroupService', 'ErrorService', function ($location, $log, $routeParams, ViewLogService, GroupService, ErrorService) {
     var vm = this;
     vm.formData = {};
     vm.logs = [];
@@ -31,7 +31,7 @@ angular.module('eggercise')
         }
       })
       .catch(function (error){
-        vm.error = error;
+        ErrorService.errorToasty(error);
       });
     }
 
