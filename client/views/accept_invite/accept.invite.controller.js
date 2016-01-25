@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('eggercise')
-  .controller('AcceptInviteCtrl', ['$scope', '$location', '$log', '$routeParams', 'InviteService', function ($scope, $location, $log, $routeParams,InviteService) {
+  .controller('AcceptInviteCtrl', ['$scope', '$location', '$log', '$routeParams', 'InviteService', function ($scope, $location, $log, $routeParams, InviteService) {
 
     var vm = this;
     vm.invite = {};
@@ -24,8 +24,9 @@ angular.module('eggercise')
     }
 
     vm.acceptInvite = function (id) {
-      console.log('This is the id from the view: ', id);
-      InviteService.acceptInvite(id)
+      console.log('This is the id from the acceptInvite view: ', id);
+      console.log('This is vm.newUser: ', vm.newUser);
+      InviteService.acceptInvite(vm.newUser)
       .then(function (data) {
         console.log('This is data: ', data);
         vm.newUser = data;
