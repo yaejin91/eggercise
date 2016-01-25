@@ -113,12 +113,14 @@ exports.acceptInvite = function(req, res) {
 
   User.findOne({email: newUser.email})
   .exec(function(error, foundUser) {
-    if (foundUser === null) {
-      console.log('This user was not found. A new user account will be created.');
-    } else if (foundUser) {
+    if (foundUser) {
       console.log('There was a user found in the database');
+    } else if (foundUser) {
+      console.log('This user was not found. A new user account will be created.');
     }
   })
+
+
   // var user = new User ({
   //   name: req.body.name,
   //   email: req.body.email,

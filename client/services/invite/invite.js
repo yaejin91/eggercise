@@ -36,7 +36,6 @@ angular.module('eggercise')
       var deferred = $q.defer();
       $http.post('/api/invites/accept', newUser)
         .success(function (acceptedInvitation) {
-          console.log('This is id: ', id);
           console.log('This is acceptedInvitation: ', acceptedInvitation);
           deferred.resolve(acceptedInvitation);
         })

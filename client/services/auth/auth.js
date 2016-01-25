@@ -25,6 +25,7 @@ angular.module('eggercise')
      * @returns {promise}
      */
     this.signup = function (user) {
+      console.log('This is user in the signup in the auth service: ', user);
       var deferred = $q.defer();
       $http.post('/api/users', user)
         .then(function (res) {
@@ -103,7 +104,7 @@ angular.module('eggercise')
 
     this.getUserNow = function () {
       var deferred = $q.defer();
-    
+
       if($cookieStore.get('token')){
         $http.get('/api/users/me')
           .success(function (res) {
