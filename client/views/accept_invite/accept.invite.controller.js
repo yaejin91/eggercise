@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('eggercise')
-  .controller('AcceptInviteCtrl', ['$scope', '$location', '$log', '$routeParams', 'Auth', 'ErrorService', 'InviteService', function ($scope, $location, $log, $routeParams, Auth, ErrorService, InviteService) {
+  .controller('AcceptInviteCtrl', ['$scope', '$location', '$log', '$routeParams', 'Auth', 'ErrorService', 'InviteService', 'GroupService', function ($scope, $location, $log, $routeParams, Auth, ErrorService, InviteService, GroupService) {
 
     var vm = this;
     vm.invite = {};
@@ -65,12 +65,15 @@ angular.module('eggercise')
     vm.acceptInvite = function (newUser) {
       newUser.name = vm.newUser.name;
       newUser.password = vm.newUser.password;
+      console.log('This is vm.group_id', vm.group_id);
+      console.log('This is vm.invite_id', vm.invite_id);
       // InviteService.acceptInvite(vm.invite_id, newUser)
-      Auth.signupForInvite(vm.invite_id, newUser)
+      Auth.signupForInvite(vm.invite_id, vm.group_id, newUser)
       .then(function (data) {
         console.log('This is data: ', data);
         console.log('This is newUser: ', newUser);
-        $location.path('/group/show/' + vm.group);
+        GroupService.showGroup(vm.group_id);
+        // $location.path('/group/show/' + vm.group_id);
       })
       .catch(function (error) {
         ErrorService.errorToasty(error);

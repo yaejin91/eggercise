@@ -97,7 +97,6 @@ exports.showInvite = function (req, res) {
   Invite.findOne({ _id: inviteId})
     .populate('_group')
     .exec(function (error, foundInvite) {
-      console.log('This is the foundInvite:', foundInvite);
       if (!foundInvite && error === null) {
         errorHandler.handle(res, 'Invite not found', 404);
       } else if (foundInvite) {
@@ -109,30 +108,45 @@ exports.showInvite = function (req, res) {
 //Invitee accepts invitation
 exports.acceptInvite = function(req, res) {
   var newUser = req.body;
-  console.log("newUser", newUser);
   var groupId = newUser.group._id;
-  console.log('This is the groupId:', groupId);
 
   User.create(newUser, function (error, user) {
     if (error) {
       errorHandler.handle(res, error, 500);
     } else {
       User.findOne({_id: user._id})
-        .populate('_groups')
-        .exec(function (error, foundInvitee) {
-          if (error) {
-            errorHandler.handle(res, error, 404);
-          }
-            user._groups.push(newUser.group);
-            user.save();
-            console.log('This is user in create function:', user);
-            console.log('This is foundInvitee:', foundInvitee);
-            res.json(foundInvitee);
-        })
-        // res.status(201).json({
-        //   user: _.omit(user.toObject(), ['passwordHash', 'salt']),
-        //   token: authService.signToken(user._id)
-        // });
+      .populate('_groups')
+      .exec(function (error, foundInvitee) {
+        if (error) {
+          errorHandler.handle(res, error, 404);
+        }
+          user._groups.push(newUser.group);
+          user.save();
+          var updatedGroup = populateMember(req, res, user._id);
+          // res.json(foundInvitee);
+          res.status(201).json({
+          user: _.omit(user.toObject(), ['passwordHash', 'salt']),
+          token: authService.signToken(user._id),
+          invitee: foundInvitee
+      })
+    });
     }
   });
+}
+
+
+function populateMember (req, res, id) {
+  var newUser = req.body;
+  var groupId = newUser.group._id;
+
+  Group.findOne({_id: groupId})
+  .populate('_members')
+  .exec(function (error, foundGroup) {
+    if (error) {
+      errorHandler.handle(res, error, 404);
+    }
+    foundGroup._members.push(id);
+    foundGroup.save();
+    return foundGroup;
+  })
 }

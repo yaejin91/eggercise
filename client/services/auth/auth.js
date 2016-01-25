@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('eggercise')
-  .service('Auth', function ($rootScope, $cookieStore, $q, $http) {
+  .service('Auth', function ($rootScope, $cookieStore, $q, $http, $location) {
 
     var _user = {};
     var _ready = $q.defer();
@@ -38,12 +38,13 @@ angular.module('eggercise')
       return deferred.promise;
     };
 
-    this.signupForInvite = function (id, user) {
+    this.signupForInvite = function (inviteId, groupId, user) {
       var deferred = $q.defer();
-      $http.post('/api/invites/accept/' + id, user)
+      $http.post('/api/invites/accept/' + inviteId, user)
         .then(function (res) {
           _user = res.data.user;
           $cookieStore.put('token', res.data.token);
+          $location.path('/group/show/' + groupId);
           deferred.resolve();
         })
         .catch(function (err) {
