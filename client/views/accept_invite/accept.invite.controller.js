@@ -28,13 +28,14 @@ angular.module('eggercise')
         });
     }
 
-    vm.acceptInvite = function (id) {
-      console.log('This is the id from the acceptInvite view: ', id);
-      console.log('This is vm.newUser: ', vm.newUser);
-      InviteService.acceptInvite(vm.newUser)
+    vm.acceptInvite = function (newUser) {
+      console.log('This is newUser from the acceptInvite view:', newUser);
+      console.log('This is vm.newUser from the acceptInvite view: ', vm.newUser);
+      newUser.name = vm.newUser.name;
+      newUser.password = vm.newUser.password;
+      InviteService.acceptInvite(newUser)
       .then(function (data) {
         console.log('This is data: ', data);
-        vm.newUser = data;
         console.log('This is newUser: ', newUser);
         $location.path('/group/show/' + vm.group);
       })
