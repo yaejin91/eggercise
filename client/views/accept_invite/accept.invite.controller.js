@@ -28,7 +28,6 @@ angular.module('eggercise')
         });
     }
 
-
 /*
 //Invitee accepts invitation
 exports.acceptInvite = function(req, res) {
@@ -85,4 +84,4 @@ exports.acceptInvite = function(req, res) {
   //       ErrorService.errorToasty(error);
   //     })
   //   }
-  // }]);
+  }]);
