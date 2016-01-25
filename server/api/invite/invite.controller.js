@@ -107,11 +107,18 @@ exports.showInvite = function (req, res) {
 
 //Invitee accepts invitation
 exports.acceptInvite = function(req, res) {
-  console.log('This is req.body in acceptInvite controller (server): ', req.body);
-  console.log('------------------');
-  console.log('This is res in acceptInvite controller (server): ', res);
+  var newUser = req.body;
+  console.log('This is newUser in acceptInvite controller (server): ', newUser);
   console.log('------------------');
 
+  User.findOne({email: newUser.email})
+  .exec(function(error, foundUser) {
+    if (foundUser === null) {
+      console.log('This user was not found. A new user account will be created.');
+    } else if (foundUser) {
+      console.log('There was a user found in the database');
+    }
+  })
   // var user = new User ({
   //   name: req.body.name,
   //   email: req.body.email,
