@@ -8,7 +8,7 @@ var auth = require('../../auth/auth.service.js');
 
 router.get('/accept/:invite_id', controller.showInvite);
 // router.post('/accept', controller.acceptInvite);
-router.post('/accept', user.create);
+// router.post('/accept', user.create);
 router.post('/create', auth.isAuthenticated(), controller.create);
 
 module.exports = router;

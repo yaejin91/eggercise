@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('eggercise')
-  .controller('AcceptInviteCtrl', ['$scope', '$location', '$log', '$routeParams', 'Auth', 'ErrorService', 'InviteService', function ($scope, $location, $log, $routeParams, Auth, ErrorService, InviteService) {
+  .controller('AcceptInviteCtrl', ['$scope', '$location', '$log', '$routeParams', 'InviteService', function ($scope, $location, $log, $routeParams, InviteService) {
 
     var vm = this;
     vm.invite = {};
