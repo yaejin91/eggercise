@@ -68,20 +68,20 @@ exports.acceptInvite = function(req, res) {
 }
 */
 
-  //   vm.acceptInvite = function (newUser) {
-  //     console.log('This is newUser from the acceptInvite view:', newUser);
-  //     console.log('This is vm.newUser from the acceptInvite view: ', vm.newUser);
-  //     newUser.name = vm.newUser.name;
-  //     newUser.password = vm.newUser.password;
-  //     // InviteService.acceptInvite(newUser)
-  //     Auth.signup(newUser)
-  //     .then(function (data) {
-  //       console.log('This is data: ', data);
-  //       console.log('This is newUser: ', newUser);
-  //       $location.path('/group/show/' + vm.group);
-  //     })
-  //     .catch(function (error) {
-  //       ErrorService.errorToasty(error);
-  //     })
-  //   }
+    // vm.acceptInvite = function (newUser) {
+    //   console.log('This is newUser from the acceptInvite view:', newUser);
+    //   console.log('This is vm.newUser from the acceptInvite view: ', vm.newUser);
+    //   newUser.name = vm.newUser.name;
+    //   newUser.password = vm.newUser.password;
+    //   // InviteService.acceptInvite(newUser)
+    //   Auth.signup(newUser)
+    //   .then(function (data) {
+    //     console.log('This is data: ', data);
+    //     console.log('This is newUser: ', newUser);
+    //     $location.path('/group/show/' + vm.group);
+    //   })
+    //   .catch(function (error) {
+    //     ErrorService.errorToasty(error);
+    //   })
+    // }
   }]);
