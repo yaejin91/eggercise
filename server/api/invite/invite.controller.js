@@ -107,7 +107,7 @@ exports.showInvite = function (req, res) {
 
 //Invitee accepts invitation
 exports.acceptInvite = function(req, res) {
-  console.log('This is req.params in acceptInvite controller (server): ', req.params);
+  console.log('This is req.body in acceptInvite controller (server): ', req.body);
   console.log('------------------');
   console.log('This is res in acceptInvite controller (server): ', res);
   console.log('------------------');
