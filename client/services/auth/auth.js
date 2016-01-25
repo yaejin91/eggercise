@@ -44,7 +44,7 @@ angular.module('eggercise')
         .then(function (res) {
           _user = res.data.user;
           $cookieStore.put('token', res.data.token);
-          $location.path('/group/show/' + groupId);
+          $location.path('/group');
           deferred.resolve();
         })
         .catch(function (err) {
@@ -132,9 +132,4 @@ angular.module('eggercise')
       }
       return deferred.promise;
     };
-
-
-
-
-
   });
