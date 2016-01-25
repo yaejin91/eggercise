@@ -7,6 +7,7 @@ angular.module('eggercise')
     vm.user = {};
     vm.formData = {};
     vm.allDates = [];
+    vm.date = {};
     vm.numberOfDays = 0;
     vm.firstStartDate = 99999999999999;
 
@@ -35,8 +36,11 @@ angular.module('eggercise')
         var logPath = WorkoutService.setlogPath(index, vm.allDates);
         WorkoutService.logToggle(logPath, date)
           .then(function (data) {
+            for(var i = 0; i < data.exercises.length; i++){
+              vm.date = data.exercises[i];
+              // console.log('Good Job!!! You logged an exercise on ', vm.date);.
+            }
             vm.user = data;
-            vm.ifLogged();
           })
           .catch(function (err) {
             ErrorService.errorToasty(err);
