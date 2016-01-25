@@ -1,7 +1,7 @@
 'use strict';
 
 var _ = require('lodash');
-
+var authService = require('../../auth/auth.service');
 var Group = require('../group/group.model'),
   User = require('../user/user.model'),
   Invite = require('./invite.model'),
