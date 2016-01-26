@@ -57,8 +57,6 @@ angular.module('eggercise', [
 
       Auth.isReadyLogged()
       .then(function() {
-        // if they are logged in and they try to access publicPage
-        // then redirect them to the groups page
         $rootScope.unauthorized = false;
 
         publicPagePatterns.forEach(function(publicPage, index, publicPagePatterns) {
