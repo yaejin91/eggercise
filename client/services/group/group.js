@@ -13,7 +13,6 @@ angular.module('eggercise')
         })
         .error(function (error) {
           deferred.reject('Error: ',  error);
-          console.log('error');
         });
       return deferred.promise;
     }

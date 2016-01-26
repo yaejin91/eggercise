@@ -53,27 +53,37 @@ angular.module('eggercise', [
 
     $rootScope.$on('$locationChangeStart', function (event, next, current) {
       var requestedPath = $location.url();
-      var publicPages = [/\//, /\/login/, /\/invites\/accept\/S+$/];
-      var restrictedPage = publicPages.indexOf(requestedPath) === -1;
+      var publicPagePatterns = [/\/$/, /\/login$/, /\/invites\/accept\/\S+$/];
 
       Auth.isReadyLogged()
       .then(function() {
+        // if they are logged in and they try to access publicPage
+        // then redirect them to the groups page
         $rootScope.unauthorized = false;
-        if(requestedPath === publicPages[0].test(publicPages[0])) {
-          event.preventDefault();
-          $location.path('/group');
-        }
+
+        publicPagePatterns.forEach(function(publicPage, index, publicPagePatterns) {
+          if(publicPage.test(requestedPath)) {
+            event.preventDefault();
+            $location.path('/group');
+          }
+        });
       })
       .catch(function () {
         $rootScope.unauthorized = true;
-        //publicPage is different from publicPages.
-        //publicPage is the element of the publicPages.
-        publicPages.forEach(function(publicPage, index, publicPages) {
-          if (requestedPath === publicPage.test(publicPage)) {
-            $location.path(publicPage)
+        // if the user is not logged in and trying to access a restricted page
+        // then redirect to the login page
+        var restrictedPage = true;
+
+        publicPagePatterns.forEach(function(publicPage, index, publicPagePatterns) {
+          if (publicPage.test(requestedPath)) {
+            restrictedPage = false;
           }
-        })
-      })
+        });
+
+        if (restrictedPage) { 
+          $location.path('/login');
+        }
+      });
     });
   })
 
