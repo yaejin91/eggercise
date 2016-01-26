@@ -59,15 +59,17 @@ angular.module('eggercise', [
       Auth.isReadyLogged()
       .then(function() {
         $rootScope.unauthorized = false;
-        if(requestedPath === publicPages[0]) {
+        if(requestedPath === publicPages[0].test(publicPages[0])) {
           event.preventDefault();
           $location.path('/group');
         }
       })
       .catch(function () {
         $rootScope.unauthorized = true;
+        //publicPage is different from publicPages.
+        //publicPage is the element of the publicPages.
         publicPages.forEach(function(publicPage, index, publicPages) {
-          if (requestedPath === publicPage) {
+          if (requestedPath === publicPage.test(publicPage)) {
             $location.path(publicPage)
           }
         })
