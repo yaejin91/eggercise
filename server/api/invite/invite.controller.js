@@ -72,7 +72,6 @@ exports.create = function (req, res) {
     status: false
   });
 
-  console.log("this is the create controller server side john: ", invite._group);
   // Run a check for an existing invite in the database
   var query = Invite.find ({ email: invite.email, _group: invite._group });
   query.exec(function (error, foundInvitationsArray) {
@@ -123,7 +122,6 @@ exports.acceptInvite = function(req, res) {
           user._groups.push(newUser.group);
           user.save();
           var updatedGroup = populateMember(req, res, user._id);
-          // res.json(foundInvitee);
           res.status(201).json({
           user: _.omit(user.toObject(), ['passwordHash', 'salt']),
           token: authService.signToken(user._id),
@@ -133,7 +131,6 @@ exports.acceptInvite = function(req, res) {
     }
   });
 }
-
 
 function populateMember (req, res, id) {
   var newUser = req.body;
