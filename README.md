@@ -1,4 +1,4 @@
-# Eggercise [![Generated with](https://img.shields.io/badge/generated%20with-bangular-blue.svg?style=flat-square)](https://github.com/42Zavattas/generator-bangular)
+# Eggercise [![Generated with](https://img.shields.io/badge/generated%20with-bangular-blue.svg?style=flat-square)](https://github.com/42Zavattas/generator-bangular) [![Travis](https://img.shields.io/travis/rust-lang/rust.svg?style=flat-square)]() [![PyPI](https://img.shields.io/pypi/status/Django.svg?style=flat-square)]()
 
 An application for motivating people to exercise by incentivizing them with the two true incentives in life: pride and money. 
 
