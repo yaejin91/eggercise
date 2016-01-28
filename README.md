@@ -34,7 +34,7 @@ At this point, you should have the app setup complete.
 * (Skip this if previous step was successful) If not, open a new web browser window and in the URL bar, type in 'localhost:3000'. This should redirect you to the landing page of the app.
 * You should see the landing page as shown below:
 
-![Eggercise Landing Page](img/landing.png "Eggercise Landing Page")
+![Eggercise Landing Page](img/LandingPage.png "Eggercise Landing Page")
 
 #### Tests for MongoDB and AngularJS
 
