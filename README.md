@@ -27,7 +27,7 @@ At this point, you should have the app setup complete.
 * Open a new terminal window and run the command 'mongod'.
 * You should now see that Mongo server is running
 
-![Alt text](img/Running_Mongod.png "Mongod Server Running")
+![Alt text](img/Mongod.png "Mongod Server Running")
 
 * Open another terminal window and run the command 'gulp serve' to have the server running.
 * With default settings, the app should automatically pop up in a new web browser window.
