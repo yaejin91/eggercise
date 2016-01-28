@@ -34,7 +34,7 @@ At this point, you should have the app setup complete.
 * (Skip this if previous step was successful) If not, open a new web browser window and in the URL bar, type in 'localhost:3000'. This should redirect you to the landing page of the app.
 * You should see the landing page as shown below: 
 
-![Alt text](img/landing.png "Eggercise Landing Page")
+![Eggercise Landing Page](img/landing.png "Eggercise Landing Page")
 
 #### Tests for MongoDB and AngularJS
 
@@ -55,15 +55,16 @@ At this point, you should have the app setup complete.
 
 ## Using Eggercise
 
-Welcome to Eggercise! If you are a new user, you need to register with us. Once you register, you will be directed to your groups page and you will see that you currently have no workout groups. Feel free to make one. Simply click on the 'add group' button. (Screenshot)
+Welcome to Eggercise! If you are a new user, you need to register with us. Once you register, you will be directed to your groups page and you will see that you currently have no workout groups. Feel free to make one. Simply click on the 'add group' button. 
+![Alt text](img/landing.png "Eggercise Landing Page")
 
- You will now see a field that you should fill out to determine important details of the group, such as the start and end date of the group. Fill them out as you would like to. (Screenshot)
+ You will now see a field that you should fill out to determine important details of the group, such as the start and end date of the group. Fill them out as you would like to. ![Before Create Group](img/beforeCreateG.png "Before Create Group")
 
- After you are done filling them out, click the 'create group' button. Now you should be back in the page that shows your groups, with the group you just created in the list of Active Groups. (Screenshot)
+ After you are done filling them out, click the 'create group' button. Now you should be back in the page that shows your groups, with the group you just created in the list of Active Groups. ![Create Group](img/createG.png "After Create Group")
 
- If you visit that group, you will see that group's details, such as the start date, end date, how much each person owes/ is owed, etc. But oh wait, you are the only one in the group, so no one owes you anything, nor do you owe anyone anything. So why don't we make this more fun and invite a friend? Or an enemy. Your choice. Look at the very bottom of the groups page. (Screenshot)
+ If you visit that group, you will see that group's details, such as the start date, end date, how much each person owes/ is owed, etc. But oh wait, you are the only one in the group, so no one owes you anything, nor do you owe anyone anything. So why don't we make this more fun and invite a friend? Or an enemy. Your choice. Look at the very bottom of the groups page. ![After Create Group](img/afterCreateG.png "After Create Group")
 
- Go ahead and fill out your potential group member's name and e-mail, then click the 'send invitation' button. They should have gotten an e-mail from 'team@eggercise.com', which includes a greeting and a link to accepting the invitation to that group, like the following screenshot (Screenshot). 
+ Go ahead and fill out your potential group member's name and e-mail, then click the 'send invitation' button. They should have gotten an e-mail from 'team@eggercise.com', which includes a greeting and a link to accepting the invitation to that group, like the following screenshot ![Log Workout](img/logworkout.png "Log Workout") 
 
  But oh wait, your invitees don't have an account in Eggercise. No worries, because after they click the invitation link, they just need to type in the username and password in order to register. We already have their e-mail (Screenshot). 
 
