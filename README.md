@@ -71,6 +71,8 @@ If you visit that group, you will see that group's details, such as the start da
 
 Go ahead and fill out your potential group member's name and e-mail, then click the 'send invitation' button. They should have gotten an e-mail from 'team@eggercise.com', which includes a greeting and a link to accepting the invitation to that group, like the following screenshot:
 
+![Invite Email](img/InviteEmail.png "Invite Email")
+
 But oh wait, your invitees don't have an account in Eggercise. No worries, because after they click the invitation link, they just need to type in the username and password in order to register. We already have their e-mail:
 
 ![Accept Invite](img/AcceptInvite.png "Accept Invite")
