@@ -91,7 +91,7 @@ So wait, how do you become a leader of the group? It's simple. You just need to 
 
 This option will lead you to a page where you can log the days you worked out. The dates you can log will vary, depending on when you registered for the app and when the earliest start date among your groups is. Simply click the checkbox next to the date you worked out on, and congratulations! You just logged a workout
 
-![Log Workout](img/LogWorkout.png "Log Workout")
+![Log Workout](img/LogOneWorkout.png "Log Workout")
 
 Repeat this every day and hopefully, one day you will overthrow all of the leaders in your group and become rich. Until then, keep on Eggercising!
 
