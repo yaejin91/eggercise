@@ -55,5 +55,4 @@ At this point, you should have the app setup complete.
 
 ## Using Eggercise
 
-Refer to the Eggercise document ![here](/appDoc.md "Eggercise Doc")
-w
+Refer to the Eggercise document [here](https://github.com/learntechlabs/eggercise/blob/readme/appDOC.md)
