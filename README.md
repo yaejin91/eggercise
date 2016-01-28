@@ -56,15 +56,15 @@ At this point, you should have the app setup complete.
 ## Using Eggercise
 
 Welcome to Eggercise! If you are a new user, you need to register with us. Once you register, you will be directed to your groups page and you will see that you currently have no workout groups. Feel free to make one. Simply click on the 'add group' button. 
-![Alt text](img/landing.png "Eggercise Landing Page")
+![Add Group Button](/img/addGroupBtn.png "Add Group Button")
 
  You will now see a field that you should fill out to determine important details of the group, such as the start and end date of the group. Fill them out as you would like to. ![Before Create Group](img/beforeCreateG.png "Before Create Group")
 
  After you are done filling them out, click the 'create group' button. Now you should be back in the page that shows your groups, with the group you just created in the list of Active Groups. ![Create Group](img/createG.png "After Create Group")
 
- If you visit that group, you will see that group's details, such as the start date, end date, how much each person owes/ is owed, etc. But oh wait, you are the only one in the group, so no one owes you anything, nor do you owe anyone anything. So why don't we make this more fun and invite a friend? Or an enemy. Your choice. Look at the very bottom of the groups page. ![After Create Group](img/afterCreateG.png "After Create Group")
+ If you visit that group, you will see that group's details, such as the start date, end date, how much each person owes/ is owed, etc. But oh wait, you are the only one in the group, so no one owes you anything, nor do you owe anyone anything. So why don't we make this more fun and invite a friend? Or an enemy. Your choice. Look at the very bottom of the groups page.
 
- Go ahead and fill out your potential group member's name and e-mail, then click the 'send invitation' button. They should have gotten an e-mail from 'team@eggercise.com', which includes a greeting and a link to accepting the invitation to that group, like the following screenshot ![Log Workout](img/logworkout.png "Log Workout") 
+ Go ahead and fill out your potential group member's name and e-mail, then click the 'send invitation' button. They should have gotten an e-mail from 'team@eggercise.com', which includes a greeting and a link to accepting the invitation to that group, like the following screenshot 
 
  But oh wait, your invitees don't have an account in Eggercise. No worries, because after they click the invitation link, they just need to type in the username and password in order to register. We already have their e-mail (Screenshot). 
 
@@ -76,7 +76,7 @@ Next to the pair of numbers, you will see another number, with the label 'days b
 
 If you are the leader, you win all of the money in the betting pool. If not, you will have to pay the leader, the amount depending on how behind you are from the leader. We calculate it for you in the third block (Screenshot). 
 
-So wait, how do you become a leader of the group? It's simple. You just need to workout more than the rest of the group members, and log the days that you worked out. In order for you to log your workout, you can click on your name on the navigation bar. Then you will see a 'Log Workout' option that you can click (Screenshot). 
+So wait, how do you become a leader of the group? It's simple. You just need to workout more than the rest of the group members, and log the days that you worked out. In order for you to log your workout, you can click on your name on the navigation bar. Then you will see a 'Log Workout' option that you can click ![Log Workout](img/logworkout.png "Log Workout")
 
 This option will lead you to a page where you can log the days you worked out. The dates you can log will vary, depending on when you registered for the app and when the earliest start date among your groups is. Simply click the checkbox next to the date you worked out on, and congratulations! You just logged a workout (Screenshot). 
 
