@@ -71,7 +71,9 @@ If you visit that group, you will see that group's details, such as the start da
 
 Go ahead and fill out your potential group member's name and e-mail, then click the 'send invitation' button. They should have gotten an e-mail from 'team@eggercise.com', which includes a greeting and a link to accepting the invitation to that group, like the following screenshot
 
-But oh wait, your invitees don't have an account in Eggercise. No worries, because after they click the invitation link, they just need to type in the username and password in order to register. We already have their e-mail (Screenshot).
+But oh wait, your invitees don't have an account in Eggercise. No worries, because after they click the invitation link, they just need to type in the username and password in order to register. We already have their e-mail
+
+![Accept Invite](img/AcceptInvite.png "Accept Invite")
 
 As soon as they register, they will be registered as a member of your group and you are not alone anymore.
 
@@ -79,7 +81,7 @@ So now that you have a group with your friends as members, let's dive into the a
 
 ![Group Info](img/GroupInfo.png "Group Information")
 
-Next to the pair of numbers, you will see another number, with the label 'days behind' or 'days ahead' below it. That shows how many days you are ahead if you are the leader of the group, or how many days behind if you are not the leader of the group (Screenshot).
+Next to the pair of numbers, you will see another number, with the label 'days behind' or 'days ahead' below it. That shows how many days you are ahead if you are the leader of the group, or how many days behind if you are not the leader of the group.
 
 If you are the leader, you win all of the money in the betting pool. If not, you will have to pay the leader, the amount depending on how behind you are from the leader. We calculate it for you in the third block
 
@@ -94,5 +96,3 @@ This option will lead you to a page where you can log the days you worked out. T
 ![Log Workout](img/LogOneWorkout.png "Log Workout")
 
 Repeat this every day and hopefully, one day you will overthrow all of the leaders in your group and become rich. Until then, keep on Eggercising!
-
-
