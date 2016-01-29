@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('eggercise')
-  .controller('ViewLogCtrl', ['$location', '$log', '$routeParams', 'ViewLogService', 'GroupService', function ($location, $log, $routeParams, ViewLogService, GroupService) {
+  .controller('ViewLogCtrl', ['$location', '$log', '$routeParams', 'ViewLogService', 'GroupService', 'ErrorService', function ($location, $log, $routeParams, ViewLogService, GroupService, ErrorService) {
     var vm = this;
     vm.formData = {};
     vm.logs = [];
@@ -31,14 +31,14 @@ angular.module('eggercise')
         }
       })
       .catch(function (error){
-        vm.error = error;
+        ErrorService.errorToasty(error);
       });
     }
 
 
     vm.notification = function (){
       var noLogs = document.getElementById('noLogs');
-        noLogs.innerHTML = 'No exercise logs found at the moment \u2639 .';
+        noLogs.innerHTML = 'No exercise logs found at the moment \u2639';
         noLogs.style.display = 'block';
     }
 

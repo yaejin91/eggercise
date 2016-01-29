@@ -8,27 +8,26 @@ angular.module('eggercise')
       var deferred = $q.defer();
       $http.post('/api/invites/create', formData)
         .success(function (returnedInvite) {
-          console.log('This is the createInvite & returnedInvite: ', returnedInvite);
-          formData = {};
           deferred.resolve(returnedInvite);
         })
         .error(function (error) {
-          console.log('This is the createInvite & error: ', error);
           deferred.reject(error);
         });
       return deferred.promise;
     }
 
-    service.acceptInvite = function (id) {
+    // Show invite by invite id
+    service.showInvite = function (id) {
       var deferred = $q.defer();
       $http.get('/api/invites/accept/' + id)
-        .success(function (showGroup) {
-          deferred.resolve(showGroup);
+        .success(function (showInvite) {
+          deferred.resolve(showInvite);
         })
         .error(function (error) {
-          deferred.reject(error);
+          deferred.reject('Error: ', error);
         });
-      return deferred.promise;
-    }
+        return deferred.promise;
+    };
+
     return service;
   });

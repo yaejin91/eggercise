@@ -7,12 +7,20 @@ body {
   font-family: sans-serif;
   margin-bottom: 60px;
 }
+a{
+  cursor: pointer;
+}
+
+
+a, u {
+  text-decoration: none;
+}
 
 .landingpage {
   color: white;
   text-align: center;
-  height: 400px;
-  background: url('../../assets/images/eggerciseimage.jpg') no-repeat center;
+  height: 750px;
+  background: url('../../assets/images/eggerciseimage.jpg') no-repeat center top;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   background-size: cover;
@@ -25,6 +33,7 @@ body {
 
 .pageforms {
   margin: auto;
+  width: 500px;
   width: 33%;
 }
 
@@ -39,11 +48,12 @@ body {
   height: 120px;
   width: 300px;
   padding: 20px;
-  background-color: white;
+  background-color: #4F628E;
+  color: white;
 
   /* outer shadows  (note the rgba is red, green, blue, alpha) */
-  -webkit-box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.4);
-  -moz-box-shadow: 0px 1px 6px rgba(23, 69, 88, .5);
+  // -webkit-box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.4);
+  // -moz-box-shadow: 0px 1px 6px rgba(23, 69, 88, .5);
 
   /* rounded corners */
   -webkit-border-radius: 12px;
@@ -51,9 +61,9 @@ body {
   border-radius: 7px;
 
   /* gradients */
-  background: -webkit-gradient(linear, left top, left bottom,
-  color-stop(0%, white), color-stop(15%, white), color-stop(100%, #2E4272));
-  background: -moz-linear-gradient(top, white 0%, white 55%, #2E4272 130%);
+  // background: -webkit-gradient(linear, left top, left bottom,
+  // color-stop(0%, white), color-stop(15%, white), color-stop(100%, #2E4272));
+  // background: -moz-linear-gradient(top, white 0%, white 55%, #2E4272 130%);
 }
 
 .logadd {
@@ -61,11 +71,11 @@ body {
   height: 80px;
   // width: 300px;
   // padding: 20px;
-  background-color: white;
+  background-color: #4F628E;
 
   /* outer shadows  (note the rgba is red, green, blue, alpha) */
-  -webkit-box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.4);
-  -moz-box-shadow: 0px 1px 6px rgba(23, 69, 88, .5);
+  // -webkit-box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.4);
+  // -moz-box-shadow: 0px 1px 6px rgba(0, 0, 0, 0.4);
 
   /* rounded corners */
   -webkit-border-radius: 12px;
@@ -73,48 +83,50 @@ body {
   border-radius: 7px;
 
   /* gradients */
-  background: -webkit-gradient(linear, left top, left bottom,
-  color-stop(0%, white), color-stop(15%, white), color-stop(100%, #2E4272));
-  background: -moz-linear-gradient(top, white 0%, white 55%, #2E4272 130%);
+  // background: -webkit-gradient(linear, left top, left bottom,
+  // color-stop(0%, white), color-stop(15%, white), color-stop(100%, #2E4272));
+  // background: -moz-linear-gradient(top, white 0%, white 55%, #2E4272 130%);
 }
 
 .loglist {
   margin: auto;
   padding: 10px 0 10px 60px;
-  background-color: white;
+  background-color: #4F628E;
+  color: white;
 
   /* outer shadows  (note the rgba is red, green, blue, alpha) */
-  -webkit-box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.4);
-  -moz-box-shadow: 0px 1px 6px rgba(23, 69, 88, .5);
+  // -webkit-box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.4);
+  // -moz-box-shadow: 0px 1px 6px rgba(23, 69, 88, .5);
 
   /* rounded corners */
-  -webkit-border-radius: 12px;
-  -moz-border-radius: 7px;
-  border-radius: 7px;
+  // -webkit-border-radius: 12px;
+  // -moz-border-radius: 7px;
+  // border-radius: 7px;
 
   /* gradients */
-  background: -webkit-gradient(linear, left top, left bottom,
-  color-stop(0%, white), color-stop(15%, white), color-stop(100%, #2E4272));
-  background: -moz-linear-gradient(top, white 0%, white 55%, #2E4272 130%);
+  // background: -webkit-gradient(linear, left top, left bottom,
+  // color-stop(0%, white), color-stop(15%, white), color-stop(100%, #2E4272));
+  // background: -moz-linear-gradient(top, white 0%, white 55%, #2E4272 130%);
 }
 
 .logworkout {
   padding: 10px 0 10px 0;
-  background-color: white;
+  background-color: #4F628E;
+  color: white;
 
   /* outer shadows  (note the rgba is red, green, blue, alpha) */
-  -webkit-box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.4);
-  -moz-box-shadow: 0px 1px 6px rgba(23, 69, 88, .5);
+  // -webkit-box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.4);
+  // -moz-box-shadow: 0px 1px 6px rgba(23, 69, 88, .5);
 
   /* rounded corners */
-  -webkit-border-radius: 12px;
-  -moz-border-radius: 7px;
-  border-radius: 7px;
+  // -webkit-border-radius: 12px;
+  // -moz-border-radius: 7px;
+  // border-radius: 7px;
 
   /* gradients */
-  background: -webkit-gradient(linear, left top, left bottom,
-  color-stop(0%, white), color-stop(15%, white), color-stop(100%, #2E4272));
-  background: -moz-linear-gradient(top, white 0%, white 55%, #2E4272 130%);
+  // background: -webkit-gradient(linear, left top, left bottom,
+  // color-stop(0%, white), color-stop(15%, white), color-stop(100%, #2E4272));
+  // background: -moz-linear-gradient(top, white 0%, white 55%, #2E4272 130%);
 }
 
 .groupimage {
@@ -129,7 +141,7 @@ body {
   height: 60px;
   background: #162955;
   text-align: center;
-  color: #337ab7;
+  color: white;
   position: absolute;
 }
 
@@ -138,8 +150,9 @@ body {
 }
 
 .margin-base-vertical {
-  margin: 40px 0;
+  padding-top: 40px;
   text-align: center;
+  margin-top: 0;
 }
 
 
@@ -151,11 +164,16 @@ body {
 
 .navbar {
   background-color: #162955;
+  border-radius: 0;
+  margin-bottom: 0px;
+}
+
+.nav-tabs > li > a {
   color: white;
 }
 
-.navbar > li > a {
-  color: #000;
+.nav-tabs > li > a:hover, .nav-tabs > li > a:focus {
+  color: black;
 }
 
 .nav-tabs {
@@ -172,12 +190,12 @@ body {
 
 
 .large-glyph {
-  color: black;
+  color: white;
   font-size: 200%;
 }
 
 .glyph-title {
-  color: black;
+  color: white;
 }
 
 .control-button {
@@ -212,6 +230,12 @@ body {
 #hideButton{
   /*display: none;*/
 }
+
+#delete-group{
+  font-weight: bold;
+  text-decoration: none;
+  color: red;
+}
 .workoutlog {
   text-align: center;
 }
@@ -220,8 +244,23 @@ body {
   font-weight: bold;
 }
 
+#inviteBox{
+  padding-bottom: 20px;
+}
+
+
+#group-title-bar{
+  padding-top: 20px;
+}
+
+#group-name{
+  font-size: 2em;
+  font-weight: bold;
+}
+
 /* Media-Query Landscape phones and down */
-@media (max-width: 480px) {
+/*@media (max-width: 480px) {*/
+@media (max-width: 800px) {
   #changeFontSize{
     font-size: 1.5em;
   }
@@ -232,4 +271,24 @@ body {
     margin-left: auto;
 
   }
+}
+
+.landing-page {
+  width: 100%;
+  padding-right: 0px;
+  padding-left: 0px;
+}
+
+.invite-links {
+  font-size: 20px;
+  color: #162955;
+  font-weight: bold;
+}
+
+.links {
+  margin-top: 15px;
+}
+
+.group-info {
+  font-weight: bold;
 }

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('eggercise')
-  .controller('LoginCtrl', ['$scope', '$location', 'Auth', function ($scope, $location, Auth) {
+  .controller('LoginCtrl', ['$scope', '$location', 'Auth', 'ErrorService', function ($scope, $location, Auth, ErrorService) {
 
     var vm = this;
 
@@ -23,7 +23,7 @@ angular.module('eggercise')
             }
           })
           .catch(function (err) {
-            vm.error = err;
+            ErrorService.errorToasty(err);
           });
       }
 

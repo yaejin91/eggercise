@@ -1,12 +1,13 @@
 'use strict';
 
 angular.module('eggercise')
-  .controller('WorkoutCtrl', ['WorkoutService', '$routeParams', '$log', '$location', function (WorkoutService, $routeParams, $log, $location) {
+  .controller('WorkoutCtrl', ['WorkoutService', '$routeParams', '$log', '$location', 'ErrorService', function (WorkoutService, $routeParams, $log, $location, ErrorService) {
 
     var vm = this;
     vm.user = {};
     vm.formData = {};
     vm.allDates = [];
+    vm.date = {};
     vm.numberOfDays = 0;
     vm.firstStartDate = 99999999999999;
 
@@ -26,8 +27,7 @@ angular.module('eggercise')
             $location.path('/log');
           })
           .catch(function (err) {
-            vm.error = err;
-            $log.error('Error: ',err);
+            ErrorService.errorToasty(err);
           });
       },
 
@@ -36,12 +36,15 @@ angular.module('eggercise')
         var logPath = WorkoutService.setlogPath(index, vm.allDates);
         WorkoutService.logToggle(logPath, date)
           .then(function (data) {
+            for(var i = 0; i < data.exercises.length; i++){
+              vm.date = data.exercises[i];
+              // console.log('Good Job!!! You logged an exercise on ', vm.date);.
+            }
             vm.user = data;
           })
           .catch(function (err) {
-            vm.error = err;
-            $log.error('Error: ', err);
-          })
+            ErrorService.errorToasty(err);
+          });
         }
     });
   }]);

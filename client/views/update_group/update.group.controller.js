@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('eggercise')
-  .controller('UpdateGroupCtrl', ['$location', '$log', '$routeParams', 'GroupService', function ($location, $log, $routeParams,GroupService) {
+  .controller('UpdateGroupCtrl', ['$location', '$log', '$routeParams', 'GroupService', 'ErrorService', function ($location, $log, $routeParams, GroupService, ErrorService) {
 
     var vm = this;
     vm.formData = {};
@@ -13,8 +13,6 @@ angular.module('eggercise')
     vm.group_id = $routeParams.group_id;
     vm.startDatePickerIsOpen = false;
     vm.endDatePickerIsOpen = false;
-
-
 
 
     vm.valuationDatePickerOpen = function ($event, whichDate) {
@@ -45,7 +43,6 @@ angular.module('eggercise')
       GroupService.showGroup(id)
         .then(function (data) {
           vm.group = data;
-
           //getting member id in group's data
           for(var i = 0; i < data._members.length; i++){
             var memberId = data._members[i]._id;
@@ -62,7 +59,7 @@ angular.module('eggercise')
           vm.formData.end = new Date(vm.group.end);
         })
         .catch(function (error) {
-          vm.error = error;
+          ErrorService.errorToasty(error);
         });
     }
 
@@ -71,10 +68,10 @@ angular.module('eggercise')
       GroupService.updateGroup(id, vm.formData)
         .then(function (updatedGroup){
           vm.formData = updatedGroup;
-          $location.path('/group')
+          $location.path('/group/show/' + vm.group._id);
         })
-        .catch(function(error) {
-          vm.error = error;
+        .catch(function (error) {
+          ErrorService.errorToasty(error);
         });
     }
 
@@ -86,7 +83,7 @@ angular.module('eggercise')
           $location.path('/group')
         })
         .catch(function (error) {
-          vm.error = error;
+          ErrorService.errorToasty(error);
         });
     }
   }]);

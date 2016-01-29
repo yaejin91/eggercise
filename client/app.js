@@ -10,6 +10,8 @@ angular.module('eggercise', [
   'ngAnimate',
   'angular-toasty'
 ])
+
+// only display home.js if the user is not logged in
   .config(function ($routeProvider, $locationProvider, $httpProvider) {
     $routeProvider
       .otherwise({
@@ -33,41 +35,53 @@ angular.module('eggercise', [
       },
 
       responseError: function (response) {
-        console.log('response.status: ', response.status);
         if (response.status === 401) {
-          console.log('responseError going to login');
           $location.path('/login');
           $cookieStore.remove('token');
           return $q.reject(response);
         }
-        else{
+         else {
           return $q.reject(response);
         }
       }
     };
   })
-  
+
   .run(function ($rootScope, $location, Auth) {
 
     $rootScope.Auth = Auth;
 
     $rootScope.$on('$locationChangeStart', function (event, next, current) {
       var requestedPath = $location.url();
-      var publicPages = ['/', '/login', '/signup'];
-      var restrictedPage = publicPages.indexOf(requestedPath) === -1;
+      var publicPagePatterns = [/\/$/, /\/login$/, /\/invites\/accept\/\S+$/];
 
-      if (restrictedPage) {
-        Auth.isReadyLogged()
-        .then(function() {
-          $rootScope.unauthorized = false;
-        })
-        .catch(function () {
-          $rootScope.unauthorized = true;
-          event.preventDefault();
-          $rootScope.returnToPath = $location.url();
-          $location.path('/login');
+      Auth.isReadyLogged()
+      .then(function() {
+        $rootScope.unauthorized = false;
+
+        publicPagePatterns.forEach(function(publicPage, index, publicPagePatterns) {
+          if(publicPage.test(requestedPath)) {
+            event.preventDefault();
+            $location.path('/group');
+          }
         });
-      }
+      })
+      .catch(function () {
+        $rootScope.unauthorized = true;
+        // if the user is not logged in and trying to access a restricted page
+        // then redirect to the login page
+        var restrictedPage = true;
+
+        publicPagePatterns.forEach(function(publicPage, index, publicPagePatterns) {
+          if (publicPage.test(requestedPath)) {
+            restrictedPage = false;
+          }
+        });
+
+        if (restrictedPage) { 
+          $location.path('/login');
+        }
+      });
     });
   })
 

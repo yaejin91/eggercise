@@ -6,9 +6,7 @@ var _ = require('lodash'),
 var Group = require('./group.model'),
   User = require('../user/user.model');
 
-function handleError (res, err, status) {
-  return res.status(status).json({err: err});
-}
+var errorHandler = require('../../error/error-handling');
 
 //Show all groups
 exports.showAllGroups = function (req, res) {
@@ -17,7 +15,7 @@ exports.showAllGroups = function (req, res) {
     .populate('_groups')
     .exec(function (error, foundUser) {
     if (error) {
-      return handleError(res, error, 500);
+      errorHandler.handle(res, error, 404);
     } else if (foundUser) {
       res.json(foundUser._groups);
     }
@@ -26,7 +24,6 @@ exports.showAllGroups = function (req, res) {
 
 
 //Creates a new group in the DB.
-//TODO: should return new group created with the attributes.
 exports.create = function (req, res) {
   var creatorId = req.user._id;
   var group = new Group ({
@@ -43,7 +40,7 @@ exports.create = function (req, res) {
     if (data) {
       User.findOne({_id: creatorId}, function (error, creator){
         if (error) {
-          return handleError(res, error, 500);
+          errorHandler.handle(res, error, 404);
         } else {
           var id = mongoose.Types.ObjectId(creator._id);
           creator._groups.push(data._id);
@@ -53,7 +50,7 @@ exports.create = function (req, res) {
       });
     } else if (error) {
       console.error(error.stack);
-      return handleError(res, error, 500);
+      errorHandler.handle(res, error, 500);
     }
   });
 }
@@ -72,10 +69,11 @@ exports.showGroup = function (req, res) {
   if (mongoose.Types.ObjectId.isValid(req.params.group_id)) {
     Group.findOne({_id: req.params.group_id})
       .populate('_members')
-      .exec(function (err, group) {
+      .exec(function (error, group) {
       groupCreatorId = group._creator.toString();
 
-      if (err) { return handleError(res, err, 500);
+      if (error) {
+        errorHandler.handle(res, error, 404);
       } else if (group) {
         // store the member group ids in an array
         for (var i = 0; i < group._members.length; i++) {
@@ -97,10 +95,11 @@ exports.showGroup = function (req, res) {
 //Delete a group
 exports.delete = function (req, res){
   var group = new Group({_id: req.params.group_id});
-  group.remove(function (err, deletedGroup){
-    if(err){
+  group.remove(function (error, deletedGroup){
+    if(error){
       // res.status(400).json({err: 'deletedGroup not found'});
-      return handleError(res, 'deletedGroup not found', 404);
+      errorHandler.handle(res, 'deletedGroup not found', 404);
+      return;
     }
     res.status(200).json({
       group: deletedGroup
@@ -130,8 +129,11 @@ exports.update = function (req, res){
     }
   }
 
-  Group.findByIdAndUpdate(groupId, update, options, function (err, updatedGroup) {
-    if (err) { return handleError(res, err);}
+  Group.findByIdAndUpdate(groupId, update, options, function (error, updatedGroup) {
+    if (error) {
+      errorHandler.handle(res, error, 422);
+      return;
+    }
     res.status(200).json(updatedGroup);
   });
 }
@@ -148,10 +150,7 @@ exports.showGroupLeaderboard = function (req, res){
         members: foundGroup._members
       });
     } else {
-      return handleError(res, 'group not found', 404);
+      errorHandler.handle(res, 'group not found', 404);
     }
   })
 };
-
-
-
