@@ -42,7 +42,7 @@ angular.module('eggercise')
       })
       .catch(function (error){
         vm.flashMessage('error', vm.formData);
-        vm.formData = {};
       });
+      vm.formData = {};
     }
   }]);
