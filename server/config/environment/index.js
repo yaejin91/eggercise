@@ -25,4 +25,10 @@ var all = {
   }
 };
 
+console.log('process.env: ',process.env);
+
+//This is undefined because process.env does not have any attribute
+//called SENDGRID_API_KEY
+console.log('api key: ',process.env.SENDGRID_API_KEY);
+
 module.exports = _.merge(all, require('./' + all.env + '.js'));
