@@ -22,7 +22,7 @@ function generateInvitation (invitedUserName, groupCreator, id) {
   var emailBody = "Hello " + invitedUserName + ", you've been invited by " + groupCreator + " to join the Eggercise app! Please join by clicking on the link to accept your invitation."
   var localBaseUrl = "localhost:3000";
   var eggerciseBaseUrl = "https://www.eggercise.com"
-  var fullUrl = localBaseUrl + "/invites/accept/" + id;
+  var fullUrl = eggerciseBaseUrl + "/invites/accept/" + id;
   return emailBody + " " + fullUrl;
 }
 
