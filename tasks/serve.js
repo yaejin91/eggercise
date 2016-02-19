@@ -9,6 +9,7 @@ var ripe       = require('ripe');
 var nodemon    = require('gulp-nodemon');
 var open       = require('gulp-open');
 var bsync      = require('browser-sync');
+var fs         = require('fs');
 
 var config = require('../server/config/environment');
 
@@ -16,6 +17,14 @@ var openOpts = {
   uri: 'http://localhost:' + config.port,
   already: false
 };
+
+var apiPath = process.env.INIT_CWD + '/tasks/development-ignored.json';
+
+var stats = fs.lstatSync(apiPath);
+if (stats.isFile() && (process.env.NODE_ENV == 'development')) {
+  var developmentEnvironmentConfig = require(apiPath);
+  process.env.SENDGRID_API_KEY = developmentEnvironmentConfig.sendgridAPI;
+}
 
 module.exports = {
 
