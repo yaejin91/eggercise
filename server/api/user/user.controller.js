@@ -15,13 +15,20 @@ var errorHandler = require('../../error/error-handling');
  * @param res
  */
 exports.create = function (req, res) {
-  User.create(req.body, function (error, user) {
-    if (error) { errorHandler.handle(res, error, 500); }
-    res.status(201).json({
-      user: _.omit(user.toObject(), ['passwordHash', 'salt']),
-      token: authService.signToken(user._id)
-    });
-  });
+  User.findOne({name: req.body.name})
+    .exec(function (error, foundUser) {
+      if(foundUser) {
+        errorHandler.handle(res, error, 500)
+      } else {
+        User.create(req.body, function (error, user) {
+          if (error) { errorHandler.handle(res, error, 500); }
+          res.status(201).json({
+            user: _.omit(user.toObject(), ['passwordHash', 'salt']),
+            token: authService.signToken(user._id)
+          });
+        }); 
+      }
+    })
 };
 
 /**
