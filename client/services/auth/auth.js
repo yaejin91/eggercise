@@ -1,8 +1,9 @@
 'use strict';
 
 angular.module('eggercise')
-  .service('Auth', function ($rootScope, $cookieStore, $q, $http, $location) {
+  .service('Auth', ['ErrorService','$rootScope', '$cookieStore', '$q', '$http', '$location', function (ErrorService, $rootScope, $cookieStore, $q, $http, $location) {
 
+    var service = {};
     var _user = {};
     var _ready = $q.defer();
 
@@ -24,8 +25,9 @@ angular.module('eggercise')
      * @param user
      * @returns {promise}
      */
-    this.signup = function (user) {
+    service.signup = function (user) {
       var deferred = $q.defer();
+    
       $http.post('/api/users', user)
         .then(function (res) {
           _user = res.data.user;
@@ -33,12 +35,13 @@ angular.module('eggercise')
           deferred.resolve();
         })
         .catch(function (err) {
-          deferred.reject(err.data);
+          ErrorService.errorToasty('This username/email is already taken.')
+          // deferred.reject(err.data);
         });
       return deferred.promise;
     };
 
-    this.signupForInvite = function (inviteId, groupId, user) {
+    service.signupForInvite = function (inviteId, groupId, user) {
       var deferred = $q.defer();
       $http.post('/api/invites/accept/' + inviteId, user)
         .then(function (res) {
@@ -59,7 +62,7 @@ angular.module('eggercise')
      * @param user
      * @returns {promise}
      */
-    this.login = function (user) {
+    service.login = function (user) {
       var deferred = $q.defer();
       $http.post('/auth/local', user)
         .then(function (res) {
@@ -76,7 +79,7 @@ angular.module('eggercise')
     /**
      * Logout
      */
-    this.logout = function () {
+    service.logout = function () {
       $cookieStore.remove('token');
       _user = {};
     };
@@ -86,7 +89,7 @@ angular.module('eggercise')
      *
      * @returns {boolean}
      */
-    this.isLogged = function () {
+    service.isLogged = function () {
       return _user.hasOwnProperty('_id');
     };
 
@@ -95,7 +98,7 @@ angular.module('eggercise')
      *
      * @returns {Promise}
      */
-    this.isReadyLogged = function () {
+    service.isReadyLogged = function () {
       var def = $q.defer();
       _ready.promise.then(function () {
         if (_user.hasOwnProperty('_id')) {
@@ -112,11 +115,11 @@ angular.module('eggercise')
      *
      * @returns {object}
      */
-    this.getUser = function () {
+    service.getUser = function () {
       return _user;
     };
 
-    this.getUserNow = function () {
+    service.getUserNow = function () {
       var deferred = $q.defer();
 
       if($cookieStore.get('token')){
@@ -132,4 +135,5 @@ angular.module('eggercise')
       }
       return deferred.promise;
     };
-  });
+    return service;
+  }]);
