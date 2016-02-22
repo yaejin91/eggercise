@@ -36,10 +36,8 @@ angular.module('eggercise')
         })
         .catch(function (err) {
           ErrorService.errorToasty('This username/email is already taken.')
-
           // deferred.reject(err.data);
         });
-      
       return deferred.promise;
     };
 
