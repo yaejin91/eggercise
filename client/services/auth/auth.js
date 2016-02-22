@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('eggercise')
-  .service('Auth', ['$rootScope', '$cookieStore', '$q', '$http', '$location', function ($rootScope, $cookieStore, $q, $http, $location) {
+  .service('Auth', ['ErrorService','$rootScope', '$cookieStore', '$q', '$http', '$location', function (ErrorService, $rootScope, $cookieStore, $q, $http, $location) {
 
     var service = {};
     var _user = {};
@@ -27,15 +27,20 @@ angular.module('eggercise')
      */
     service.signup = function (user) {
       var deferred = $q.defer();
-      $http.post('/api/users', user)
-        .then(function (res) {
-          _user = res.data.user;
-          $cookieStore.put('token', res.data.token);
-          deferred.resolve();
-        })
-        .catch(function (err) {
-          deferred.reject(err.data);
-        });
+      console.log('this is user', user);
+      if (user) {
+        ErrorService.errorToasty('This username/email is already taken.')
+      } else {
+        $http.post('/api/users', user)
+          .then(function (res) {
+            _user = res.data.user;
+            $cookieStore.put('token', res.data.token);
+            deferred.resolve();
+          })
+          .catch(function (err) {
+            deferred.reject(err.data);
+          });
+      }
       return deferred.promise;
     };
 
