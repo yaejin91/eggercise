@@ -10,8 +10,7 @@ describe('User-Validation', function () {
     scope = $rootScope;
     element = angular.element();
     $compile(element)(scope);
-    scope.digest();
-    form = scope.form;
+    scope.$apply();
   }));
 
   it('should ...', function() {
